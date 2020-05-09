@@ -1,0 +1,82 @@
+<RCC>
+  <qresource prefix="/catView">
+    <file>small_business.png</file>
+    <file>table_money_16.png</file>
+    <file>table_money.png</file>
+    <file>monitor_16.png</file>
+    <file>pwicon.png</file>
+    <file>pirate_flag_16.png</file>
+    <file>time.png</file>
+    <file>door_16.png</file>
+    <file>door_open_16.png</file>
+    <file>coins.png</file>
+    <file>coins_add.png</file>
+    <file>coins_delete.png</file>
+    <file>plotchart.png</file>
+    <file>widgets16.png</file>
+    <file>c48.png</file>
+    <file>copying_and_distribution.png</file>
+    <file>Button-Help-icon.png</file>
+    <file>lock_16.png</file>
+    <file>money.png</file>
+    <file>door.png</file>
+    <file>door_open.png</file>
+    <file>shop_closed.png</file>
+    <file>widgets.png</file>
+    <file>lock-open-icon.png</file>
+    <file>cat.png</file>
+    <file>cat_32.png</file>
+    <file>group.png</file>
+    <file>exclamation.png</file>
+    <file>coin_gold.png</file>
+  </qresource>
+  <qresource prefix="/commi">
+    <file>filter.png</file>
+    <file>update.png</file>
+  </qresource>
+  <qresource prefix="/license">
+    <file>license_key.png</file>
+  </qresource>
+  <qresource prefix="/multiView">
+    <file>folder.png</file>
+    <file>disk.png</file>
+    <file>cross.png</file>
+    <file>reseller_programm.png</file>
+  </qresource>
+  <qresource prefix="/config">
+    <file>show_comment.png</file>
+    <file>card_money_32.png</file>
+    <file>group.png</file>
+    <file>user.png</file>
+    <file>24717.png</file>
+    <file>folder_blue.png</file>
+    <file>user_add.png</file>
+    <file>user_delete.png</file>
+  </qresource>
+  <qresource prefix="/gconfig">
+    <file>error.png</file>
+  </qresource>
+  <qresource prefix="/about">
+    <file>antikotin.png</file>
+        <file>gmail.png</file>
+        <file>telegram.png</file>
+  </qresource>
+  <qresource prefix="/trade">
+    <file>empty_16.png</file>
+    <file>tick.png</file>
+    <file>coins_in_hand.png</file>
+    <file>arrow.png</file>
+    <file>previous_1.png</file>
+    <file>next.png</file>
+    <file>previous.png</file>
+    <file>prevprev.png</file>
+    <file>nextnext.png</file>
+  </qresource>
+  <qresource prefix="/lock">
+    <file>lock_32.png</file>
+  </qresource>
+    <qresource prefix="/history">
+    <file>arrow_left_16.png</file>
+    <file>arrow_right_16.png</file>
+  </qresource>
+</RCC>

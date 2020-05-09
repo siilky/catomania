@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="io">
+      <UniqueIdentifier>{24901d99-c5d3-4187-b19d-849a7bc03774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{f85a6c28-c23d-455a-b704-b5682736fd1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\AI">
+      <UniqueIdentifier>{ce8dd194-6321-4b52-a440-28b6dbc6fee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="netdata">
+      <UniqueIdentifier>{ed9f46b7-d753-4e48-9955-039048d1f628}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="netio">
+      <UniqueIdentifier>{cc3e544f-f51f-4c29-a2a8-66a196441b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\data">
+      <UniqueIdentifier>{c7fd3976-7229-4db5-ae71-b4fb57a9a68c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{782a2c61-b50e-4555-b447-34b85c30984d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\game">
+      <UniqueIdentifier>{19356d02-4269-406d-b49b-64880242c38d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\game\ai">
+      <UniqueIdentifier>{bbc11484-ea35-48ab-818f-23a7c20f448f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\game\data">
+      <UniqueIdentifier>{7b1fe895-6be8-478b-a245-107b8fad286d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\io">
+      <UniqueIdentifier>{4f120b10-0351-4192-a902-7240b4b97567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\netdata">
+      <UniqueIdentifier>{0854016b-467a-49e6-a9e5-c98212a30106}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\netio">
+      <UniqueIdentifier>{cd4746e4-fca8-45aa-ac65-7b3b7197d34a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ui">
+      <UniqueIdentifier>{610422e1-efd2-470a-b419-0970d4f5697a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="io\asyncIoBuffer.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="io\pipe.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="game\world_s.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\task.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\tlogin.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="netio\netchannelx.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="compactuint.cpp" />
+    <ClCompile Include="error.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="md5.cpp" />
+    <ClCompile Include="memtools.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="textconsole.cpp" />
+    <ClCompile Include="thread.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="WaitQueue.cpp" />
+    <ClCompile Include="game\game.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\player.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\inventory.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\account.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\tinfo.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\data\elements.cpp">
+      <Filter>game\data</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gtime.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\chat.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\condition.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\data\itemprops.cpp">
+      <Filter>game\data</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gamebase.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\connection.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\fragments_server.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\content.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\fragment_manager.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\fragments.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\fragments_client.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\fragments_giclient.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\fragments_giserver.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="persistence2.cpp" />
+    <ClCompile Include="persistence.cpp" />
+    <ClCompile Include="game\data\itemeffects.cpp">
+      <Filter>game\data</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\tshop.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\tinventory.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\tmove.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\tingame.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ai\tnpc.cpp">
+      <Filter>game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="netio\encoder.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="game\trade.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="netdata\fragments_npc.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="game\data\gshop.cpp">
+      <Filter>game\data</Filter>
+    </ClCompile>
+    <ClCompile Include="game\data\filereader.cpp">
+      <Filter>game\data</Filter>
+    </ClCompile>
+    <ClCompile Include="game\anticheat.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gametask.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="netio\mppc.cpp">
+      <Filter>netdata</Filter>
+    </ClCompile>
+    <ClCompile Include="NetDll.cpp" />
+    <ClCompile Include="netio\connector.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="PWUnpack.cpp" />
+    <ClCompile Include="SystemInfo.cpp" />
+    <ClCompile Include="game\comissionshop.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\lib\error.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="include\game\ai\tshop.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\task.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\condition.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\tingame.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\tinfo.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\tlogin.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\tinventory.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\character.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\data\elements.h">
+      <Filter>include\game\data</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\data\itemprops.h">
+      <Filter>include\game\data</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\gamebase.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\inventory.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\chat.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\gtime.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\world_s.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\game.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\player.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\account.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\io\socket.h">
+      <Filter>include\io</Filter>
+    </ClInclude>
+    <ClInclude Include="include\io\asyncIoBuffer.h">
+      <Filter>include\io</Filter>
+    </ClInclude>
+    <ClInclude Include="include\io\pipe.h">
+      <Filter>include\io</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\fragments_giserver.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\sw_version.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\content.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\fragments_giclient.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\serialize.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\fragments_server.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\fragments_client.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\fragment.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\connection.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\fragments.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\fragment_manager.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ui\trayicon.h">
+      <Filter>include\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\persistence.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\memtools.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\utils.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\textconsole.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\types.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thread.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\log.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\error.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\compactuint.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\md5.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ini.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WaitQueue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\tmove.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\event.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\inventory_types.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\persistence2.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\data\itemeffects.h">
+      <Filter>include\game\data</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\ai\tnpc.h">
+      <Filter>include\game\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netio\netchannelx.h">
+      <Filter>include\netio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netio\netchannel.h">
+      <Filter>include\netio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\connectiontcp.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netdata\connectionx.h">
+      <Filter>include\netdata</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\trade.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\data\items.h">
+      <Filter>include\game\data</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\world_types.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\data\gshop.h">
+      <Filter>include\game\data</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\data\filereader.h">
+      <Filter>include\game\data</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\anticheat.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\gametask.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\account_types.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netio\mppc.h">
+      <Filter>include\netio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netio\encoder.h">
+      <Filter>include\netio</Filter>
+    </ClInclude>
+    <ClInclude Include="NetDll.h" />
+    <ClInclude Include="include\netio\connector.h">
+      <Filter>include\netio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PWUnpack.h" />
+    <ClInclude Include="SystemInfo.h" />
+    <ClInclude Include="include\game\comissionshop.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

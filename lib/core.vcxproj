@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug Dll|Win32">
+      <Configuration>Debug Dll</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug-FP|Win32">
+      <Configuration>Debug-FP</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release Dll|Win32">
+      <Configuration>Release Dll</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-FP|Win32">
+      <Configuration>Release-FP</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>lib</ProjectName>
+    <ProjectGuid>{C2900659-8553-4FBA-A437-8B5660779DAE}</ProjectGuid>
+    <RootNamespace>core</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Env.props" />
+    <Import Project="..\Release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Env.props" />
+    <Import Project="..\Debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Env.props" />
+    <Import Project="..\Release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Env.props" />
+    <Import Project="..\Release.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Env.props" />
+    <Import Project="..\Debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Env.props" />
+    <Import Project="..\Debug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30128.1</_ProjectFileVersion>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\json_spirit\json_spirit;$(WTLDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnablePREfast>false</EnablePREfast>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <ProjectReference />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\json_spirit\json_spirit;$(WTLDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <EnablePREfast>false</EnablePREfast>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\json_spirit\json_spirit;$(WTLDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\json_spirit\json_spirit;$(WTLDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\json_spirit\json_spirit;$(WTLDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;WIN32;_DEBUG;_LIB;FRAGMENT_PRINTABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <EnablePREfast>false</EnablePREfast>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\json_spirit\json_spirit;$(WTLDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;WIN32;NDEBUG;_LIB;FRAGMENT_PRINTABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="game\account.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\condition.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\tinfo.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\tingame.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\tinventory.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\tmove.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\tnpc.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\tshop.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\anticheat.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\chat.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\comissionshop.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\data\elements.cpp" />
+    <ClCompile Include="game\data\filereader.cpp" />
+    <ClCompile Include="game\data\gshop.cpp" />
+    <ClCompile Include="game\data\itemeffects.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\data\itemprops.cpp" />
+    <ClCompile Include="game\game.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\gamebase.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="game\gtime.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\inventory.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\player.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\gametask.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\trade.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="io\asyncIoBuffer.cpp" />
+    <ClCompile Include="io\pipe.cpp" />
+    <ClCompile Include="game\world_s.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\task.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="game\ai\tlogin.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="netdata\connection.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="netdata\content.cpp" />
+    <ClCompile Include="netdata\fragments_npc.cpp" />
+    <ClCompile Include="netdata\fragment_manager.cpp" />
+    <ClCompile Include="netdata\fragments.cpp">
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile Include="netdata\fragments_client.cpp" />
+    <ClCompile Include="netdata\fragments_giclient.cpp" />
+    <ClCompile Include="netdata\fragments_giserver.cpp" />
+    <ClCompile Include="netdata\fragments_server.cpp" />
+    <ClCompile Include="NetDll.cpp" />
+    <ClCompile Include="netio\connector.cpp" />
+    <ClCompile Include="netio\encoder.cpp" />
+    <ClCompile Include="netio\mppc.cpp" />
+    <ClCompile Include="netio\netchannelx.cpp" />
+    <ClCompile Include="persistence.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="persistence2.cpp" />
+    <ClCompile Include="compactuint.cpp" />
+    <ClCompile Include="error.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="md5.cpp" />
+    <ClCompile Include="memtools.cpp" />
+    <ClCompile Include="PWUnpack.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SystemInfo.cpp" />
+    <ClCompile Include="textconsole.cpp" />
+    <ClCompile Include="thread.cpp" />
+    <ClCompile Include="utils.cpp">
+      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">AssemblyAndSourceCode</AssemblerOutput>
+      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release-FP|Win32'">AssemblyAndSourceCode</AssemblerOutput>
+    </ClCompile>
+    <ClCompile Include="WaitQueue.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\lib\error.h" />
+    <ClInclude Include="include\common.h" />
+    <ClInclude Include="include\compactuint.h" />
+    <ClInclude Include="include\error.h" />
+    <ClInclude Include="include\event.h" />
+    <ClInclude Include="include\game\account.h" />
+    <ClInclude Include="include\game\account_types.h" />
+    <ClInclude Include="include\game\ai\character.h" />
+    <ClInclude Include="include\game\ai\condition.h" />
+    <ClInclude Include="include\game\ai\task.h" />
+    <ClInclude Include="include\game\ai\tinfo.h" />
+    <ClInclude Include="include\game\ai\tingame.h" />
+    <ClInclude Include="include\game\ai\tinventory.h" />
+    <ClInclude Include="include\game\ai\tlogin.h" />
+    <ClInclude Include="include\game\ai\tmove.h" />
+    <ClInclude Include="include\game\ai\tnpc.h" />
+    <ClInclude Include="include\game\ai\tshop.h" />
+    <ClInclude Include="include\game\anticheat.h" />
+    <ClInclude Include="include\game\chat.h" />
+    <ClInclude Include="include\game\comissionshop.h" />
+    <ClInclude Include="include\game\data\elements.h" />
+    <ClInclude Include="include\game\data\filereader.h" />
+    <ClInclude Include="include\game\data\gshop.h" />
+    <ClInclude Include="include\game\data\itemeffects.h" />
+    <ClInclude Include="include\game\data\itemprops.h" />
+    <ClInclude Include="include\game\data\items.h" />
+    <ClInclude Include="include\game\game.h" />
+    <ClInclude Include="include\game\gamebase.h" />
+    <ClInclude Include="include\game\gtime.h" />
+    <ClInclude Include="include\game\inventory.h" />
+    <ClInclude Include="include\game\inventory_types.h" />
+    <ClInclude Include="include\game\player.h" />
+    <ClInclude Include="include\game\gametask.h" />
+    <ClInclude Include="include\game\trade.h" />
+    <ClInclude Include="include\game\world_s.h" />
+    <ClInclude Include="include\game\world_types.h" />
+    <ClInclude Include="include\ini.h" />
+    <ClInclude Include="include\io\asyncIoBuffer.h" />
+    <ClInclude Include="include\io\pipe.h" />
+    <ClInclude Include="include\io\socket.h" />
+    <ClInclude Include="include\log.h" />
+    <ClInclude Include="include\md5.h" />
+    <ClInclude Include="include\memtools.h" />
+    <ClInclude Include="include\netdata\connection.h" />
+    <ClInclude Include="include\netdata\connectiontcp.h" />
+    <ClInclude Include="include\netdata\connectionx.h" />
+    <ClInclude Include="include\netdata\content.h" />
+    <ClInclude Include="include\netdata\fragment.h" />
+    <ClInclude Include="include\netdata\fragments.h" />
+    <ClInclude Include="include\netdata\fragments_client.h" />
+    <ClInclude Include="include\netdata\fragments_giclient.h" />
+    <ClInclude Include="include\netdata\fragments_giserver.h" />
+    <ClInclude Include="include\netdata\fragments_server.h" />
+    <ClInclude Include="include\netdata\fragment_manager.h" />
+    <ClInclude Include="include\netdata\serialize.h" />
+    <ClInclude Include="include\netdata\sw_version.h" />
+    <ClInclude Include="include\netio\connector.h" />
+    <ClInclude Include="include\netio\encoder.h" />
+    <ClInclude Include="include\netio\mppc.h" />
+    <ClInclude Include="include\netio\netchannel.h" />
+    <ClInclude Include="include\netio\netchannelx.h" />
+    <ClInclude Include="include\persistence.h" />
+    <ClInclude Include="include\persistence2.h" />
+    <ClInclude Include="include\PWUnpack.h" />
+    <ClInclude Include="include\textconsole.h" />
+    <ClInclude Include="include\thread.h" />
+    <ClInclude Include="include\types.h" />
+    <ClInclude Include="include\ui\trayicon.h" />
+    <ClInclude Include="include\utils.h" />
+    <ClInclude Include="include\WaitQueue.h" />
+    <ClInclude Include="NetDll.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SystemInfo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\thirdparty\json_spirit\json_spirit\json_spirit.vcxproj">
+      <Project>{be262a86-cc26-4b25-a877-883ed2688cec}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.68.0.0\build\boost.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.68.0.0\build\boost.targets'))" />
+  </Target>
+</Project>

@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kitty", "kittycat\qtui.vcxproj", "{7938EE24-F5F4-4F6A-AE63-07D81B69199B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B12702AD-ABFB-343A-A199-8E24837244A3} = {B12702AD-ABFB-343A-A199-8E24837244A3}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lib", "lib\core.vcxproj", "{C2900659-8553-4FBA-A437-8B5660779DAE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qlib", "qlib\qlib.vcxproj", "{01511DD9-20C6-4A0F-A473-9EF42B953764}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "json_spirit_lib", "thirdparty\json_spirit\json_spirit\json_spirit.vcxproj", "{BE262A86-CC26-4B25-A877-883ED2688CEC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mailru", "mailru\mailru.vcxproj", "{6D5AB20A-B0F7-4623-ABF1-256480E7CCF6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arc", "arc\arc.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{01511DD9-20C6-4A0F-A473-9EF42B953764} = {01511DD9-20C6-4A0F-A473-9EF42B953764}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7938EE24-F5F4-4F6A-AE63-07D81B69199B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7938EE24-F5F4-4F6A-AE63-07D81B69199B}.Debug|Win32.Build.0 = Debug|Win32
+		{7938EE24-F5F4-4F6A-AE63-07D81B69199B}.Debug|x64.ActiveCfg = Debug|Win32
+		{7938EE24-F5F4-4F6A-AE63-07D81B69199B}.Release|Win32.ActiveCfg = Release|Win32
+		{7938EE24-F5F4-4F6A-AE63-07D81B69199B}.Release|Win32.Build.0 = Release|Win32
+		{7938EE24-F5F4-4F6A-AE63-07D81B69199B}.Release|x64.ActiveCfg = Release|Win32
+		{C2900659-8553-4FBA-A437-8B5660779DAE}.Debug|Win32.ActiveCfg = Debug Dll|Win32
+		{C2900659-8553-4FBA-A437-8B5660779DAE}.Debug|Win32.Build.0 = Debug Dll|Win32
+		{C2900659-8553-4FBA-A437-8B5660779DAE}.Debug|x64.ActiveCfg = Debug|Win32
+		{C2900659-8553-4FBA-A437-8B5660779DAE}.Release|Win32.ActiveCfg = Release Dll|Win32
+		{C2900659-8553-4FBA-A437-8B5660779DAE}.Release|Win32.Build.0 = Release Dll|Win32
+		{C2900659-8553-4FBA-A437-8B5660779DAE}.Release|x64.ActiveCfg = Release|Win32
+		{01511DD9-20C6-4A0F-A473-9EF42B953764}.Debug|Win32.ActiveCfg = Debug|Win32
+		{01511DD9-20C6-4A0F-A473-9EF42B953764}.Debug|Win32.Build.0 = Debug|Win32
+		{01511DD9-20C6-4A0F-A473-9EF42B953764}.Debug|x64.ActiveCfg = Debug|Win32
+		{01511DD9-20C6-4A0F-A473-9EF42B953764}.Release|Win32.ActiveCfg = Release|Win32
+		{01511DD9-20C6-4A0F-A473-9EF42B953764}.Release|Win32.Build.0 = Release|Win32
+		{01511DD9-20C6-4A0F-A473-9EF42B953764}.Release|x64.ActiveCfg = Release|Win32
+		{BE262A86-CC26-4B25-A877-883ED2688CEC}.Debug|Win32.ActiveCfg = Debug Dll|Win32
+		{BE262A86-CC26-4B25-A877-883ED2688CEC}.Debug|Win32.Build.0 = Debug Dll|Win32
+		{BE262A86-CC26-4B25-A877-883ED2688CEC}.Debug|x64.ActiveCfg = Debug|Win32
+		{BE262A86-CC26-4B25-A877-883ED2688CEC}.Release|Win32.ActiveCfg = Release Dll|Win32
+		{BE262A86-CC26-4B25-A877-883ED2688CEC}.Release|Win32.Build.0 = Release Dll|Win32
+		{BE262A86-CC26-4B25-A877-883ED2688CEC}.Release|x64.ActiveCfg = Release|Win32
+		{6D5AB20A-B0F7-4623-ABF1-256480E7CCF6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6D5AB20A-B0F7-4623-ABF1-256480E7CCF6}.Debug|Win32.Build.0 = Debug|Win32
+		{6D5AB20A-B0F7-4623-ABF1-256480E7CCF6}.Debug|x64.ActiveCfg = Debug|Win32
+		{6D5AB20A-B0F7-4623-ABF1-256480E7CCF6}.Release|Win32.ActiveCfg = Release|Win32
+		{6D5AB20A-B0F7-4623-ABF1-256480E7CCF6}.Release|Win32.Build.0 = Release|Win32
+		{6D5AB20A-B0F7-4623-ABF1-256480E7CCF6}.Release|x64.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.Build.0 = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.Build.0 = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A82EC94-6441-480F-918B-1D0928306DB9}
+		Qt5Version = $(DefaultQtVersion)
+	EndGlobalSection
+EndGlobal

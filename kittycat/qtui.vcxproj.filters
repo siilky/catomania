@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Forms">
+      <UniqueIdentifier>{5ab677e3-7641-4b6d-ab98-50fdecca31c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widgets">
+      <UniqueIdentifier>{acb41285-ce67-4626-9683-fd5a7da032b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="catctl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="treewidgetltr.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uiabout.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uiaccounts.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uicatview.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uicharsel.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uiconfig.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uimultiview.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="catcontainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="i18n.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="itempropformatter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamethread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="options.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uigconfig.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uiprices.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uilicense.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="serverlist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uitrade.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uilock.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="clicker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="marketbuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uiclientlocation.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="minidump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clientlocation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="license.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="catfactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="auth_errors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="processctl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PortManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="historydb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uihistoryview.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketSetupModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketItemSetup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoPriceMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PWCatsApi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\chat.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uicommi.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uimoveitems.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\uigetpin.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="itempropformatter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="options.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="marketbuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="minidump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clientlocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="catfactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tristate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="auth_errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PortManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="historydb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serverlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketItemSetup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ui\catview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtRcc Include="ui\resource.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtMoc Include="catctl.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtUic Include="ui\about.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\accounts.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <CustomBuild Include="util.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <QtUic Include="ui\charsel.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\config.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\multiview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="treewidgetltr.h">
+      <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uiabout.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uiaccounts.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uicatview.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uicharsel.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uiconfig.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uimultiview.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtUic Include="ui\license.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\gconfig.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <CustomBuild Include="catcontainer.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <QtMoc Include="i18n.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtUic Include="ui\prices.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="gamethread.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uigconfig.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uilicense.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uiprices.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtUic Include="ui\trade.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="forms\uitrade.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtUic Include="ui\lock.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="forms\uilock.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="clicker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtUic Include="ui\clientlocation.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="forms\uiclientlocation.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="license.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="debugger.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="processctl.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtUic Include="ui\history.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="forms\uihistoryview.hpp">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="MarketSetupModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="AutoPriceMonitor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PWCatsApi.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\chat.hpp">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtUic Include="ui\chat.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtRcc Include="smile\smile.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="ui\commi.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="forms\uicommi.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="forms\uimoveitems.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtUic Include="ui\getPin.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\moveitems.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="forms\uigetpin.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cats_ru.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="icon.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

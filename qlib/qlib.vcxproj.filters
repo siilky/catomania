@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{c4cbe808-c9d4-4196-8c59-dcb0fa47c8b8}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{a370bf4d-4bd5-48cb-86ae-54681f33b7b9}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="netio">
+      <UniqueIdentifier>{2eaf577c-4655-45bf-8e98-bbf29150c75b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{8b948e2a-c0d0-4b85-a0cc-0cc87d9567d7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="eventq.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vmp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="netio\qchanneltcp.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gamebase.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    
+    
+    
+    
+    
+    
+    <ClCompile Include="netio\connectiontcp.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pckmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\iconmanager.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="netio\connectionproxy.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    
+    <ClCompile Include="netio\nettools.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    
+    <ClCompile Include="safefile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vmp.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\connectiontcp.h">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pckmanager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\iconmanager.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\nettools.h">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="safefile.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="eventq.h">
+      <Filter>Source Files</Filter>
+    </QtMoc>
+    <QtMoc Include="netio\qchanneltcp.h">
+      <Filter>netio</Filter>
+    </QtMoc>
+    <QtMoc Include="game\gamebase.h">
+      <Filter>game</Filter>
+    </QtMoc>
+    <QtMoc Include="netio\connectionproxy.h">
+      <Filter>netio</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
