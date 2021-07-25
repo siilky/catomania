@@ -185,14 +185,8 @@ namespace serverdata
                     type2 = type1;
                 #endif
 
-                if (type1 == type2)
-                {
-                    s.wr(unk2).b(position.angle);
-                }
-                else
-                {
-                    s.skip(12);
-                }
+                s.wr(unk2).b(position.angle);
+
                 s.lr(status)
                 #if PW_SERVER_VERSION >= 1500
                     .lr(status2)

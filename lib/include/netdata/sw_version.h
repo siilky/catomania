@@ -5,7 +5,7 @@
 //#define PW_SERVER_VERSION 1420    //
 //#define PW_SERVER_VERSION 1450    // morai
 //#define PW_SERVER_VERSION 1451    // imperial fury
-#define PW_SERVER_VERSION 1460    // Vexillium
+//#define PW_SERVER_VERSION 1460    // Vexillium
 //#define PW_SERVER_VERSION 1500    // crossworld
 //#define PW_SERVER_VERSION 1510    // rebirth
 //#define PW_SERVER_VERSION 1511    // lunesca
@@ -20,8 +20,9 @@
 //#define PW_SERVER_VERSION 1600
 //#define PW_SERVER_VERSION 1620
 //#define PW_SERVER_VERSION 1640
+#define PW_SERVER_VERSION 1660
 
 //#define PW_SERVER_TOKEN_2_AUTH      // mailru auth by tokens
-//#define PW_SERVER_TOKEN_AUTH        // pwi auth by tokens
+#define PW_SERVER_TOKEN_AUTH        // pwi auth by tokens
 
 #endif

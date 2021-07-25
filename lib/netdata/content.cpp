@@ -40,6 +40,9 @@ bool CharAttrs::read(SerializerIn & s)
     // 734D00 @ 1.5.1
     // 74A970 @ 1.5.1.1
 
+    // or
+    // look for CECPlayer::SetNewExtendStates call
+
     isEmpty_ = false;
 
 #if PW_SERVER_VERSION < 1470
@@ -242,6 +245,12 @@ bool CharAttrs::read(SerializerIn & s)
     if (primary_[6] & 0x04)	// 0x40000
     {
         offset += 8;
+    }
+#endif
+#if PW_SERVER_VERSION >= 1660
+    if (primary_[6] & 0x08)	// 0x80000
+    {
+        offset += 4;
     }
 #endif
 
