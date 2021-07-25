@@ -280,7 +280,7 @@ bool GameBase::beforeConnection()
 
 bool GameBase::execute( std::shared_ptr<Connection> connection
                       , std::shared_ptr<ITask>      taskRoot
-                      , QEventLoop                    & eventLoop)
+                      , QEventLoop                  & eventLoop)
 {
     bool        connectionFail = false;
     DWORD       waitResult     = WAIT_TIMEOUT;

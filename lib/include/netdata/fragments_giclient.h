@@ -494,19 +494,19 @@ namespace clientdata
     public:
         enum { ID = 0x0027 };
 
-        BYTE unk1;
-        BYTE unk2;
-        BYTE unk3;
+        BYTE byPack;
+        BYTE byEquip;
+        BYTE byTask;
 
     protected:
         template<int mode> void format(Serializer<mode> & s)
         {
-            s.b(unk1).b(unk2).b(unk3);
+            s.b(byPack).b(byEquip).b(byTask);
         }
 
         void print(tostream & stream) const
         {
-            stream << _T("  [Get Full Info]  ") << hex << unk1 << _T(" ") << unk2 << _T(" ") << unk3 << endl;
+            stream << _T("  [Get Full Info]  ") << hex << byPack << _T(" ") << byEquip << _T(" ") << byTask << endl;
         }
     };
 

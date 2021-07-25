@@ -74,8 +74,8 @@ void debugPrint(const char *format, ...)
 
     if (hLogFile != INVALID_HANDLE_VALUE)
     {
-        WriteFile(hLogFile, ts, (DWORD)wcslen(ts), &dummy, NULL);
-        WriteFile(hLogFile, msg0, (DWORD)wcslen(msg0), &dummy, NULL);
+        WriteFile(hLogFile, ts, (DWORD)wcslen(ts) * sizeof(*ts), &dummy, NULL);
+        WriteFile(hLogFile, msg0, (DWORD)wcslen(msg0) * sizeof(*msg0), &dummy, NULL);
         FlushFileBuffers(hLogFile);
     }
 

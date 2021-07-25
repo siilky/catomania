@@ -60,6 +60,8 @@ bool Vmp::hasOption(Option opt)
                 break;
             case OptionAutoprice: o = (unsigned char *) VMProtectDecryptStringA("autoprice");
                 break;
+            case OptionNoUpdate: o = (unsigned char *) VMProtectDecryptStringA("noupdate");
+                break;
         }
         if (o == nullptr)
         {

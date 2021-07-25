@@ -43,7 +43,7 @@ protected:
 
     bool execute( std::shared_ptr<Connection> connection
                 , std::shared_ptr<ITask>      taskRoot
-                , ITask::State                 & status);
+                , ITask::State                & status);
 
     //
 

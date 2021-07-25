@@ -95,6 +95,19 @@ namespace elements
     static const char * STORY_BOOK_MAJOR_TYPE                   = "STORY_BOOK_MAJOR_TYPE";
     static const char * STORY_BOOK_CONFIG                       = "STORY_BOOK_CONFIG";
     static const char * QIHUN_COVER_ESSENCE                     = "QIHUN_COVER_ESSENCE";
+    // 1.6.
+    static const char * SLIDE_SKILL_ESSENCE          = "SLIDE_SKILL_ESSENCE";
+    static const char * USE_FOR_SELF_ITEM_ESSENCE    = "USE_FOR_SELF_ITEM_ESSENCE";
+    // 1.7.0    // 1.7.0"
+    static const char * RED_BOOK_UPGRADE_ITEM        = "RED_BOOK_UPGRADE_ITEM";
+    static const char * CAMP_TOKEN_ESSENCE           = "CAMP_TOKEN_ESSENCE";
+    static const char * FASHION_NEW_ESSENCE          = "FASHION_NEW_ESSENCE";
+    static const char * ILLUSTRATED_FASHION_ESSENCE  = "ILLUSTRATED_FASHION_ESSENCE";
+    static const char * ILLUSTRATED_WING_EGG_ESSENCE = "ILLUSTRATED_WING_EGG_ESSENCE";
+    static const char * ILLUSTRATED_PET_EGG_ESSENCE  = "ILLUSTRATED_PET_EGG_ESSENCE";
+    static const char * FAST_PRODUCE_ITEM_ESSENCE    = "FAST_PRODUCE_ITEM_ESSENCE";
+    static const char * KID_DEBRIS_ESSENCE           = "KID_DEBRIS_ESSENCE";
+    static const char * KID_DEBRIS_GENERATOR_ESSENCE = "KID_DEBRIS_GENERATOR_ESSENCE";
 
 
 class Error : public std::runtime_error

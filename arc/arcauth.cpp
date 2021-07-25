@@ -29,12 +29,12 @@ struct Init
 static const std::wstring ArcAddress = L"login.core.perfectworld.com:9881";
 static const std::string ArcVersion = "arcversion:V1.1.0.17595 os:Microsoft Windows 10 Pro\r\n";
 
-ArcAuth::ArcAuth(QObject *parent /*= 0*/)
+ArcAuth::ArcAuth(QString hwId, QObject *parent /*= 0*/)
     : QObject(parent)
+    , hwId_(QCryptographicHash::hash(hwId.toLocal8Bit(), QCryptographicHash::Md5).toHex())
 {
     static Init init;
 
-    hwId_ = QCryptographicHash::hash(Vmp::getHwId().toLatin1(), QCryptographicHash::Md5).toHex();
     pcName_ = QSysInfo::machineHostName();
     if (pcName_.isEmpty())
     {

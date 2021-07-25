@@ -32,17 +32,20 @@ ConnectionBase::~ConnectionBase()
         delete server_;
     }
 
-    assert(serverProcessor_ != nullptr);
-    assert(clientProcessor_ != nullptr);
-
-    for (auto cookie : sHooks_)
+    if (serverProcessor_)
     {
-        serverProcessor_->unregisterHandler(cookie);
+        for (auto cookie : sHooks_)
+        {
+            serverProcessor_->unregisterHandler(cookie);
+        }
     }
 
-    for (auto cookie : cHooks_)
+    if (clientProcessor_)
     {
-        clientProcessor_->unregisterHandler(cookie);
+        for (auto cookie : cHooks_)
+        {
+            clientProcessor_->unregisterHandler(cookie);
+        }
     }
 
     delete serverProcessor_;
@@ -85,14 +88,22 @@ const ErrorState & ConnectionBase::getError()
 
 bool ConnectionBase::send(FragmentBase *fragment)
 {
-    assert(clientProcessor_);
-
     if (server_ == nullptr || ! server_->isConnected())
     {
         return false;
     }
 
-    clientProcessor_->process(fragment);
+    if (clientProcessor_)
+    {
+        clientProcessor_->process(fragment);
+    }
+
+#if PW_SERVER_VERSION >= 1700
+    if (GIEncodeValue != 0)
+    {
+        fragment->encode(GIEncodeValue);
+    }
+#endif
 
     barray stream = fragment->assemble();
     if (fragment->isOk())
@@ -103,7 +114,6 @@ bool ConnectionBase::send(FragmentBase *fragment)
             logfile_ << _T("=>") << fragment << endl;
         }
     #endif
-
         return server_->write(stream);
     }
     else
@@ -121,11 +131,11 @@ bool ConnectionBase::receive()
 {
     // return connection status after channels are processed so last message has chance to be processed
 
-    if (server_ != nullptr && serverFactory_ != nullptr)
+    if (server_ && serverProcessor_ && serverFactory_)
     {
         processChannel(server_, serverProcessor_, serverFactory_);
     }
-    if (client_ != nullptr && clientFactory_ != nullptr)
+    if (client_ && clientProcessor_ && clientFactory_)
     {
         processChannel(client_, clientProcessor_, clientFactory_);
     }
@@ -250,8 +260,13 @@ ConnectionBase & ConnectionBase::unbindHandlers(std::vector<Cookie> & cookies)
 
 //
 
-Connection::Connection()
+Connection::Connection(bool safeMode)
 {
+    if (safeMode)
+    {
+        return;
+    }
+
     serverProcessor_ = new FragmentProcessor();
     serverFactory_   = &serverdata::fragmentFactory;
     clientProcessor_ = new FragmentProcessor();
@@ -260,39 +275,42 @@ Connection::Connection()
     serverGiProcessor_ = new FragmentProcessor();
     clientGiProcessor_ = new FragmentProcessor();
 
-#ifndef FRAGMENT_PRINTABLE
-    sgiHooks_.push_back(serverProcessor_->registerHandler(serverdata::FragmentGameinfoSet::ID
+    sHooks_.push_back(serverProcessor_->registerHandler(serverdata::FragmentGameinfoSet::ID
                                                        , std::bind(&fragmentCollectionHandler<serverdata::FragmentGameinfoSet>
                                                                      , _1
                                                                      , serverGiProcessor_)));
-    sgiHooks_.push_back(serverProcessor_->registerHandler(serverdata::FragmentArray::ID
+    sHooks_.push_back(serverProcessor_->registerHandler(serverdata::FragmentArray::ID
                                                        , std::bind(&fragmentCollectionHandler<serverdata::FragmentArray>
                                                                      , _1
                                                                      , serverProcessor_)));
-    sgiHooks_.push_back(serverProcessor_->registerHandler(serverdata::FragmentArrayPacked::ID
+    sHooks_.push_back(serverProcessor_->registerHandler(serverdata::FragmentArrayPacked::ID
                                                        , std::bind(&fragmentCollectionHandler<serverdata::FragmentArrayPacked>
                                                                      , _1
                                                                      , serverProcessor_)));
 
-    cgiHooks_.push_back(clientProcessor_->registerHandler(clientdata::FragmentGameinfoSet::ID
+    cHooks_.push_back(clientProcessor_->registerHandler(clientdata::FragmentGameinfoSet::ID
                                                        , std::bind(&fragmentCollectionHandler<clientdata::FragmentGameinfoSet>
                                                                      , _1
                                                                      , clientGiProcessor_)));
-    cgiHooks_.push_back(clientProcessor_->registerHandler(clientdata::FragmentArray::ID
+    cHooks_.push_back(clientProcessor_->registerHandler(clientdata::FragmentArray::ID
                                                        , std::bind(&fragmentCollectionHandler<clientdata::FragmentArray>
                                                                      , _1
                                                                      , clientProcessor_)));
+#if PW_SERVER_VERSION >= 1700
+    AccountInfoHandler_ = bindServerHandler(std::function<void(const serverdata::AccInfoImpl *)>
+                                            (std::bind(&Connection::setAccountId, this, _1))
+    );
 #endif
 }
 
 Connection::~Connection()
 {
-    for (auto cookie : sgiHooks_)
+    for (auto cookie : sHooks_)
     {
         serverProcessor_->unregisterHandler(cookie);
     }
 
-    for (auto cookie : cgiHooks_)
+    for (auto cookie : cHooks_)
     {
         clientProcessor_->unregisterHandler(cookie);
     }
@@ -323,3 +341,11 @@ Connection & Connection::unbindHandler(Cookie & cookie)
     return *this;
 }
 
+void Connection::setAccountId(const serverdata::AccInfoImpl * f)
+{
+#if PW_SERVER_VERSION >= 1700
+    setGiIdEncodeVal(f->accId);
+#else
+    (void)f;
+#endif
+}

@@ -30,7 +30,7 @@ namespace clientdata
             : FragmentSet(dataStream, curPos, &fragmentFactory)
         {}
 
-        virtual barray assemble()
+        virtual barray assemble()override
         {
             return FragmentSet::assemble(ID);
         }
@@ -53,9 +53,17 @@ namespace clientdata
             : FragmentSet(dataStream, curPos, &fragmentGiFactory)
         {}
 
-        virtual barray assemble()
+        virtual barray assemble() override
         {
             return FragmentSet::assemble(ID);
+        }
+
+        virtual void encode(unsigned int x)
+        {
+            for (auto f : fragmentArray_)
+            {
+                f->setId(f->getId() ^ (uint16_t)x ^ 0x12C);
+            }
         }
 
         virtual void print(tostream &stream) const

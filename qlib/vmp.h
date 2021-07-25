@@ -20,6 +20,7 @@ namespace Vmp
     {
         OptionHistory,
         OptionAutoprice,
+        OptionNoUpdate,
 
         OptionEnd
     };

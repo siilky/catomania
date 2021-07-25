@@ -49,9 +49,18 @@ public:
         return payload_;
     }
 
+    virtual void encode(unsigned int /*x*/)
+    {
+    }
+
     unsigned int getId() const
     {
         return id_;
+    }
+
+    void setId(unsigned id)
+    {
+        id_ = id;
     }
 
     bool isOk() const

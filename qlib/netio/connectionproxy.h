@@ -11,7 +11,7 @@ namespace qlib
     {
         Q_OBJECT
     public:
-        ConnectionProxy(QObject *parent = 0);
+        ConnectionProxy(bool safeMode = false, QObject *parent = 0);
         virtual ~ConnectionProxy();
 
         bool open( const std::string   &login

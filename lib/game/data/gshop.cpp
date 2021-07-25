@@ -91,6 +91,11 @@ bool GShop::GShop::load(const std::wstring & filename) const
         item.extra3 = fr.readDword();
     #endif
 
+    #if GSHOP_VERSION >= 1700
+        item.extra4 = fr.readDword();
+        item.extra5 = fr.readDword();
+    #endif
+
         index ++;
     }
 

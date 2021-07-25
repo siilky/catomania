@@ -19,19 +19,7 @@ bool CharAttrs::read(SerializerIn & s)
     }
 
     // format parsers
-    // 447130 @ 1.4.4 - 0
-    // 449030 @ 1.4.4 - 2
-    // 46EFC0 @ 1.4.5
-    // 44CBC0 @ 1.4.6
-    // 458150 @ 1.5.1
-    // 00458FD0 @ 1.5.2
-    // 004671A0 @ 1.5.3
-    // 00467B60 @ 1.5.3.2
-    // 0046A4D0 @ 1.5.5
-    // 0046A510 @ 1.5.5 ru
-    // 004AD480 @ 1.5.5.2 pwi
-    // 004B0950 @ 1.5.6
-    // 004B2990 @ 1.5.7
+    // look for CECPlayer::SetNewExtendStates call
 
     // Actual length calculation is at
     // 631F30 @ 1.4.5
@@ -39,9 +27,8 @@ bool CharAttrs::read(SerializerIn & s)
     // 6EB7A0 @ 1.5.0
     // 734D00 @ 1.5.1
     // 74A970 @ 1.5.1.1
-
-    // or
-    // look for CECPlayer::SetNewExtendStates call
+    //
+    //  F7 ? 1A 00 00 01 00
 
     isEmpty_ = false;
 
@@ -87,6 +74,9 @@ bool CharAttrs::read(SerializerIn & s)
         #if PW_SERVER_VERSION >= 1600
             offset += 4;
         #endif
+        #if PW_SERVER_VERSION >= 1700
+            offset += 8;
+        #endif
     }
 
     if (primary_[1] & 0x08)
@@ -130,7 +120,11 @@ bool CharAttrs::read(SerializerIn & s)
 
     if (primary_[2] & 0x10)     // 0x100000
     {
+    #if PW_SERVER_VERSION < 1700
         offset += 5;
+    #else
+        offset += 37;
+    #endif
     }
 
     if (primary_[2] & 0x80)
@@ -241,10 +235,15 @@ bool CharAttrs::read(SerializerIn & s)
 		offset += 4;
 	}
 #endif
-#if PW_SERVER_VERSION >= 1640
+#if PW_SERVER_VERSION < 1700
     if (primary_[6] & 0x04)	// 0x40000
     {
         offset += 8;
+    }
+#else
+    if (primary_[6] & 0x04)	// 0x40000
+    {
+        offset += 12;
     }
 #endif
 #if PW_SERVER_VERSION >= 1660
@@ -252,6 +251,22 @@ bool CharAttrs::read(SerializerIn & s)
     {
         offset += 4;
     }
+#endif
+#if PW_SERVER_VERSION >= 1700
+    if (primary_[6] & 0x10)	// 0x100000
+    {
+        offset += 1;
+    }
+#endif
+
+#if defined(PW_SERVER_CHARINFOEXT)
+    std::vector<byte> header;
+    header.resize(12);
+    s.arr(header, 12, &SerializerIn::b);
+    s.skip(4);
+    DWORD size;
+    s.lr(size);
+    s.skip(size);
 #endif
 
     additional_.assign(pos, offset);

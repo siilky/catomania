@@ -101,7 +101,7 @@ public:
         SerializerOut out(payload_);
         Impl::format(out);
 
-        return Base::assemble(Impl::ID);
+        return Base::assemble((unsigned short)id_);
     }
 
 private:
@@ -110,7 +110,7 @@ private:
 #if defined(FRAGMENT_PRINTABLE)
         checkParsed();
 
-        stream << _T("  [") << hex << Impl::ID << _T("]");
+        stream << _T("  [") << hex << Impl::ID << _T("] ") << typeid(Impl).name() << endl;
 
         Impl::print(stream);
         stream << endl;

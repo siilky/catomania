@@ -228,8 +228,10 @@ namespace serverdata
                         s.arr(bStatus, 16, &Serializer<mode>::b);
 					#elif PW_SERVER_VERSION < 1600
 						s.arr(bStatus, 24, &Serializer<mode>::b);
-					#else      
+					#elif PW_SERVER_VERSION < 1700
 						s.arr(bStatus, 28, &Serializer<mode>::b);
+					#else      
+						s.arr(bStatus, 36, &Serializer<mode>::b);
                     #endif
                 }
                 if ((status & 0x1000) != 0)
@@ -2889,7 +2891,7 @@ namespace serverdata
         enum LockState
         {
             LockStateUnknown = 0,
-
+            LockStateOnV1 = 1,
             LockStateOff = 2,
             LockStateOn = 3,
         };
@@ -2916,7 +2918,7 @@ namespace serverdata
                 << _T(" UnlockTS:") << hex << setw(8) << unlockTS
                 << _T(" Time in sec:") << dec << lockTime 
             #if PW_SERVER_VERSION >= 1640
-                << _T(" u2:") << dec << lock2
+                << _T(" v2:") << dec << lock2
             #endif
                 << endl;
         }

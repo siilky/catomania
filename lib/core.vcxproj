@@ -344,7 +344,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SystemInfo.cpp" />
-    <ClCompile Include="textconsole.cpp" />
+    <ClCompile Include="textconsole.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dll|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Dll|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="thread.cpp" />
     <ClCompile Include="utils.cpp">
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">AssemblyAndSourceCode</AssemblerOutput>

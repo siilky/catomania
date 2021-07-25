@@ -2,10 +2,14 @@
 #define connection_h
 
 #include "netio/netchannel.h"
+//#include "netdata/fragments_server.h"
 #include "fragment_manager.h"
 
+namespace serverdata
+{
+    class AccInfoImpl;
+}
 
-// read it as 'FragmentedIO'
 class ConnectionBase
 {
 public:
@@ -38,6 +42,13 @@ public:
     // receive/process server/client messages
     bool receive();
 
+#if PW_SERVER_VERSION >= 1700
+    void setGiIdEncodeVal(unsigned x)
+    {
+        GIEncodeValue = x;
+    }
+#endif
+
     // send to server
     bool send(FragmentBase *fragment);
     bool send(const barray & data);
@@ -45,27 +56,47 @@ public:
     template<class FragmentType>
     Cookie bindServerHandler(std::function< void (const FragmentType *) > handler)
     {
-        return std::make_pair( CookieServer
-                             , serverProcessor_->registerHandler( FragmentType::ID
-                                                                , std::bind(&fragmentHandler_i<FragmentType>, std::placeholders::_1, handler)));
+        if (serverProcessor_)
+        {
+            return std::make_pair( CookieServer
+                                 , serverProcessor_->registerHandler( FragmentType::ID
+                                                                    , std::bind(&fragmentHandler_i<FragmentType>, std::placeholders::_1, handler)));
+        }
+        else
+        {
+            return {};
+        }
     }
 
     template<class FragmentType>
     Cookie bindClientHandler(std::function<void (const FragmentType *)> handler)
     {
-        return std::make_pair( CookieClient
-                             , clientProcessor_->registerHandler( FragmentType::ID
-                                                                , std::bind(&fragmentHandler_i<FragmentType>, std::placeholders::_1, handler)));
+        if (clientProcessor_)
+        {
+            return std::make_pair( CookieClient
+                                 , clientProcessor_->registerHandler( FragmentType::ID
+                                                                    , std::bind(&fragmentHandler_i<FragmentType>, std::placeholders::_1, handler)));
+        }
+        else
+        {
+            return {};
+        }
     }
 
 #if defined(FRAGMENT_PRINTABLE)
     void bindServerDefaultHandler(std::function< void(const FragmentBase *) > handler)
     {
-        serverProcessor_->registerDefaultHandler(handler);
+        if (serverProcessor_)
+        {
+            serverProcessor_->registerDefaultHandler(handler);
+        }
     }
     void bindClientDefaultHandler(std::function< void(const FragmentBase *) > handler)
     {
-        clientProcessor_->registerDefaultHandler(handler);
+        if (clientProcessor_)
+        {
+            clientProcessor_->registerDefaultHandler(handler);
+        }
     }
 #endif
 
@@ -112,6 +143,10 @@ private:
                        , FragmentFactory   *factory);
 
     std::vector<FragmentProcessor::Cookie> sHooks_, cHooks_;
+
+#if PW_SERVER_VERSION >= 1700
+    unsigned GIEncodeValue = 0;
+#endif
 };
 
 
@@ -119,13 +154,14 @@ private:
 class Connection : public ConnectionBase
 {
 public:
-    Connection();
+    Connection(bool safeMode = false);
     virtual ~Connection();
 
     template<class FragmentType>
     Cookie bindServerHandler(std::function< void(const FragmentType *) > handler)
     {
-        if (boost::is_base_of<FragmentGameinfo, FragmentType>::value)
+        if (serverGiProcessor_
+            && std::is_base_of<FragmentGameinfo, FragmentType>::value)
         {
             return std::make_pair(CookieServerGi
                                  , serverGiProcessor_->registerHandler(FragmentType::ID
@@ -140,7 +176,8 @@ public:
     template<class FragmentType>
     Cookie bindClientHandler(std::function<void(const FragmentType *)> handler)
     {
-        if (boost::is_base_of<FragmentGameinfo, FragmentType>::value)
+        if (clientGiProcessor_
+            && std::is_base_of<FragmentGameinfo, FragmentType>::value)
         {
             return std::make_pair(CookieClientGi
                                  , clientGiProcessor_->registerHandler(FragmentType::ID
@@ -163,11 +200,13 @@ protected:
     };
 
 private:
+    void setAccountId(const serverdata::AccInfoImpl * f);
+    Cookie  AccountInfoHandler_;
 
-    FragmentProcessor   *serverGiProcessor_;
-    FragmentProcessor   *clientGiProcessor_;
+    FragmentProcessor   *serverGiProcessor_ = nullptr;
+    FragmentProcessor   *clientGiProcessor_ = nullptr;
 
-    std::vector<FragmentProcessor::Cookie> sgiHooks_, cgiHooks_;
+    std::vector<FragmentProcessor::Cookie> sHooks_, cHooks_;
 };
 
 

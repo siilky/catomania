@@ -386,7 +386,8 @@ void Player::onProtectionInfo(const serverdata::FragmentGiProtectionInfo *f)
     FTRACE();
 
 #if PW_SERVER_VERSION >= 1640
-    if (f->lock == serverdata::FragmentGiProtectionInfo::LockStateOn)
+    if (f->lock == serverdata::FragmentGiProtectionInfo::LockStateOn
+        || f->lock == serverdata::FragmentGiProtectionInfo::LockStateOnV1)
     {
         lockState_ = LockStateOn;
     }

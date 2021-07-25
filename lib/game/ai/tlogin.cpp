@@ -99,9 +99,9 @@ ITask::State TGetInventory::onStarted()
     FTRACE();
 
     clientdata::FragmentGiGetFullInfo *fGetFullInfo = new clientdata::FragmentGiGetFullInfo;
-    fGetFullInfo->unk1 = 1;
-    fGetFullInfo->unk2 = 1;
-    fGetFullInfo->unk3 = 0;
+    fGetFullInfo->byPack = 1;
+    fGetFullInfo->byEquip = 1;
+    fGetFullInfo->byTask = 0;
     clientdata::FragmentGameinfoSet fgi(fGetFullInfo);
 
     if ( ! game_->getConnection()->send(&fgi))

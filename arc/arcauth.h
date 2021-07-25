@@ -27,7 +27,7 @@ public:
         IncorrectPin = 20,
     };
 
-    ArcAuth(QObject *parent = 0);
+    ArcAuth(QString hwId, QObject *parent = 0);
     virtual ~ArcAuth();
 
 

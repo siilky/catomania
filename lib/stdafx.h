@@ -90,4 +90,8 @@
 #include <functional>
 using namespace std::placeholders;
 
+#if defined(_DEBUG)
+    #define FRAGMENT_PRINTABLE
+#endif
+
 #pragma warning(pop)

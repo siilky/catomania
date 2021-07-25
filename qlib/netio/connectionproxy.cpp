@@ -5,8 +5,9 @@
 #include "qchanneltcp.h"
 
 
-qlib::ConnectionProxy::ConnectionProxy(QObject *parent)
+qlib::ConnectionProxy::ConnectionProxy(bool safeMode, QObject *parent)
     : QObject(parent)
+    , Connection(safeMode)
 {
     connect(&localServer_, &QTcpServer::acceptError,    this, &ConnectionProxy::onAcceptError);
     connect(&localServer_, &QTcpServer::newConnection,  this, &ConnectionProxy::onNewConnection);
