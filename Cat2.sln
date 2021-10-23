@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kitty", "kittycat\qtui\qtui.vcxproj", "{7938EE24-F5F4-4F6A-AE63-07D81B69199B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kitty", "kittycat\qtui.vcxproj", "{7938EE24-F5F4-4F6A-AE63-07D81B69199B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B12702AD-ABFB-343A-A199-8E24837244A3} = {B12702AD-ABFB-343A-A199-8E24837244A3}
 	EndProjectSection
