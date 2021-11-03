@@ -348,4 +348,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/build/Debug Dll
+
+/build
+/packages
+/kittycat/GeneratedFiles
+/qlib/GeneratedFiles
+/mailru/GeneratedFiles
+/arc/GeneratedFiles
