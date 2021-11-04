@@ -6,8 +6,7 @@
 #include "uimultiview.h"
 #include "util.h"
 #include "uigconfig.h"
-
-extern QString g_elementExePath_;   // fixme: should not be global
+#include "main.h"
 
 class ByteConversion
 {

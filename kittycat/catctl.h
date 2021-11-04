@@ -94,6 +94,10 @@ public:
     CatCtl(const JsonValue & config, QObject *parent = NULL);
     ~CatCtl();
 
+#if defined GAME_USING_CLIENT
+    void setProcessSafeMode(bool isOn);
+#endif
+
     JsonValue & config()
     {
         return config_;

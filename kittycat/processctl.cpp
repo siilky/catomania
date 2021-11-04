@@ -103,6 +103,70 @@ static const ProcessCtl::PatchData disableProtector3
     { 0xEB, 0x22 }
 };
 
+static const ProcessCtl::PatchData disableProtector4
+{
+    // .text:0044A141 F4C 33 FF                                   xor     edi, edi
+    // .text:0044A143 F4C 33 C0                                   xor     eax, eax
+    // .text:0044A145 F4C 89 45 D0                                mov     [ebp+0EC0h+ProcessInformation.hProcess], eax
+    // .text:0044A148 F4C 89 45 D4                                mov     [ebp+0EC0h+ProcessInformation.hThread], eax
+    // .text:0044A14B F4C 89 45 D8                                mov     [ebp+0EC0h+ProcessInformation.dwProcessId], eax
+    // .text:0044A14E F4C 89 45 DC                                mov     [ebp+0EC0h+ProcessInformation.dwThreadId], eax
+    // .text:0044A151 F4C 8D 45 D0                                lea     eax, [ebp+0EC0h+ProcessInformation]
+    // .text:0044A154 F4C 50                                      push    eax             ; lpProcessInformation
+    // .text:0044A155 F50 8D 4D 88                                lea     ecx, [ebp+0EC0h+StartupInfo]
+    // .text:0044A158 F50 51                                      push    ecx             ; lpStartupInfo
+    // .text:0044A159 F54 57                                      push    edi             ; lpCurrentDirectory
+    // .text:0044A15A F58 57                                      push    edi             ; lpEnvironment
+    // .text:0044A15B F5C 57                                      push    edi             ; dwCreationFlags
+    // .text:0044A15C F60 57                                      push    edi             ; bInheritHandles
+    // .text:0044A15D F64 57                                      push    edi             ; lpThreadAttributes
+    // .text:0044A15E F68 57                                      push    edi             ; lpProcessAttributes
+    // .text:0044A15F F6C 57                                      push    edi             ; lpCommandLine
+    // .text:0044A160 F70 68 D0 97 00 01                          push    offset aReportbugsPwpr ; lpApplicationName
+    // .text:0044A165 F74 FF 15 A8 23 00 01                       call    ds:CreateProcessW
+    0x040000,
+    0x050000,
+    {
+        0x51, 0x57, 0x57, 0x57, 0x57, 0x57, 0x57, 0x57, 0x68, 0x110, 0x114, 0x1CB, 0x100,
+        0xFF
+    },
+    0,
+    { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }
+};
+
+static const ProcessCtl::PatchData disableProtector5
+{
+    // .text:00BA28F4 F54 0F 11 85 04 F1 FF FF                          movups  xmmword ptr [ebp+ProcessInformation.hProcess], xmm0
+    // .text:00BA28FB F54 8D 85 04 F1 FF FF                             lea     eax, [ebp+ProcessInformation]
+    // .text:00BA2901 F54 50                                            push    eax             ; lpProcessInformation
+    // .text:00BA2902 F58 8D 85 C0 F0 FF FF                             lea     eax, [ebp+StartupInfo]
+    // .text:00BA2908 F58 50                                            push    eax             ; lpStartupInfo
+    // .text:00BA2909 F5C 6A 00                                         push    0               ; lpCurrentDirectory
+    // .text:00BA290B F60 6A 00                                         push    0               ; lpEnvironment
+    // .text:00BA290D F64 6A 00                                         push    0               ; dwCreationFlags
+    // .text:00BA290F F68 6A 00                                         push    0               ; bInheritHandles
+    // .text:00BA2911 F6C 6A 00                                         push    0               ; lpThreadAttributes
+    // .text:00BA2913 F70 6A 00                                         push    0               ; lpProcessAttributes
+    // .text:00BA2915 F74 6A 00                                         push    0               ; lpCommandLine
+    // .text:00BA2917 F78 68 20 1E 09 01                                push    offset aReportbugsPwprotect ; lpApplicationName
+    // .text:00BA291C F7C FF 15 08 F3 FF 00                             call    ds:CreateProcessW
+    0x0750000,
+    0x0100000,
+    {
+        0x50,
+        0x6A, 0x00,
+        0x6A, 0x00,
+        0x6A, 0x00,
+        0x6A, 0x00,
+        0x6A, 0x00,
+        0x6A, 0x00,
+        0x6A, 0x00,
+        0x68, 0x110, 0x114, 0x1CB, 0x100,
+        0xFF, 0x15
+    },
+    0x00BA2901 - 0x00BA291D,
+    { 0xEB, 0x1F }
+};
 
 static const ProcessCtl::PatchData disableServerSelPatch
 {
@@ -246,8 +310,7 @@ static const ProcessCtl::PatchData disableServerSelPatch3
         0x8B, 0xC8,
         0xE8, 0x17B, 0x112, 0x101, 0x100,
         0x8B, 0x116,
-        0x8B, 0x42,
-        0x38,
+        0x8B, 0x42, 0x38,
         0x6A, 0x00,
         0x68, 0x114, 0x114, 0x1E0, 0x100,
         0x68, 0x1A0, 0x160, 0x1DF, 0x100,
@@ -262,6 +325,57 @@ static const ProcessCtl::PatchData disableServerSelPatch3
 #else
     { 0xEB, 0x2F }
 #endif
+};
+
+static const ProcessCtl::PatchData disableServerSelPatch4
+{
+    // .text:00A6951A 024 E8 A1 22 0F 00                                call    pCECServerList
+    // .text:00A6951F 024 8B C8                                         mov     ecx, eax
+    // .text:00A69521 024 E8 3A 2E 0F 00                                call    sub_B5C360
+    // .text:00A69526 024 E8 95 22 0F 00                                call    pCECServerList
+    // .text:00A6952B 024 83 78 10 00                                   cmp     dword ptr [eax+10h], 0
+    // .text:00A6952F 024 7D 3E                                         jge     short loc_A6956F
+    // .text:00A69531 024 E8 8A 22 0F 00                                call    pCECServerList
+    // .text:00A69536 024 8B C8                                         mov     ecx, eax
+    // .text:00A69538 024 E8 03 27 0F 00                                call    readCurrentServer
+    // .text:00A6953D 024 8B 06                                         mov     eax, [esi]
+    // .text:00A6953F 024 8B CE                                         mov     ecx, esi
+    //-.text:00A69541 024 6A 00                                         push    0
+    // .text:00A69543 028 68 E8 37 26 01                                push    offset ??_R0?AVCDlgLoginServerList@@@8 ; CDlgLoginServerList `RTTI Type Descriptor'
+    // .text:00A69548 02C 68 50 8D 25 01                                push    offset ??_R0?AVAUIDialog@@@8 ; AUIDialog `RTTI Type Descriptor'
+    // .text:00A6954D 030 6A 00                                         push    0
+    // .text:00A6954F 034 68 38 02 02 01                                push    offset aWin_loginserve ; "Win_LoginServerList"
+    // .text:00A69554 038 FF 50 38                                      call    dword ptr [eax+38h]
+    // .text:00A69557 038 50                                            push    eax
+    // .text:00A69558 03C E8 65 3B 4E 00                                call    __RTDynamicCast
+    // .text:00A6955D 03C 83 C4 14                                      add     esp, 14h
+    // .text:00A69560 028 8B C8                                         mov     ecx, eax
+    // .text:00A69562 028 8B 10                                         mov     edx, [eax]
+    // .text:00A69564 028 6A 01                                         push    1
+    // .text:00A69566 02C 6A 00                                         push    0
+    // .text:00A69568 030 6A 01                                         push    1
+    // .text:00A6956A 034 FF 52 24                                      call    dword ptr [edx+24h]
+    // .text:00A6956D 024 EB 18                                         jmp     short loc_A69587
+    // .text:00A6956F                                   loc_A6956F:                             ; CODE XREF: sub_A693F0+13Fj
+    // .text:00A6956F 024 8B 8E B0 12 10 00                             mov     ecx, [esi+1012B0h]
+    // e8 ? ? ? ? 8b c8 e8 ? ? ? ? 8b 06 8b ce 6a 00 68 ? ? ? ? 68 ? ? ? ? 6a 00 68 ? ? ? ? ff 50
+    0x600000,
+    0x100000,
+    {
+        0xE8, 0x112, 0x111, 0x101, 0x100,
+        0x8B, 0xC8,
+        0xE8, 0x17B, 0x112, 0x101, 0x100,
+        0x8B, 0x116,
+        0x8B, 0xCE,
+        0x6A, 0x00,
+        0x68, 0x114, 0x114, 0x1E0, 0x100,
+        0x68, 0x1A0, 0x160, 0x1DF, 0x100,
+        0x6A, 0x00,
+        0x68, 0x1C8, 0x1CD, 0x1CA, 0x100,
+        0xFF, 0x50
+    },
+    -20,
+    { 0xEB, 0x2C }
 };
 
 static const ProcessCtl::PatchData passOpenMarketPatch
@@ -326,7 +440,7 @@ static const ProcessCtl::PatchData passOpenMarketPatch2
         0x7C, 0x104,
         0x85, 0xC0,
         0x77, 0x128,
-        0x68, 0x108, 0x10C, 0x1C6, 0x00,
+        0x68, 0x108, 0x10C, 0x1C6, 0x100,
         0x8B, 0xCE,
         0xE8, 0x1D0, 0x1E0, 0x141, 0x00,
         0x80, 0x78, 0x17E, 0x00,
@@ -336,9 +450,51 @@ static const ProcessCtl::PatchData passOpenMarketPatch2
     {0xEB}
 };
 
+static const ProcessCtl::PatchData passOpenMarketPatch3
+{
+    // .text:005B7A1C 040 85 FF                                         test    edi, edi
+    // .text:005B7A1E 040 7F 34                                         jg      short loc_5B7A54
+    // .text:005B7A20 040 7C 04                                         jl      short loc_5B7A26
+    // .text:005B7A22 040 85 DB                                         test    ebx, ebx
+    // .text:005B7A24 040 75 2E                                         jnz     short loc_5B7A54
+    // .text:005B7A26 040 85 C9                                         test    ecx, ecx
+    // .text:005B7A28 040 7F 2A                                         jg      short loc_5B7A54
+    // .text:005B7A2A 040 7C 04                                         jl      short loc_5B7A30
+    // .text:005B7A2C 040 85 C0                                         test    eax, eax
+    // .text:005B7A2E 040 75 24                                         jnz     short loc_5B7A54
+    // .text:005B7A30 040 68 84 F0 00 01                                push    offset aDefault_txt_na ; "DEFAULT_Txt_Name"
+    // .text:005B7A35 044 8B CE                                         mov     ecx, esi
+    // .text:005B7A37 044 E8 F4 17 86 00                                call    sub_E19230
+    // .text:005B7A3C 040 8A 40 7E                                      mov     al, [eax+7Eh]
+    // .text:005B7A3F 040 84 C0                                         test    al, al
+    //*.text:005B7A41 040 75 11                                         jnz     short loc_5B7A54
+    // .text:005B7A43 040 68 0C A9 00 01                                push    offset aIdcancel ; "IDCANCEL"
+    // 85 c9 7f ? 7c ? 85 c0 75 ?
+    0x100000,
+    0x200000,
+    {
+        0x85, 0xC9,
+        0x7F, 0x12E,
+        0x7C, 0x104,
+        0x85, 0xC0,
+        0x75, 0x128,
+        0x68, 0x108, 0x10C, 0x1C6, 0x100,
+        0x8B, 0xCE,
+        0xE8, 0x1D0, 0x1E0, 0x141, 0x00,
+        0x8A, 0x40, 0x17E,
+        0x84, 0xC0,
+        0x75
+    },
+    0,
+    {0xEB}
+};
 
-static const ProcessCtl::BreakpointData replaceServerBp{
+
+static const ProcessCtl::BreakpointData replaceServerBp
+{
     // int __stdcall GNET_init_thread(CECGameSession *arg_)
+    // CECGameSession::DoOvertimeCheck, up fn
+    //
     // .text:0074E8D0 51                                      push    ecx
     // .text:0074E8D1 A1 AC EF CC 00                          mov     eax, g_CECGame
     // .text:0074E8D6 55                                      push    ebp
@@ -356,24 +512,25 @@ static const ProcessCtl::BreakpointData replaceServerBp{
     0x300000,
     0x300000,
     {
-        0x51, 
-		0xA1, 0x1AC, 0x1EF, 0x1CC, 0x100,
-		0x55,
-		0x56,
-		0x57,
-		0x8A, 0x88, 0x1C4, 0x02, 0x00, 0x00,
-		0x8D, 0xA8, 0x1C4, 0x02, 0x00, 0x00,
-		0x84, 0xC9,
-		0x74, 0x149,
-		0x8B, 0x88, 0x1C4, 0x03, 0x00, 0x00,
-		0x85, 0xC9,
-		0x74, 0x13F,
-		0x8B,
+        0x51,
+        0xA1, 0x1AC, 0x1EF, 0x1CC, 0x100,
+        0x55,
+        0x56,
+        0x57,
+        0x8A, 0x88, 0x1C4, 0x02, 0x00, 0x00,
+        0x8D, 0xA8, 0x1C4, 0x02, 0x00, 0x00,
+        0x84, 0xC9,
+        0x74, 0x149,
+        0x8B, 0x88, 0x1C4, 0x03, 0x00, 0x00,
+        0x85, 0xC9,
+        0x74, 0x13F,
+        0x8B,
     },
     0
 };
 
-static const ProcessCtl::BreakpointData replaceServerBp2{
+static const ProcessCtl::BreakpointData replaceServerBp2
+{
     // .text:007ECB10 000 51                                      push    ecx
     // .text:007ECB11 004 8B 0D B0 BA E4 00                       mov     ecx, g_CECGame
     // .text:007ECB17 004 80 B9 FC 02 00 00 00                    cmp     byte ptr [ecx+2FCh], 0
@@ -401,9 +558,37 @@ static const ProcessCtl::BreakpointData replaceServerBp2{
     0
 };
 
+static const ProcessCtl::BreakpointData replaceServerBp3
+{
+    // .text:00BC2A34 008 A1 00 D6 2A 01                                mov     eax, pCECGame
+    // .text:00BC2A39 008 80 B8 B4 02 00 00 00                          cmp     byte ptr [eax+2B4h], 0 ; host
+    // .text:00BC2A40 008 8D 88 B4 02 00 00                             lea     ecx, [eax+2B4h]
+    // .text:00BC2A46 008 56                                            push    esi
+    // .text:00BC2A47 00C 57                                            push    edi
+    // .text:00BC2A48 010 74 28                                         jz      short loc_BC2A72
+    // .text:00BC2A4A 010 83 B8 B4 03 00 00 00                          cmp     dword ptr [eax+3B4h], 0
+    // .text:00BC2A51 010 74 1F                                         jz      short loc_BC2A72
+    // .text:00BC2A53 010 FF B0 C0 04 00 00                             push    dword ptr [eax+4C0h] ; int
+    // .text:00BC2A59 014 0F B7 80 B4 03 00 00                          movzx   eax, word ptr [eax+3B4h] ; port
+    // .text:00BC2A60 014 8B 75 08                                      mov     esi, [ebp+lpThreadParameter]
+    // .text:00BC2A63 014 50                                            push    eax             ; hostshort
+    // .text:00BC2A64 018 51                                            push    ecx             ; name
+    // .text:00BC2A65 01C 8B 8E AC 00 00 00                             mov     ecx, [esi+0ACh] ; int
+    // .text:00BC2A6B 01C E8 70 FF FF FF                                call    sub_BC29E0
+    // 51 a1 ? ? ? ? 80 b8 ? ? ? ? 00 8d 88 ? ? ? ?
+    0x750000,
+    0x100000,
+    {
+        0x51,
+        0xA1, 0x1B0, 0x1BA, 0x1E4, 0x100,
+        0x80, 0xB8, 0x1FC, 0x102, 0x00, 0x00, 0x00,
+        0x8D, 0x88,
+    },
+    5
+};
 
 #if CLIENT_VERSION < 1520
-static const ProcessCtl::BreakpointData replaceRoleBp{
+static const ProcessCtl::BreakpointData replaceRoleBp {
     // .text:007099D4 8B F1                                   mov     esi, ecx
     // .text:007099D6 0F 84 3B 01 00 00                       jz      loc_709B17
     // .text:007099DC 8D 44 24 08                             lea     eax, [esp+0BCh+role]
@@ -503,22 +688,48 @@ static const ProcessCtl::BreakpointData replaceRoleBp3
     // .text:0061D223 018 74 14                                         jz      short loc_61D239
     0x180000,
     0x200000,
-{
-    0x8B, 0xF1,
-    0x80, 0x3D, 0x1F4, 0x111, 0x1E0, 0x100, 0x100,
-    0x74, 0x14D,
-    0x8D, 0x44, 0x24, 0x108,
-    0x50,
-    0xC6, 0x05, 0x1F4, 0x111, 0x1E0, 0x100, 0x100,
-    0xE8, 0x102, 0x1AB, 0x1E5, 0x1FF,
-    0x83, 0xC4, 0x04,
-    0x8B, 0x4C, 0x24, 0x108,
-    0xC7, 0x44, 0x24, 0x114, 0x00, 0x00, 0x00, 0x00,
-    0x3B, 0x0D, 0x1F0, 0x1D7, 0x1E1, 0x100,
-    0x74,
-},
-0
+    {
+        0x8B, 0xF1,
+        0x80, 0x3D, 0x1F4, 0x111, 0x1E0, 0x100, 0x100,
+        0x74, 0x14D,
+        0x8D, 0x44, 0x24, 0x108,
+        0x50,
+        0xC6, 0x05, 0x1F4, 0x111, 0x1E0, 0x100, 0x100,
+        0xE8, 0x102, 0x1AB, 0x1E5, 0x1FF,
+        0x83, 0xC4, 0x04,
+        0x8B, 0x4C, 0x24, 0x108,
+        0xC7, 0x44, 0x24, 0x114, 0x00, 0x00, 0x00, 0x00,
+        0x3B, 0x0D, 0x1F0, 0x1D7, 0x1E1, 0x100,
+        0x74,
+    },
+    0
 };
+
+static const ProcessCtl::BreakpointData replaceRoleBp4
+{
+    // .text:00A60682 01C C6 05 08 28 1F 01 00                          mov     byte_11F2808, 0
+    // .text:00A60689 01C 50                                            push    eax
+    // .text:00A6068A 020 E8 E1 2E E4 FF                                call    get_cmg_value_role
+    // .text:00A6068F 020 83 C4 04                                      add     esp, 4
+    // .text:00A60692 01C 8B 45 F0                                      mov     eax, [ebp+var_10]
+    // .text:00A60695 01C C7 45 FC 00 00 00 00                          mov     [ebp+var_4], 0
+    // .text:00A6069C 01C 3B 05 44 64 1F 01                             cmp     eax, off_11F6444
+    // .text:00A606A2 01C 74 13                                         jz      short loc_A606B7
+    0x600000,
+    0x100000,
+    {
+        0xC6, 0x05, 0x1F4, 0x111, 0x1E0, 0x100, 0x00,
+        0x50,
+        0xE8, 0x102, 0x1AB, 0x1E5, 0x1FF,
+        0x83, 0xC4, 0x04,
+        0x8B, 0x45, 0xF0,
+        0xC7, 0x45, 0x124, 0x114, 0x00, 0x00, 0x00,
+        0x3B, 0x05, 0x1F0, 0x1D7, 0x1E1, 0x100,
+        0x74,
+    },
+    0
+};
+
 static const ProcessCtl::BreakpointData replaceRoleStepBp
 {
     // .text:0073E334 0C0 6A 01                                   push    1
@@ -552,7 +763,7 @@ static const ProcessCtl::BreakpointData replaceRoleStepBp2
     // .text:005C9A63 0C8 52                                      push    edx             ; Str2
     // .text:005C9A64 0CC 8B CD                                   mov     ecx, ebp
     // .text:005C9A66 0CC E8 85 A0 47 00                          call    Str_wcsicmp
-    0x1C0000,
+    0x600000,
     0x200000,
     {
         0x6A, 0x01,
@@ -568,6 +779,29 @@ static const ProcessCtl::BreakpointData replaceRoleStepBp2
         0xE8
     },
     0
+};
+static const ProcessCtl::BreakpointData replaceRoleStepBp3
+{
+    // .text:00A61736 0D8 E8 45 81 3A 00                                call    escapeString
+    // .text:00A6173B 0D8 8B 8D 48 FF FF FF                             mov     ecx, [ebp+var_B8]
+    // .text:00A61741 0D8 8D 85 50 FF FF FF                             lea     eax, [ebp+Str2]
+    // .text:00A61747 0D8 83 C4 0C                                      add     esp, 0Ch
+    // .text:00A6174A 0CC 50                                            push    eax             ; Str2
+    // .text:00A6174B 0D0 E8 A0 FD 23 00                                call    Str_wcsicmp
+    // .text:00A61750 0CC 8D 8D 4C FF FF FF                             lea     ecx, [ebp+var_B4]
+    // e8 ? ? ? ? 8b 8d ? ? ? ? 8d 85 ? ? ? ? 83 c4 0c 50 e8 ? ? ? ? 8d 8d
+    0x600000,
+    0x100000,
+    {
+        0xE8, 0x1B4, 0x1A9, 0x142, 0x00,
+        0x8B, 0x8D, 0x154, 0x124, 0x118, 0xFF,
+        0x8D, 0x85, 0x154, 0x124, 0x118, 0xFF,
+        0x83, 0xC4, 0x0C,
+        0x50,
+        0xE8, 0x100, 0x100, 0x100, 0x100,
+        0x8D, 0x8D
+    },
+    -6
 };
 
 #endif
@@ -620,11 +854,41 @@ static const ProcessCtl::BreakpointData createWindowBp2
     {
         0x6A, 0x00, 0x53, 0x6A, 0x00, 0x6A,
         0x00, 0x55, 0x57, 0x6A, 0x00, 0x6A, 0x00, 0x56, 0x52, 0x50, 0x51,
-        0xFF, 0x15, 0x128, 0x1EB, 0x1CC, 0x00, 0x33,
+        0xFF, 0x15, 0x128, 0x1EB, 0x1CC, 0x100,
+        0x33,
     },
     0
 };
 
+static const ProcessCtl::BreakpointData createWindowBp3
+{
+    // .text:00BA0EF0 034 6A 00                                         push    0               ; lpParam
+    // .text:00BA0EF2 038 50                                            push    eax             ; hInstance
+    // .text:00BA0EF3 03C 6A 00                                         push    0               ; hMenu
+    // .text:00BA0EF5 040 6A 00                                         push    0               ; hWndParent
+    // .text:00BA0EF7 044 52                                            push    edx             ; nHeight
+    // .text:00BA0EF8 048 51                                            push    ecx             ; nWidth
+    // .text:00BA0EF9 04C 6A 00                                         push    0               ; Y
+    // .text:00BA0EFB 050 6A 00                                         push    0               ; X
+    // .text:00BA0EFD 054 56                                            push    esi             ; dwStyle
+    // .text:00BA0EFE 058 FF 35 FC 38 2B 01                             push    lpWideCharStr   ; lpWindowName
+    // .text:00BA0F04 05C FF 35 C4 3E 1F 01                             push    lpClassName     ; lpClassName
+    // .text:00BA0F0A 060 57                                            push    edi             ; dwExStyle
+    // .text:00BA0F0B 064 FF 15 B8 F7 FF 00                             call    ds:CreateWindowExW
+    // .text:00BA0F11 034 85 C0                                         test    eax, eax
+    0x7A0000,
+    0x100000,
+    {
+        0x6A, 0x00, 0x50, 0x6A, 0x00, 0x6A, 0x00,
+        0x52, 0x51, 0x6A, 0x00, 0x6A, 0x00, 0x56,
+        0xFF, 0x35, 0x128, 0x1EB, 0x1CC, 0x100,
+        0xFF, 0x35, 0x128, 0x1EB, 0x1CC, 0x100,
+        0x57,
+        0xFF, 0x15, 0x128, 0x1EB, 0x1CC, 0x100,
+        0x85,
+    },
+    0
+};
 
 static const ProcessCtl::PatchData createWindowSkipShowPatch
 {
@@ -654,27 +918,27 @@ static const ProcessCtl::PatchData createWindowSkipShowPatch
     0x100000,
     {
         0xD1, 0xF8,
-		0x57,
-		0x56,
-		0x50,
-		0x55,
-		0x52,
-		0xFF, 0x15, 0x1DC, 0x1B7, 0x1B7, 0x00,
-		0x8B, 0x44, 0x24, 0x28,
-		0x8B, 0x0D, 0x17C, 0x102, 0x1CD, 0x100,
-		0x50,
-		0x51,
-		0xFF, 0x15, 0x1F4, 0x1B7, 0x1B7, 0x00,
-		0x8B, 0x15, 0x17C, 0x102, 0x1CD, 0x100,
-		0x52,
-		0xFF, 0x15, 0x1E0, 0x1B7, 0x1B7, 0x00,
-		0xA1, 0x17C, 0x102, 0x1CD, 0x100,
-		0x50,
-		0xFF, 0x15, 0x1D0, 0x1B6, 0x1B7, 0x00,
-		0x5F,
-		0x5E,
-		0x5D,
-		0xB0, 0x01
+        0x57,
+        0x56,
+        0x50,
+        0x55,
+        0x52,
+        0xFF, 0x15, 0x1DC, 0x1B7, 0x1B7, 0x00,
+        0x8B, 0x44, 0x24, 0x28,
+        0x8B, 0x0D, 0x17C, 0x102, 0x1CD, 0x100,
+        0x50,
+        0x51,
+        0xFF, 0x15, 0x1F4, 0x1B7, 0x1B7, 0x00,
+        0x8B, 0x15, 0x17C, 0x102, 0x1CD, 0x100,
+        0x52,
+        0xFF, 0x15, 0x1E0, 0x1B7, 0x1B7, 0x00,
+        0xA1, 0x17C, 0x102, 0x1CD, 0x100,
+        0x50,
+        0xFF, 0x15, 0x1D0, 0x1B6, 0x1B7, 0x00,
+        0x5F,
+        0x5E,
+        0x5D,
+        0xB0, 0x01
     },
     -0x25,      // 004531D5
     { 0xEB, 0x1F }
@@ -720,18 +984,18 @@ static const ProcessCtl::PatchData createWindowSkipShowPatch2
         0xA1, 0x118, 0x1C4, 0x1E4, 0x100,
         0x55,
         0x50,
-        0xFF, 0x15, 0x1A8, 0x1F8, 0x1C7, 0x00,
+        0xFF, 0x15, 0x1A8, 0x1F8, 0x1C7, 0x100,
         0x8B, 0x4C, 0x124, 0x28,
         0x8B, 0x15, 0x118, 0x1C4, 0x1E4, 0x100,
         0x51,
         0x52,
-        0xFF, 0x15, 0x1C0, 0x1F8, 0x1C7, 0x00,
+        0xFF, 0x15, 0x1C0, 0x1F8, 0x1C7, 0x100,
         0xA1, 0x118, 0x1C4, 0x1E4, 0x100,
         0x50,
-        0xFF, 0x15, 0x1AC, 0x1F8, 0x1C7, 0x00,
+        0xFF, 0x15, 0x1AC, 0x1F8, 0x1C7, 0x100,
         0x8B, 0x0D, 0x118, 0x1C4, 0x1E4, 0x100,
         0x51,
-        0xFF, 0x15, 0x1B0, 0x1F8, 0xC17, 0x00,
+        0xFF, 0x15, 0x1B0, 0x1F8, 0xC17, 0x100,
         0x5F,
         0x5E,
         0x5D,
@@ -741,8 +1005,37 @@ static const ProcessCtl::PatchData createWindowSkipShowPatch2
     { 0xEB, 0x1F }
 };
 
+static const ProcessCtl::PatchData createWindowSkipShowPatch3
+{
+    // .text:00BA0F8B 034 FF 75 0C                                      push    [ebp+nCmdShow]  ; nCmdShow
+    // .text:00BA0F8E 038 50                                            push    eax             ; hWnd
+    // .text:00BA0F8F 03C FF 15 78 F8 FF 00                             call    ds:ShowWindow
+    // .text:00BA0F95 034 FF 35 F8 40 2B 01                             push    hWnd            ; hWnd
+    // .text:00BA0F9B 038 FF 15 AC F7 FF 00                             call    ds:UpdateWindow
+    // .text:00BA0FA1 034 FF 35 F8 40 2B 01                             push    hWnd            ; hWnd
+    // .text:00BA0FA7 038 FF 15 A8 F7 FF 00                             call    ds:SetForegroundWindow
+    // .text:00BA0FAD 034 8B 4D FC                                      mov     ecx, [ebp+var_4]
+    // .text:00BA0FB0 034 B0 01                                         mov     al, 1
+    // 50 ff 15 ? ? ? ? ff 35 ? ? ? ? ff 15 ? ? ? ? ff 35 ? ? ? ? ff 15 ? ? ? ?
+    0x780000,
+    0x100000,
+    {
+        0x50,
+        0xFF, 0x15, 0x1A8, 0x1F8, 0x1C7, 0x100,
+        0xFF, 0x35, 0x118, 0x1C4, 0x1E4, 0x100,
+        0xFF, 0x15, 0x1A8, 0x1F8, 0x1C7, 0x100,
+        0xFF, 0x35, 0x118, 0x1C4, 0x1E4, 0x100,
+        0xFF, 0x15, 0x1A8, 0x1F8, 0x1C7, 0x100,
+        0x8B,
+    },
+    0x00BA0F8B - 0x00BA0FAD,
+    { 0xEB, 0x20 }
+};
+
 static const ProcessCtl::BreakpointData closeWindowBp
 {
+    // need to skip creating tray icon
+    //
     // .text:0043C8E7 0DC 6A 06                                   push    6               ; nCmdShow
     // .text:0043C8E9 0E0 56                                      push    esi             ; hWnd
     // .text:0043C8EA 0E4 FF D7                                   call    edi ; ShowWindow
@@ -753,13 +1046,29 @@ static const ProcessCtl::BreakpointData closeWindowBp
     // .text:0043C8F7 0DC 55                                      push    ebp
     // .text:0043C8F8 0E0 6A 00                                   push    0
     // .text:0043C8FA 0E4 FF 15 18 EB CC 00                       call    oShell_NotifyIconW
+    // 
+    // .text:00905E5F 0DC 8B 35 78 F8 FF 00                             mov     esi, ds:ShowWindow
+    // .text:00905E65 0DC 74 05                                         jz      short loc_905E6C
+    // .text:00905E67 0DC 6A 06                                         push    6               ; nCmdShow
+    // .text:00905E69 0E0 57                                            push    edi             ; hWnd
+    // .text:00905E6A 0E4 FF D6                                         call    esi ; ShowWindow
+    // .text:00905E6C 0DC 6A 00                                         push    0               ; nCmdShow
+    // .text:00905E6E 0E0 57                                            push    edi             ; hWnd
+    // .text:00905E6F 0E4 FF D6                                         call    esi ; ShowWindow
+    // .text:00905E71 0DC 8D 83 40 05 00 00                             lea     eax, [ebx+540h]
+    // .text:00905E77 0DC 50                                            push    eax
+    // .text:00905E78 0E0 6A 00                                         push    0
+    // .text:00905E7A 0E4 E9 14 03 00 00                                jmp     loc_906193
+    // .text:00906193 0E4 FF 15 E8 F5 FF 00                             call    ds:Shell_NotifyIconW
+
+    // 6a 06 ? ff ? 6a 00 ? ff ?
     0x000000,
-    0x100000,
+    0x600000,
     {
-        0x6A, 0x06, 0x56, 0xFF, 0xD7,
-        0x6A, 0x00, 0x56, 0xFF, 0xD7, 0x81, 0xC5, 0x14C, 0x05, 0x00, 0x00, 0x55, 0x6A, 0x00, 0xFF, 0x15,
+        0x6A, 0x06, 0x156, 0xFF, 0x1D7,
+        0x6A, 0x00, 0x156, 0xFF,
     },
-    -4 // 0043C8F7
+    9 // 0043C8F8
 };
 
 static const ProcessCtl::BreakpointData adjustSettingsBp
@@ -810,6 +1119,33 @@ static const ProcessCtl::BreakpointData adjustSettingsBp2
         0x8B, 0x54, 0x24, 0x40,
         0x52,
         0x8B, 0xCB,
+        0xE8,
+    },
+    0
+};
+static const ProcessCtl::BreakpointData adjustSettingsBp3
+{
+    // .text:008A53DC 040 59                                            pop     ecx
+    // .text:008A53DD 03C 5F                                            pop     edi
+    // .text:008A53DE 038 5E                                            pop     esi
+    // .text:008A53DF 034 5B                                            pop     ebx
+    // .text:008A53E0 030 8B E5                                         mov     esp, ebp
+    // .text:008A53E2 004 5D                                            pop     ebp
+    // .text:008A53E3 000 C2 0C 00                                      retn    0Ch
+    // .text:008A53E6 040 FF 75 10                                      push    [ebp+arg_8]
+    // .text:008A53E9 044 8B CE                                         mov     ecx, esi
+    // .text:008A53EB 044 E8 A0 0C 00 00                                call    CECConfigs__LoadSystemSettings
+    // .text:008A53F0 040 84 C0                                         test    al, al
+    // .text:008A53F2 040 75 07                                         jnz     short loc_8A53FB
+    // .text:008A53F4 040 68 DE 00 00 00                                push    0DEh
+    // .text:008A53F9 044 EB C6                                         jmp     short loc_8A53C1
+    // c2 0c 00 ff 75 10 8b ce e8 ? ? ? ?
+    0x4A0000,
+    0x100000,
+    {
+        0xC2, 0x0C, 0x00,
+        0xff, 0x75, 0x10,
+        0x8b, 0xce,
         0xE8,
     },
     0
@@ -884,6 +1220,59 @@ static const ProcessCtl::PatchData noSaveSettingsPatch2
     { 0xC3 }
 };
 
+static const ProcessCtl::PatchData noSaveSettingsPatch3
+{
+    // .text:008A7930 000 55                                            push    ebp
+    // .text:008A7931 004 8B EC                                         mov     ebp, esp
+    // .text:008A7933 004 6A FF                                         push    0FFFFFFFFh
+    // .text:008A7935 008 68 96 21 FA 00                                push    offset sub_FA2196
+    // .text:008A793A 00C 64 A1 00 00 00 00                             mov     eax, large fs:0
+    // .text:008A7940 00C 50                                            push    eax
+    // .text:008A7941 010 81 EC 78 08 00 00                             sub     esp, 878h
+    // .text:008A7947 888 A1 38 81 25 01                                mov     eax, ___security_cookie
+    // .text:008A794C 888 33 C5                                         xor     eax, ebp
+    // .text:008A794E 888 89 45 F0                                      mov     [ebp+var_10], eax
+    // .text:008A7951 888 56                                            push    esi
+    // .text:008A7952 88C 50                                            push    eax
+    // .text:008A7953 890 8D 45 F4                                      lea     eax, [ebp+var_C]
+    // .text:008A7956 890 64 A3 00 00 00 00                             mov     large fs:0, eax
+    // .text:008A795C 890 8B F1                                         mov     esi, ecx
+    // .text:008A795E 890 8D 8D 7C F7 FF FF                             lea     ecx, [ebp+var_884]
+    // .text:008A7964 890 E8 D7 21 41 00                                call    sub_CB9B40
+    // .text:008A7969 890 68 84 5B 05 01                                push    offset aInfo    ; "Info"
+    // .text:008A796E 894 8D 8D A0 F7 FF FF                             lea     ecx, [ebp+var_860]
+    // .text:008A7974 894 C7 45 FC 00 00 00 00                          mov     [ebp+var_4], 0
+    // .text:008A797B 894 E8 C0 75 3F 00                                call    sub_C9EF40
+
+    // 55 8b ec 6a ff 68 ? ? ? ? 64 a1 0 0 0 0 50 81 ec ? ? 0 0 a1 ? ? ? ? 33 c5 89 45 F0 56 50 8d 45 F4 64 a3 0 0 0 0 8b f1 8d 8d ? ? ? ? e8 ? ? ? ? 68
+    0x450000,
+    0x100000,
+    {
+        0x55,
+        0x8b, 0xEC,
+        0x6A, 0xFF,
+        0x68, 0x1C6, 0x18F, 0x1B9, 0x100,
+        0x64, 0xA1, 0x00, 0x00, 0x00, 0x00,
+        0x50,
+        0x81, 0xEC, 0x158, 0x108, 0x00, 0x00,
+        0xA1, 0x148, 0x164, 0x1E4, 0x100,
+        0x33, 0xC5,
+        0x89, 0x45, 0xf0,
+        0x56,
+        0x50,
+        0x8D, 0x45, 0xF4,
+        0x64, 0xA3, 0x00, 0x00, 0x00, 0x00,
+        0x8B, 0xF1,
+        0x8D, 0x8D, 0x124, 0x164, 0x108, 0x100,
+        0xE8, 0x124, 0x164, 0x108, 0x100,
+        0x68, 0x124, 0x164, 0x108, 0x100,
+        0x8D, 0x8D, 0x124, 0x164, 0x108, 0x100,
+        0xC7, 0x45, 0x124, 0x164, 0x108, 0x100, 0x00,
+        0xE8,
+    },
+    0x008A7930 - 0x008A797B,
+    { 0xC3 }
+};
 
 static const ProcessCtl::PatchData noMediaPatch
 {
@@ -904,11 +1293,42 @@ static const ProcessCtl::PatchData noMediaPatch
     0x550000,
     0x300000,
     {
-         0x56, 0x57, 0x8B, 0x7C, 0x24, 0x0C, 0x18B, 0x1F1, 0x185, 0x1FF, 0x74, 0x44, 0x8D, 0x46, 0x3E, 0x57,
-         0x50, 0xFF, 0x15, 0x160, 0x1B4, 0x1B7, 0x00, 0x83, 0xC4, 0x08, 0x85, 0xC0, 0x74,
+         0x56, 0x57, 0x8B, 0x7C, 0x24, 0x0C,
+         0x18B, 0x1F1, 0x185, 0x1FF,
+         0x74, 0x44,
+         0x8D, 0x46, 0x3E,
+         0x57,
+         0x50,
+         0xFF, 0x15, 0x160, 0x1B4, 0x1B7, 0x100,
+         0x83, 0xC4, 0x08, 0x85, 0xC0, 0x74,
     },
     0x009CDE20 - 0x009CDE3C,
     { 0xb0, 0x01, 0xc2, 0x04, 0x00 }
+};
+
+static const ProcessCtl::PatchData noMediaPatch2
+{
+    // .text:00CA3F20
+    // .text:00CA3F20 000 55                                            push    ebp
+    // .text:00CA3F21 004 8B EC                                         mov     ebp, esp
+    // .text:00CA3F23 004 56                                            push    esi
+    // .text:00CA3F24 008 57                                            push    edi
+    // .text:00CA3F25 00C 8B 7D 08                                      mov     edi, [ebp+Str2]
+    // .text:00CA3F28 00C 8B F1                                         mov     esi, ecx
+    // .text:00CA3F2A 00C 85 FF                                         test    edi, edi
+    // .text:00CA3F2C 00C 74 45                                         jz      short loc_CA3F73
+    // .text:00CA3F2E 00C 8D 46 3E                                      lea     eax, [esi+3Eh]
+    // .text:00CA3F31 00C 57                                            push    edi             ; Str2
+    // .text:00CA3F32 010 50                                            push    eax             ; Str1
+    // .text:00CA3F33 014 FF 15 58 FC FF 00                             call    ds:_stricmp
+    // 55 8b ec 56 57 8b 7d 08 8b f1 85 ff 74 ? 8d 46
+    0x850000,
+    0x100000,
+    {
+        0x55, 0x8b, 0xec, 0x56, 0x57, 0x8b, 0x7d, 0x08, 0x8b, 0xf1, 0x85, 0xff, 0x74, 0x100, 0x8d, 0x46,
+    },
+    0x00CA3F20 - 0x00CA3F2F,
+    { 0xb0, 0x01, 0xc2, 0x04, 0x00} // mov al, 01, ret 04
 };
 
 // static const ProcessCtl::PatchData noMediaPatch
@@ -980,21 +1400,44 @@ static const ProcessCtl::PatchData lowCpuPatch2
     0x100000,
     {
         0x6A, 0x0F,
-        0xFF, 0x15, 0x148, 0x142, 0x1D4, 0x00,
+        0xFF, 0x15, 0x148, 0x142, 0x1D4, 0x100,
         0xEB,
     },
     0x00433DBE - 0x00433DC5,
     { 0x7F }
 };
+static const ProcessCtl::PatchData lowCpuPatch3
+{
+    // CECGame::Run(), break because CECGameRun::Render() return false!
+
+    // .text:00433DAF 050 38 9D F0 04 00 00                             cmp     [ebp+4F0h], bl
+    // .text:00433DB5 050 75 10                                         jnz     short loc_433DC7
+    // .text:00433DB7 050 38 5C 24 17                                   cmp     [esp+50h+var_39], bl
+    // .text:00433DBB 050 75 0A                                         jnz     short loc_433DC7
+    // .text:00433DBD 050 6A 0F                                         push    0Fh             ; dwMilliseconds
+    // .text:00433DBF 054 FF 15 1C A3 FB 00                             call    ds:Sleep
+    // .text:00433DC5 038 E9 88 00 00 00                                jmp     loc_433C75
+
+    0x000000,
+    0x600000,
+    {
+        0x6A, 0x0F,
+        0xFF, 0x15, 0x148, 0x142, 0x1D4, 0x100,
+        0xE9,
+    },
+    0x00433DBE - 0x00433DC5,
+    { 0x7F }
+};
+
 
 //
 
-ProcessCtl::ProcessCtl(QObject *parent)
+ProcessCtl::ProcessCtl(QObject * parent)
     : QObject(parent)
     , debugger_(new Debugger)
     , memoryAccess_(0)
 {
-    connect(debugger_, &Debugger::breakpoint,       this, &ProcessCtl::breakpoint);
+    connect(debugger_, &Debugger::breakpoint, this, &ProcessCtl::breakpoint);
     connect(debugger_, &Debugger::debuggingStarted, this, &ProcessCtl::started);
     connect(debugger_, &Debugger::debuggingStopped, this, &ProcessCtl::stopped);
     init();
@@ -1033,10 +1476,10 @@ bool ProcessCtl::start(const QString & executable, const QString & user, const Q
 {
     QFileInfo fi(executable);
     if (debugger_->startProcess(QString("\"%1\" startbypatcher user:%2 token2:%3 role:0000")
-                                        .arg(executable)
-                                        .arg(user)
-                                        .arg(password)
-                               , fi.absolutePath()))
+                                .arg(executable)
+                                .arg(user)
+                                .arg(password)
+                                , fi.absolutePath()))
     {
         isStartup_ = true;
         return true;
@@ -1113,24 +1556,37 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
         memoryAccess_.reset(new MemoryAccess(debugger_->processId()));
         if (memoryAccess_->isGood())
         {
-            if ((opId++, (applyPatch(disableServerSelPatch) || applyPatch(disableServerSelPatch2) || applyPatch(disableServerSelPatch3)))
-                && (opId++, (applyPatch(disableProtector) || applyPatch(disableProtector2) || applyPatch(disableProtector3)))
-                && (opId++, (applyPatch(createWindowSkipShowPatch) || applyPatch(createWindowSkipShowPatch2)))  //3
-                && (opId++, ((adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp)) != 0 || (adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp2)) != 0))
-                && (opId++, ((createWindowBp_ = placeBreakpoint(createWindowBp)) != 0 || (createWindowBp_ = placeBreakpoint(createWindowBp2)) != 0))
-                && (opId++, closeWindowBp_ = placeBreakpoint(closeWindowBp)) != 0
+            if ((opId++, (applyPatch(disableServerSelPatch)
+                          || applyPatch(disableServerSelPatch2)
+                          || applyPatch(disableServerSelPatch3)
+                          || applyPatch(disableServerSelPatch4)))
                 && ((opId++, serverAddress_.isEmpty()) // if server not empty then set BP
-                    || ((replaceServerBp_ = placeBreakpoint(replaceServerBp)) != 0 || (replaceServerBp2_ = placeBreakpoint(replaceServerBp2)) != 0))
-                && (opId++, ((replaceRoleBp_ = placeBreakpoint(replaceRoleBp)) != 0 )     // 8
+                    || ((replaceServerBp_ = placeBreakpoint(replaceServerBp)) != 0
+                        || (replaceServerBp2_ = placeBreakpoint(replaceServerBp2)) != 0
+                        || (replaceServerBp3_ = placeBreakpoint(replaceServerBp3)) != 0))
+                && (isSafeMode_
+                    || (   (opId++, (applyPatch(disableProtector) || applyPatch(disableProtector2) || applyPatch(disableProtector3) || applyPatch(disableProtector4) || applyPatch(disableProtector5)))
+                        && (opId++, (applyPatch(createWindowSkipShowPatch) || applyPatch(createWindowSkipShowPatch2) || applyPatch(createWindowSkipShowPatch3)))  //3
+                        && (opId++, ((adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp)) != 0
+                                     || (adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp2)) != 0
+                                     || (adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp3)) != 0))
+                        && (opId++, ((createWindowBp_ = placeBreakpoint(createWindowBp)) != 0
+                                     || (createWindowBp_ = placeBreakpoint(createWindowBp2)) != 0
+                                     || (createWindowBp_ = placeBreakpoint(createWindowBp3)) != 0))
+                        && (opId++, closeWindowBp_ = placeBreakpoint(closeWindowBp)) != 0
+                        && (opId++, ((replaceRoleBp_ = placeBreakpoint(replaceRoleBp)) != 0)     // 8
                         #if CLIENT_VERSION >= 1520
-                             || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp2)) != 0
-                             || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp3)) != 0
+                            || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp2)) != 0
+                            || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp3)) != 0
+                            || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp4)) != 0
                         #endif
-                    )     // 8
-                && (opId++, applyPatch(passOpenMarketPatch) || applyPatch(passOpenMarketPatch2))
-                && (opId++, (applyPatch(noSaveSettingsPatch) || applyPatch(noSaveSettingsPatch2)))      // 10
-                && (opId++, applyPatch(noMediaPatch))
-                && (opId++, applyPatch(lowCpuPatch) || applyPatch(lowCpuPatch2))
+                            )
+                        && (opId++, applyPatch(passOpenMarketPatch) || applyPatch(passOpenMarketPatch2) || applyPatch(passOpenMarketPatch3))        // 9
+                        && (opId++, (applyPatch(noSaveSettingsPatch) || applyPatch(noSaveSettingsPatch2) || applyPatch(noSaveSettingsPatch3)))      // 10
+                        && (opId++, applyPatch(noMediaPatch) || applyPatch(noMediaPatch2))
+                        && (opId++, applyPatch(lowCpuPatch) || applyPatch(lowCpuPatch2) || applyPatch(lowCpuPatch3))
+                        )
+                    )
                 )
             {
                 opId++;
@@ -1161,58 +1617,70 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
 
                 success =
                 #if CLIENT_VERSION < 1520
-                    memoryAccess_->write(((byte*)pSettings_) + 0xAB + 0x13, &wid, 4)    // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xAB + 0x17, &hei, 4)    // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xAB + 0x23, &z, 1)      // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xAB + 0x25, &z, 1)      // VerticalSync
+                    memoryAccess_->write(((byte *)pSettings_) + 0xAB + 0x13, &wid, 4)    // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xAB + 0x17, &hei, 4)    // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xAB + 0x23, &z, 1)      // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xAB + 0x25, &z, 1)      // VerticalSync
                 #elif CLIENT_VERSION < 1530
-                        memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
-                    && memoryAccess_->write(((byte*)pSettings_) + 0x31D, &sm, 4)           // SimplifyMode
+                    memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x31D, &sm, 4)           // SimplifyMode
                 #elif CLIENT_VERSION <= 1550
-                    memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
-                    && memoryAccess_->write(((byte*)pSettings_) + 0x322, &sm, 4)           // SimplifyMode
+                    memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x322, &sm, 4)           // SimplifyMode
                 #elif CLIENT_VERSION <= 1550
-                    memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
-                    && memoryAccess_->write(((byte*)pSettings_) + 0x323, &sm, 4)           // SimplifyMode
+                    memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x323, &sm, 4)           // SimplifyMode
                 #elif CLIENT_VERSION < 1560
-                    memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
-                    && memoryAccess_->write(((byte*)pSettings_) + 0x32B, &sm, 4)           // SimplifyMode
+                    memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x32B, &sm, 4)           // SimplifyMode
                 #elif CLIENT_VERSION < 1570
-                        memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
-                    && memoryAccess_->write(((byte*)pSettings_) + 0x339, &sm, 4)           // SimplifyMode
+                    memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x13, &wid, 4)    // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x17, &hei, 4)    // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x23, &z, 1)      // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xBD + 0x25, &z, 1)      // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x339, &sm, 4)           // SimplifyMode
                 #elif CLIENT_VERSION < 1590
-                        memoryAccess_->write(((byte*)pSettings_) + 0xD7, &wid, 4)           // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xDB, &hei, 4)            // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xE7, &z, 1)              // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xE9, &z, 1)              // VerticalSync
-                    && memoryAccess_->write(((byte*)pSettings_) + 0x33B, &sm, 4)            // SimplifyMode
+                    memoryAccess_->write(((byte *)pSettings_) + 0xD7, &wid, 4)           // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xDB, &hei, 4)            // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x33B, &sm, 4)            // SimplifyMode
                 #elif CLIENT_VERSION < 1620
-					memoryAccess_->write(((byte*)pSettings_) + 0xD7, &wid, 4)               // RenderWid
-					&& memoryAccess_->write(((byte*)pSettings_) + 0xDB, &hei, 4)            // RenderHei
-					&& memoryAccess_->write(((byte*)pSettings_) + 0xE7, &z, 1)              // FullScreen
-					&& memoryAccess_->write(((byte*)pSettings_) + 0xE9, &z, 1)              // VerticalSync
-					&& memoryAccess_->write(((byte*)pSettings_) + 0x340, &sm, 4)             // SimplifyMode
-				#else
-                    memoryAccess_->write(((byte*)pSettings_) + 0xD7, &wid, 4)               // RenderWid
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xDB, &hei, 4)            // RenderHei
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xE7, &z, 1)              // FullScreen
-                    && memoryAccess_->write(((byte*)pSettings_) + 0xE9, &z, 1)              // VerticalSync
-                    && memoryAccess_->write(((byte*)pSettings_) + 0x343, &sm, 4)            // SimplifyMode
+                    memoryAccess_->write(((byte *)pSettings_) + 0xD7, &wid, 4)               // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xDB, &hei, 4)            // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x340, &sm, 4)             // SimplifyMode
+                #elif CLIENT_VERSION < 1660
+                    memoryAccess_->write(((byte *)pSettings_) + 0xD7, &wid, 4)               // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xDB, &hei, 4)            // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x343, &sm, 4)            // SimplifyMode
+                #elif CLIENT_VERSION < 1700
+                    memoryAccess_->write(((byte *)pSettings_) + 0xD7, &wid, 4)               // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xDB, &hei, 4)            // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x349, &sm, 4)            // SimplifyMode
+                #else
+                    memoryAccess_->write(((byte *)pSettings_) + 0xD7, &wid, 4)               // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xDB, &hei, 4)            // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x34A, &sm, 4)            // SimplifyMode
                 #endif
                     && debugger_->removeBreakpoint(adjustSettingsBp_)
                     ;
@@ -1244,6 +1712,12 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
             opId = 23;
             success = replaceServer2(threadId);
             debugger_->removeBreakpoint(replaceServerBp2_);
+        }
+        else if (addr == replaceServerBp3_)
+        {
+            opId = 23;
+            success = replaceServer3(threadId);
+            debugger_->removeBreakpoint(replaceServerBp3_);
         }
         else if (addr == replaceRoleBp_)
         {
@@ -1302,7 +1776,7 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
 
 bool ProcessCtl::applyPatch(const PatchData & patchData)
 {
-    byte *addr = memoryAccess_->findPattern(patchData.hint, patchData.lookupLength, patchData.pattern.data(), patchData.pattern.size());
+    byte * addr = memoryAccess_->findPattern(patchData.hint, patchData.lookupLength, patchData.pattern.data(), patchData.pattern.size());
     if (addr != 0)
     {
         return memoryAccess_->write(addr + patchData.offset, patchData.patch.data(), patchData.patch.size());
@@ -1362,8 +1836,11 @@ bool ProcessCtl::processCloseWindow(unsigned threadId)
         return false;
     }
 
-    // stepping over tray icon creation
-    ctx.Eip += 9;
+    // stepping over tray icon creation: corrupt Shell_NotifyIconW message
+    ctx.Eip += 2;
+    ctx.Esp -= 4;
+    uint32_t msg = 0x100;
+    debugger_->writeMemory(ctx.Esp, (char *)&msg, 4);
     if (!debugger_->setContext(threadId, &ctx))
     {
         qWarning() << "Failed to operate with process," << debugger_->lastError();
@@ -1387,7 +1864,7 @@ bool ProcessCtl::replaceServer(unsigned threadId)
         ctx.Ecx = serverPort_;
         if (debugger_->setContext(threadId, &ctx)
             && debugger_->writeMemory(ctx.Ebp, serverAddress_.toLatin1().data(), serverAddress_.size() + 1)
-            && debugger_->writeMemory(ctx.Ebp + 0x100, (const char*)&serverPort_, 4))
+            && debugger_->writeMemory(ctx.Ebp + 0x100, (const char *)&serverPort_, 4))
         {
             qDebug() << "Replaced server in client";
             return true;
@@ -1407,7 +1884,27 @@ bool ProcessCtl::replaceServer2(unsigned threadId)
     {
         if (debugger_->setContext(threadId, &ctx)
             && debugger_->writeMemory(ctx.Eax, serverAddress_.toLatin1().data(), serverAddress_.size() + 1)
-            && debugger_->writeMemory(ctx.Eax + 0x100, (const char*)&serverPort_, 4))
+            && debugger_->writeMemory(ctx.Eax + 0x100, (const char *)&serverPort_, 4))
+        {
+            qDebug() << "Replaced server in client";
+            return true;
+        }
+    }
+
+    qWarning() << "Failed to operate with process," << debugger_->lastError();
+    return false;
+}
+bool ProcessCtl::replaceServer3(unsigned threadId)
+{
+    // ecx = указатель на хост ([ecx+2FCh])
+    // указатель на порт = ecx + 0x100 ([ecx+3FCh])
+
+    CONTEXT ctx;
+    if (debugger_->getContext(threadId, &ctx))
+    {
+        if (debugger_->setContext(threadId, &ctx)
+            && debugger_->writeMemory(ctx.Ecx, serverAddress_.toLatin1().data(), serverAddress_.size() + 1)
+            && debugger_->writeMemory(ctx.Ecx + 0x100, (const char *)&serverPort_, 4))
         {
             qDebug() << "Replaced server in client";
             return true;
@@ -1450,11 +1947,17 @@ bool ProcessCtl::replaceRoleStart()
     // с шагом здесь немного сложнее - цикл находится в другой функции
 #else
     // .text:005CA9CA 000 C3                                      retn
-    quintptr endAddr = replaceRoleBp_ + 0x37;
+    quintptr endAddr = (quintptr)memoryAccess_->findPattern(replaceRoleBp_ - memoryAccess_->processBase(), 0x40, { 0xC3, 0xCC });
 #endif
 
     replaceRoleBp_ = 0; // теперь можно и обнулить
 
+    if (!endAddr)
+    {
+        qWarning() << "replaceRoleEndBp_ end position not found";
+        return false;
+    }
+    --endAddr;
     {
         const QByteArray data = debugger_->readMemory(endAddr, 1);
         if (data.size() < 1 || data.at(0) != '\xC3')
@@ -1479,6 +1982,10 @@ bool ProcessCtl::replaceRoleStart()
     if (replaceRoleStepBp_ == 0)
     {
         replaceRoleStepBp_ = placeBreakpoint(replaceRoleStepBp2);
+        if (replaceRoleStepBp_ == 0)
+        {
+            replaceRoleStepBp_ = placeBreakpoint(replaceRoleStepBp3);
+        }
     }
 #endif
 
@@ -1535,8 +2042,10 @@ bool ProcessCtl::replaceRoleStep()
         return false;
     }
 
-    // edx is pointer to charName
-    QByteArray name = debugger_->readMemory(ctx.Edx, 64);
+    // pointer to charName is on stack
+    auto ptra = debugger_->readMemory(ctx.Esp, 4);
+    uint32_t ptr = *(uint32_t *)ptra.data();
+    QByteArray name = debugger_->readMemory(ptr, 64);
     for (int i = 0; i < (name.size() - 1); i += 2)
     {
         if (name.at(i) == '\0' && name.at(i + 1) == '\0')
@@ -1549,7 +2058,7 @@ bool ProcessCtl::replaceRoleStep()
         qDebug() << "replaceRoleStep: empty name, skipping";
         return true;
     }
-    QString sName = QString::fromWCharArray((wchar_t*)name.data(), name.size() / 2);
+    QString sName = QString::fromWCharArray((wchar_t *)name.data(), name.size() / 2);
     if (sName == role_)
     {
         // found char. selecting

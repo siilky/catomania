@@ -356,6 +356,7 @@
     <QtMoc Include="license.h">
       <ForceInclude Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h;../../%(Filename)%(Extension)</ForceInclude>
     </QtMoc>
+    <ClInclude Include="main.h" />
     <ClInclude Include="marketbuilder.h" />
     <ClInclude Include="MarketItemSetup.h" />
     <ClInclude Include="minidump.h" />

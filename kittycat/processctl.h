@@ -32,6 +32,11 @@ public:
     ProcessCtl(QObject *parent = 0);
     ~ProcessCtl();
 
+    void setSafeMode(bool isOn)
+    {
+        isSafeMode_ = isOn;
+    }
+
     void setServerSubstitution(const QString & address, unsigned port);
     bool start(const QString & executable, const QString & user, const QString & password);
     void stop();
@@ -63,6 +68,7 @@ private:
     bool processCloseWindow(unsigned threadId);
     bool replaceServer(unsigned threadId);
     bool replaceServer2(unsigned threadId);
+    bool replaceServer3(unsigned threadId);
     bool replaceRoleStep();
 
     Debugger    *debugger_;
@@ -79,6 +85,7 @@ private:
 
     quintptr    replaceServerBp_;
     quintptr    replaceServerBp2_;
+    quintptr    replaceServerBp3_;
     QString     serverAddress_;
     unsigned    serverPort_;
 
@@ -87,6 +94,8 @@ private:
     quintptr    replaceRoleStepBp_;
     unsigned    replaceRoleThreadId_;
     QString     role_;
+
+    bool        isSafeMode_ = false;
 };
 
 #endif

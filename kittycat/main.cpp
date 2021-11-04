@@ -1,19 +1,21 @@
 
 #include "stdafx.h"
 
-#include "version.h"
-#include "forms/uimultiview.h"
+#include "main.h"
+#include "clientlocation.h"
+#include "config.h"
 #include "forms/uiclientlocation.h"
-#include "persistence2.h"
+#include "forms/uimultiview.h"
+#include "game/data/elements.h"
+#include "game/data/gshop.h"
 #include "i18n.h"
+#include "license.h"
 #include "log.h"
 #include "minidump.h"
-#include "clientlocation.h"
-#include "license.h"
-#include "game/data/gshop.h"
-#include "game/data/elements.h"
-#include "qlib/pckmanager.h"
+#include "persistence2.h"
 #include "qlib/game/iconmanager.h"
+#include "qlib/pckmanager.h"
+#include "version.h"
 
 // test/debug
 //#include "marketbuilder.h"
@@ -21,7 +23,7 @@
 
 elements::ItemListCollection  g_elements_;
 QString g_elementExePath_;
-
+bool g_isSafeProcessMode = false;
 
 static bool loadElements(const wchar_t *elements, const wchar_t *config)
 {
@@ -99,6 +101,15 @@ static bool loadElements(const wchar_t *elements, const wchar_t *config)
         + data[elements::STORY_BOOK_MAJOR_TYPE]
         + data[elements::STORY_BOOK_CONFIG]
         + data[elements::QIHUN_COVER_ESSENCE]
+        + data[elements::RED_BOOK_UPGRADE_ITEM]
+        + data[elements::CAMP_TOKEN_ESSENCE]
+        + data[elements::FASHION_NEW_ESSENCE]
+        + data[elements::ILLUSTRATED_FASHION_ESSENCE]
+        + data[elements::ILLUSTRATED_WING_EGG_ESSENCE]
+        + data[elements::ILLUSTRATED_PET_EGG_ESSENCE]
+        + data[elements::FAST_PRODUCE_ITEM_ESSENCE]
+        + data[elements::KID_DEBRIS_ESSENCE]
+        + data[elements::KID_DEBRIS_GENERATOR_ESSENCE]
         ;
 
     return true;
@@ -326,6 +337,18 @@ int main(int argc, char *argv[])
 
 //testBuildMarketList();
 
+#if defined(GAME_USING_CLIENT)
+    QCommandLineParser parser;
+    parser.addOptions(
+        {
+            {{"s", "safe"},
+            QCoreApplication::translate("main", "Safe client mode.") },
+        }
+    );
+    parser.process(app);
+    g_isSafeProcessMode = parser.isSet("safe");
+#endif
+
     QString configLocation = app.applicationDirPath() + QDir::separator() + "cats2.jcfg";
     bool restored;
     Persistence config;
@@ -381,7 +404,20 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    if ( ! loadClientFiles(config))
+    if (g_isSafeProcessMode)
+    {
+        std::wstring cd, exe;
+        config.root().get(L"ClientDir", cd);
+        config.root().get(L"ExeName", exe);
+
+        QString clientDir = QString::fromStdWString(cd);
+        QString exeName = QString::fromStdWString(exe);
+
+        QDir dir(clientDir);
+        dir.cd("element");
+        g_elementExePath_ = dir.filePath(exeName.isEmpty() ? "elementclient.exe" : exeName);
+    }
+    else if (!loadClientFiles(config))
     {
         return 3;
     }

@@ -14,6 +14,11 @@ AboutView::AboutView(QWidget *parent /*= 0*/)
     ui->setupUi(this);
     setModal(true);
 
+    if (Vmp::hasOption(Vmp::OptionNoUpdate))
+    {
+        ui->btnRenew->setDisabled(true);
+    }
+
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
     effect->setBlurRadius(6);
     effect->setColor(QColor("#808080"));

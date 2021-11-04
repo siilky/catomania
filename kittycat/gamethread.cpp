@@ -943,7 +943,7 @@ void GameThread::rebuildMarketList()
     }
     std::vector<ShortMarketItem> items = buildMarketList(getBag()
                                                          , marketSetup_
-                                                         , hasCatshop ? 0 : InventoryMoneyLimit - money
+                                                         , (hasCatshop ? InventoryMoneyLimitCatshop : InventoryMoneyLimit) - money
                                                          , buyLimit
                                                          , std::max<unsigned>(CatshopMaxSlotsDefault, maxSlots));
     for (size_t i = 0; i < items.size(); i++)

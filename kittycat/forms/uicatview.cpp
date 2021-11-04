@@ -22,6 +22,8 @@
 #include "license.h"
 #include "chat.hpp"
 #include "uicommi.h"
+#include "config.h"
+#include "main.h"
 
 Q_DECLARE_METATYPE(CatCtl::AccountSelection)
 
@@ -388,6 +390,10 @@ void CatView::on_btnLogin_clicked()
     }
 
     logMessage(tr("Connecting..."));
+
+#if defined GAME_USING_CLIENT
+    ctl_->setProcessSafeMode(g_isSafeProcessMode);
+#endif
 
     bool result = ctl_->connect(currentAccount_.accountIndex, currentAccount_.characterIndex);
     if ( ! result)

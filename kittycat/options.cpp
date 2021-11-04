@@ -54,6 +54,9 @@ Options::Options(const JsonValue & config)
 
     config.get(L"ÑhatBufferSize", chatBufferSize, Tristate<int>(2));
 
+#if defined(ARC_TOKEN_AUTH)
+    config.get(L"arcId", arcHwid);
+#endif
     validate();
 }
 
@@ -102,6 +105,10 @@ void Options::writeTo(JsonValue & config)
     config.set(L"HighConverterValue",           highConverterValue.value());
 
     config.set(L"ÑhatBufferSize",               chatBufferSize.value());
+
+#if defined(ARC_TOKEN_AUTH)
+    config.set(L"arcId",                        arcHwid.value());
+#endif
 }
 
 Options & Options::operator<<(const Options & r)
@@ -145,6 +152,9 @@ Options & Options::operator<<(const Options & r)
 
     chatBufferSize          << r.chatBufferSize;
 
+#if defined(ARC_TOKEN_AUTH)
+    arcHwid                 << r.arcHwid;
+#endif
     return *this;
 }
 
@@ -189,6 +199,9 @@ const Options & Options::operator>>(Options & r) const
 
     chatBufferSize          >> r.chatBufferSize;
 
+#if defined(ARC_TOKEN_AUTH)
+    arcHwid                 >> r.arcHwid;
+#endif
     return *this;
 }
 

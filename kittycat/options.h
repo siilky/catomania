@@ -63,6 +63,10 @@ public:
     Tristate<unsigned>      highConverterValue;
 
     Tristate<int>           chatBufferSize;
+
+#if defined(ARC_TOKEN_AUTH)
+    Tristate<std::wstring>  arcHwid;
+#endif
 };
 
 

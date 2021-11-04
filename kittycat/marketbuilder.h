@@ -19,7 +19,8 @@ enum
 {
     CatshopMaxSlotsDefault = 12,
     CatshopMaxCharsDefault = 13,
-    InventoryMoneyLimit = 1000000000
+    InventoryMoneyLimit         = 1000000000,
+    InventoryMoneyLimitCatshop  = std::numeric_limits<unsigned int>().max(),
 };
 
 

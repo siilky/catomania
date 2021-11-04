@@ -9,6 +9,7 @@
 
 #include "stdafx.h"                 // but we dont use PCH
 
+#include "main.h"
 #include "catctl.h"
 #include "event.h"
 #include "gamethread.h"
@@ -29,7 +30,6 @@
 #include "arc/arcauth.h"
 
 extern elements::ItemListCollection  g_elements_;
-extern QString g_elementExePath_;
 
 //
 
@@ -43,7 +43,8 @@ public:
                             , const QString         &password
                             , const std::wstring    &server
                             , const QNetworkProxy   &proxy = QNetworkProxy()
-                            , bool                  forced = false)
+                            , bool                  forced = false
+                            , bool                  safeMode = false)
         : executable_(executable)
         , processCtl_(processCtl)
         , login_(login)
@@ -51,6 +52,7 @@ public:
         , server_(server)
         , proxy_(proxy)
         , forced_(forced)
+        , safeMode_(safeMode)
         , localPort_(localPort)
         , connection_(0)
     {
@@ -73,7 +75,7 @@ public:
         // we should create connection in thread calling "get"
         if (!conn_)
         {
-            connection_ = new qlib::ConnectionProxy();
+            connection_ = new qlib::ConnectionProxy(safeMode_);
             conn_ = std::shared_ptr<Connection>(connection_);
         }
         return conn_;
@@ -112,6 +114,7 @@ private:
     std::wstring    server_;
     QNetworkProxy   proxy_;
     bool            forced_;
+    bool            safeMode_;
 
     quint16                 localPort_;
     qlib::ConnectionProxy   *connection_;
@@ -197,6 +200,15 @@ CatCtl::CatCtl(const JsonValue & config, QObject *parent /*= NULL*/ )
     {
         currentServer_ = 0;
     }
+
+#if defined(ARC_TOKEN_AUTH)
+    std::wstring hwId = options_.arcHwid;
+    if (hwId.empty())
+    {
+        options_.arcHwid = Vmp::getHwId().toStdWString();
+        options_.writeTo(config_);
+    }
+#endif
 
 #if GAME_OWNER_TYPE==2
     loadPwcatsIndex();
@@ -294,6 +306,13 @@ CatCtl::~CatCtl()
 {
 }
 
+#if defined GAME_USING_CLIENT
+void CatCtl::setProcessSafeMode(bool isOn)
+{
+    processCtl_->setSafeMode(isOn);
+}
+#endif
+
 //
 
 QNetworkProxy CatCtl::getProxy() const
@@ -364,6 +383,8 @@ int CatCtl::getCurrentServerAsPwcatsIndex() const
     return 100;
 #elif GAME_OWNER_TYPE==4
     return 300;
+#elif GAME_OWNER_TYPE==6
+    return 350;
 #else
     return -1;
 #endif
@@ -494,7 +515,9 @@ bool CatCtl::connect(int accountIndex, int charIndex)
         delete arcAuth_;
     }
 
-    arcAuth_ = new ARC::ArcAuth(this);
+    std::wstring hwId = options_.arcHwid;
+    assert(!hwId.empty());
+    arcAuth_ = new ARC::ArcAuth(QString::fromStdWString(hwId), this);
 
     if (options_.useProxy)
     {
@@ -941,6 +964,14 @@ void CatCtl::setOptions(const Options & options)
     bool loadExternalWasEnabled(options_.useReopenExternal);
 
     options >> options_;
+#if defined(ARC_TOKEN_AUTH)
+    if (!options.arcHwid.isTristate()
+        && options.arcHwid.value().empty())
+    {
+        options_.arcHwid = Vmp::getHwId().toStdWString();
+    }
+#endif
+
     options_.validate();
     options_.writeTo(config_);
 
@@ -1375,7 +1406,9 @@ void CatCtl::onAuthFinished(bool success)
         , token
         , s.host + L':' + s.port
         , proxy_
-        , forcedLogin)));
+        , forcedLogin
+        , g_isSafeProcessMode)
+        ));
 #else
     gameThread_->start(QSharedPointer<qlib::ConnectionGenerator>(new qlib::ConnectionGeneratorTcp(
         email
@@ -1591,7 +1624,7 @@ void CatCtl::checkMarketToReopen()
     }
     std::vector<ShortMarketItem> newItems = buildMarketList( gameThread_->getBag()
                                                            , marketSetup_
-                                                           , hasCatshop ? 0 : InventoryMoneyLimit - money
+                                                           , (hasCatshop ? InventoryMoneyLimitCatshop : InventoryMoneyLimit) - money
                                                            , buyLimit);
     if (newItems.size() == 0)
     {

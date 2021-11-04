@@ -254,6 +254,10 @@ ConfigView::ConfigView(const QList< QSharedPointer<CatCtl> > & cats, JsonValue *
     }
     VMProtectEnd();
 
+#if !defined(ARC_TOKEN_AUTH)
+    ui->gbArc->hide();
+#endif
+
     setupFromCtls();
 }
 
@@ -981,6 +985,9 @@ void ConfigView::setOptions(const Options & options)
         setSlChatComment(bufferSize);
     }
 
+#if defined(ARC_TOKEN_AUTH)
+    setEditTextFrom(options.arcHwid, ui->leArcId);
+#endif
     ticker_.start();
 }
 
@@ -1045,6 +1052,10 @@ void ConfigView::getOptions(Options & options) const
     {
         options.chatBufferSize = ui->slChatBufferSize->value();
     }
+
+#if defined(ARC_TOKEN_AUTH)
+    setEditTextTo(options.arcHwid, ui->leArcId);
+#endif
 }
 
 void ConfigView::setMoney(unsigned money, unsigned banknotes)
@@ -1135,7 +1146,7 @@ void ConfigView::updateMarketStats()
     long long sellSum, buySum;
     unsigned sellCount, buyCount;
     getMarketSums( items.toVector().toStdVector()
-                 , hasCatshop_ ? 0 : InventoryMoneyLimit - money_
+                 , (hasCatshop_ ? InventoryMoneyLimitCatshop : InventoryMoneyLimit) - money_
                  , buyLimit
                  , maxSlots
                  , sellSum
