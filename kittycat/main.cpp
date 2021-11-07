@@ -422,6 +422,8 @@ int main(int argc, char *argv[])
         return 3;
     }
     
+    qApp->setProperty("config", QVariant::fromValue((void*)&config));
+
     int result;
     {   // scope guard
         MultiView mw(config.root(), &translator);

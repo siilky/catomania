@@ -1243,12 +1243,38 @@ authorization</string>
           <item>
            <widget class="QLabel" name="label_20">
             <property name="text">
-             <string>Identifier</string>
+             <string>Hardware Id</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLineEdit" name="leArcId"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>15</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>PC Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="leArcPcName"/>
           </item>
          </layout>
         </widget>
@@ -1774,22 +1800,6 @@ authorization</string>
     <hint type="destinationlabel">
      <x>470</x>
      <y>394</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbEnableProxy</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>cbEnableProxyAuth</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>145</x>
-     <y>139</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>140</x>
-     <y>156</y>
     </hint>
    </hints>
   </connection>

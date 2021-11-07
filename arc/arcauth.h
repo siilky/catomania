@@ -27,9 +27,8 @@ public:
         IncorrectPin = 20,
     };
 
-    ArcAuth(QString hwId, QObject *parent = 0);
+    ArcAuth(QString hwId, QString pcName, QString userAgent, QObject *parent = 0);
     virtual ~ArcAuth();
-
 
     void setProxy(const QNetworkProxy & proxy);
 
@@ -81,6 +80,7 @@ private:
 
     QString email_;
     QString password_;
+    QString useragent_;
     QString hwId_;
     QString pcName_;
 

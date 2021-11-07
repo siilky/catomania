@@ -5,14 +5,15 @@
 // 1 - RuOff
 // 2 - PWI
 // 3 - Atlanta
-// 4 - classic
+// 4 - pwclassic
 // 5 - other
-#define GAME_OWNER_TYPE 1
+// 6 - mmoclassic
+#define GAME_OWNER_TYPE 2
 
-#define MAILRU_TOKEN_AUTH
-//#define ARC_TOKEN_AUTH
+//#define MAILRU_TOKEN_AUTH
+#define ARC_TOKEN_AUTH
 //#define GAME_USING_CLIENT
 
-#define CLIENT_VERSION      1640
+#define CLIENT_VERSION      1710
 
 #endif

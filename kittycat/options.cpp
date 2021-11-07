@@ -56,6 +56,7 @@ Options::Options(const JsonValue & config)
 
 #if defined(ARC_TOKEN_AUTH)
     config.get(L"arcId", arcHwid);
+    config.get(L"arcPc", arcPcName);
 #endif
     validate();
 }
@@ -108,6 +109,7 @@ void Options::writeTo(JsonValue & config)
 
 #if defined(ARC_TOKEN_AUTH)
     config.set(L"arcId",                        arcHwid.value());
+    config.set(L"arcPc",                        arcPcName.value());
 #endif
 }
 
@@ -154,6 +156,7 @@ Options & Options::operator<<(const Options & r)
 
 #if defined(ARC_TOKEN_AUTH)
     arcHwid                 << r.arcHwid;
+    arcPcName               << r.arcPcName;
 #endif
     return *this;
 }
@@ -201,6 +204,7 @@ const Options & Options::operator>>(Options & r) const
 
 #if defined(ARC_TOKEN_AUTH)
     arcHwid                 >> r.arcHwid;
+    arcPcName               >> r.arcPcName;
 #endif
     return *this;
 }

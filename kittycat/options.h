@@ -66,6 +66,7 @@ public:
 
 #if defined(ARC_TOKEN_AUTH)
     Tristate<std::wstring>  arcHwid;
+    Tristate<std::wstring>  arcPcName;
 #endif
 };
 

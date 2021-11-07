@@ -987,6 +987,7 @@ void ConfigView::setOptions(const Options & options)
 
 #if defined(ARC_TOKEN_AUTH)
     setEditTextFrom(options.arcHwid, ui->leArcId);
+    setEditTextFrom(options.arcPcName, ui->leArcPcName);
 #endif
     ticker_.start();
 }
@@ -1055,6 +1056,7 @@ void ConfigView::getOptions(Options & options) const
 
 #if defined(ARC_TOKEN_AUTH)
     setEditTextTo(options.arcHwid, ui->leArcId);
+    setEditTextTo(options.arcPcName, ui->leArcPcName);
 #endif
 }
 

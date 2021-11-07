@@ -202,10 +202,14 @@ CatCtl::CatCtl(const JsonValue & config, QObject *parent /*= NULL*/ )
     }
 
 #if defined(ARC_TOKEN_AUTH)
-    std::wstring hwId = options_.arcHwid;
-    if (hwId.empty())
+    if (options_.arcHwid.value().empty())
     {
         options_.arcHwid = Vmp::getHwId().toStdWString();
+        options_.writeTo(config_);
+    }
+    if (options_.arcPcName.value().empty())
+    {
+        options_.arcPcName = QSysInfo::machineHostName().toStdWString();
         options_.writeTo(config_);
     }
 #endif
@@ -515,9 +519,24 @@ bool CatCtl::connect(int accountIndex, int charIndex)
         delete arcAuth_;
     }
 
+    std::wstring useragent;
+
+    auto config = qApp->property("config").value<void *>();
+    Persistence * p = (Persistence *)config;
+    if (p)
+    {
+        p->root().get(L"ArcUseragent", useragent);
+    }
+
     std::wstring hwId = options_.arcHwid;
+    std::wstring pcName = options_.arcPcName;
     assert(!hwId.empty());
-    arcAuth_ = new ARC::ArcAuth(QString::fromStdWString(hwId), this);
+    assert(!pcName.empty());
+
+    arcAuth_ = new ARC::ArcAuth(QString::fromStdWString(hwId),
+                                QString::fromStdWString(pcName),
+                                QString::fromStdWString(useragent),
+                                this);
 
     if (options_.useProxy)
     {

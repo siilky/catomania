@@ -27,18 +27,26 @@ struct Init
 };
 
 static const std::wstring ArcAddress = L"login.core.perfectworld.com:9881";
-static const std::string ArcVersion = "arcversion:V1.1.0.17595 os:Microsoft Windows 10 Pro\r\n";
 
-ArcAuth::ArcAuth(QString hwId, QObject *parent /*= 0*/)
+ArcAuth::ArcAuth(QString hwId, QString pcName, QString userAgent, QObject *parent /*= 0*/)
     : QObject(parent)
+    , useragent_(userAgent)
+    , pcName_(pcName)
     , hwId_(QCryptographicHash::hash(hwId.toLocal8Bit(), QCryptographicHash::Md5).toHex())
 {
     static Init init;
 
-    pcName_ = QSysInfo::machineHostName();
     if (pcName_.isEmpty())
     {
-        pcName_ = "Cat-pc";
+        pcName_ = QSysInfo::machineHostName();
+        if (pcName_.isEmpty())
+        {
+            pcName_ = "Cat-pc";
+        }
+    }
+    if (useragent_.isEmpty())
+    {
+        useragent_ = "arcversion:V1.1.0.18759 os:Microsoft Windows 10 Pro";
     }
 
     QObject::connect(&connection_, &Connection::connected, this, &ArcAuth::onConnected);
@@ -155,7 +163,7 @@ void ArcAuth::onHandshakeOk(const FragmentHandshakeOk * /*f*/)
     fr.login = email_.toStdString();
     fr.password = password_.toStdString();
     fr.lang = "en";
-    fr.useragent = ArcVersion;
+    fr.useragent = (useragent_.toStdString() + "\r\n");
     fr.hwid = hwId_.toStdString();
     fr.pcname = pcName_.toStdString();
     fr.option = 0;
