@@ -114,11 +114,11 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <QtInstall>5.13 bin</QtInstall>
     <QtModules>gui;network</QtModules>
+    <QtInstall>$(DefaultQtVersion)</QtInstall>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <QtInstall>5.13 bin</QtInstall>
+    <QtInstall>$(DefaultQtVersion)</QtInstall>
     <QtModules>gui;network</QtModules>
     <QMakeCodeLines>
     </QMakeCodeLines>

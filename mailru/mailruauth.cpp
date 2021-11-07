@@ -29,12 +29,12 @@ MailruAuth::MailruAuth(QObject *parent)
     // 7209859237883549019
     while (userId1_.size() < 19)
     {
-        userId1_.append(QString::number(qrand() & 0x0FF).right(1));
+        userId1_.append(QString::number(QRandomGenerator::global()->generate() & 0x0FF).right(1));
     }
     // 15309381820031324198
     while (userId2_.size() < 20)
     {
-        userId2_.append(QString::number(qrand() & 0x0FF).right(1));
+        userId2_.append(QString::number(QRandomGenerator::global()->generate() & 0x0FF).right(1));
     }
 }
 

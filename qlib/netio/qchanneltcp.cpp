@@ -40,8 +40,7 @@ void NetChannelTcp::setup()
     QObject::connect(socket_, &QTcpSocket::disconnected,    this, &NetChannelTcp::onDisconnected);
     QObject::connect(socket_, &QTcpSocket::disconnected,    this, &NetChannelTcp::disconnected);
     QObject::connect(socket_, &QTcpSocket::readyRead,       this, &NetChannelTcp::onReadyRead);
-    QObject::connect(socket_, static_cast<void(QAbstractSocket::*)(QAbstractSocket::SocketError)>(&QAbstractSocket::error)
-                     , this, &NetChannelTcp::onError);
+    QObject::connect(socket_, &QAbstractSocket::errorOccurred, this, &NetChannelTcp::onError);
 
     QObject::connect(&connectTimer_, &QTimer::timeout,      this, &NetChannelTcp::onConnectTimeout);
 
