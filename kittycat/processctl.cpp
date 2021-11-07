@@ -151,7 +151,7 @@ static const ProcessCtl::PatchData disableProtector5
     // .text:00BA2917 F78 68 20 1E 09 01                                push    offset aReportbugsPwprotect ; lpApplicationName
     // .text:00BA291C F7C FF 15 08 F3 FF 00                             call    ds:CreateProcessW
     0x0750000,
-    0x0100000,
+    0x0200000,
     {
         0x50,
         0x6A, 0x00,
@@ -360,7 +360,7 @@ static const ProcessCtl::PatchData disableServerSelPatch4
     // .text:00A6956F 024 8B 8E B0 12 10 00                             mov     ecx, [esi+1012B0h]
     // e8 ? ? ? ? 8b c8 e8 ? ? ? ? 8b 06 8b ce 6a 00 68 ? ? ? ? 68 ? ? ? ? 6a 00 68 ? ? ? ? ff 50
     0x600000,
-    0x100000,
+    0x200000,
     {
         0xE8, 0x112, 0x111, 0x101, 0x100,
         0x8B, 0xC8,
@@ -372,9 +372,14 @@ static const ProcessCtl::PatchData disableServerSelPatch4
         0x68, 0x1A0, 0x160, 0x1DF, 0x100,
         0x6A, 0x00,
         0x68, 0x1C8, 0x1CD, 0x1CA, 0x100,
-        0xFF, 0x50
+        0xFF, 0x50, 0x38,
+        0x50,
+        0xE8, 0x165, 0x13B, 0x14E, 0x00,
+        0x83, 0xC4, 0x14,
+        0x8B, 0xC8,
+        0x8B, 0x10,
     },
-    -20,
+    -0x22,
     { 0xEB, 0x2C }
 };
 
@@ -577,7 +582,7 @@ static const ProcessCtl::BreakpointData replaceServerBp3
     // .text:00BC2A6B 01C E8 70 FF FF FF                                call    sub_BC29E0
     // 51 a1 ? ? ? ? 80 b8 ? ? ? ? 00 8d 88 ? ? ? ?
     0x750000,
-    0x100000,
+    0x200000,
     {
         0x51,
         0xA1, 0x1B0, 0x1BA, 0x1E4, 0x100,
@@ -628,7 +633,7 @@ static const ProcessCtl::BreakpointData replaceRoleBp
     // .text:0073E251 C7 44 24 10 00 00 00 00                 mov     [esp+14h+var_4], 0
     // .text:0073E259 74 14                                   jz      short loc_73E26F
     0x300000,
-    0x200000,
+    0x250000,
     {
         0x8B, 0xF1, 0x74, 0x14E, 0x8D, 0x44, 0x124, 0x104, 0xC6, 0x05, 0x15C, 0x1BF, 0x1CD, 0x00, 0x00, 0x50,
         0xE8, 0x1DD, 0x1F0, 0x1CC, 0x1FF, 0x83, 0xC4, 0x04, 0x8B, 0x4C, 0x124, 0x104,
@@ -716,7 +721,7 @@ static const ProcessCtl::BreakpointData replaceRoleBp4
     // .text:00A6069C 01C 3B 05 44 64 1F 01                             cmp     eax, off_11F6444
     // .text:00A606A2 01C 74 13                                         jz      short loc_A606B7
     0x600000,
-    0x100000,
+    0x200000,
     {
         0xC6, 0x05, 0x1F4, 0x111, 0x1E0, 0x100, 0x00,
         0x50,
@@ -791,7 +796,7 @@ static const ProcessCtl::BreakpointData replaceRoleStepBp3
     // .text:00A61750 0CC 8D 8D 4C FF FF FF                             lea     ecx, [ebp+var_B4]
     // e8 ? ? ? ? 8b 8d ? ? ? ? 8d 85 ? ? ? ? 83 c4 0c 50 e8 ? ? ? ? 8d 8d
     0x600000,
-    0x100000,
+    0x200000,
     {
         0xE8, 0x1B4, 0x1A9, 0x142, 0x00,
         0x8B, 0x8D, 0x154, 0x124, 0x118, 0xFF,
@@ -877,7 +882,7 @@ static const ProcessCtl::BreakpointData createWindowBp3
     // .text:00BA0F0B 064 FF 15 B8 F7 FF 00                             call    ds:CreateWindowExW
     // .text:00BA0F11 034 85 C0                                         test    eax, eax
     0x7A0000,
-    0x100000,
+    0x200000,
     {
         0x6A, 0x00, 0x50, 0x6A, 0x00, 0x6A, 0x00,
         0x52, 0x51, 0x6A, 0x00, 0x6A, 0x00, 0x56,
@@ -1018,7 +1023,7 @@ static const ProcessCtl::PatchData createWindowSkipShowPatch3
     // .text:00BA0FB0 034 B0 01                                         mov     al, 1
     // 50 ff 15 ? ? ? ? ff 35 ? ? ? ? ff 15 ? ? ? ? ff 35 ? ? ? ? ff 15 ? ? ? ?
     0x780000,
-    0x100000,
+    0x200000,
     {
         0x50,
         0xFF, 0x15, 0x1A8, 0x1F8, 0x1C7, 0x100,
@@ -1246,7 +1251,7 @@ static const ProcessCtl::PatchData noSaveSettingsPatch3
 
     // 55 8b ec 6a ff 68 ? ? ? ? 64 a1 0 0 0 0 50 81 ec ? ? 0 0 a1 ? ? ? ? 33 c5 89 45 F0 56 50 8d 45 F4 64 a3 0 0 0 0 8b f1 8d 8d ? ? ? ? e8 ? ? ? ? 68
     0x450000,
-    0x100000,
+    0x200000,
     {
         0x55,
         0x8b, 0xEC,
@@ -1271,6 +1276,63 @@ static const ProcessCtl::PatchData noSaveSettingsPatch3
         0xE8,
     },
     0x008A7930 - 0x008A797B,
+    { 0xC3 }
+};
+
+static const ProcessCtl::PatchData noSaveSettingsPatch4
+{
+    // .text:0094B2F0 000 55                                            push    ebp
+    // .text:0094B2F1 004 8B EC                                         mov     ebp, esp
+    // .text:0094B2F3 004 6A FF                                         push    0FFFFFFFFh
+    // .text:0094B2F5 008 68 96 9C 06 01                                push    offset SEH_94B2F0
+    // .text:0094B2FA 00C 64 A1 00 00 00 00                             mov     eax, large fs:0
+    // .text:0094B300 00C 50                                            push    eax
+    // .text:0094B301 010 81 EC 78 08 00 00                             sub     esp, 878h
+    // .text:0094B307 888 A1 28 04 34 01                                mov     eax, ___security_cookie
+    // .text:0094B30C 888 33 C5                                         xor     eax, ebp
+    // .text:0094B30E 888 89 45 F0                                      mov     [ebp+var_10], eax
+    // .text:0094B311 888 53                                            push    ebx
+    // .text:0094B312 88C 56                                            push    esi
+    // .text:0094B313 890 57                                            push    edi
+    // .text:0094B314 894 50                                            push    eax
+    // .text:0094B315 898 8D 45 F4                                      lea     eax, [ebp+var_C]
+    // .text:0094B318 898 64 A3 00 00 00 00                             mov     large fs:0, eax
+    // .text:0094B31E 898 8B D9                                         mov     ebx, ecx
+    // .text:0094B320 898 8D 8D 7C F7 FF FF                             lea     ecx, [ebp+var_884]
+    // .text:0094B326 898 E8 05 C5 42 00                                call    sub_D77830
+    // .text:0094B32B 898 68 3C 20 12 01                                push    offset aInfo    ; "Info"
+    // .text:0094B330 89C 8D 8D A0 F7 FF FF                             lea     ecx, [ebp+var_860]
+    // .text:0094B336 89C C7 45 FC 00 00 00 00                          mov     [ebp+var_4], 0
+    // .text:0094B33D 89C E8 1E 18 41 00                                call    sub_D5CB60
+    // .text:0094B342 898 A1 E8 84 39 01                                mov     eax, pCECGame
+    0x450000,
+    0x200000,
+    {
+        0x55,
+        0x8b, 0xEC,
+        0x6A, 0xFF,
+        0x68, 0x1C6, 0x18F, 0x1B9, 0x100,
+        0x64, 0xA1, 0x00, 0x00, 0x00, 0x00,
+        0x50,
+        0x81, 0xEC, 0x158, 0x108, 0x00, 0x00,
+        0xA1, 0x148, 0x164, 0x1E4, 0x100,
+        0x33, 0xC5,
+        0x89, 0x45, 0xf0,
+        0x53,
+        0x56,
+        0x57,
+        0x50,
+        0x8D, 0x45, 0xF4,
+        0x64, 0xA3, 0x00, 0x00, 0x00, 0x00,
+        0x8B, 0x1F1,
+        0x8D, 0x8D, 0x124, 0x164, 0x108, 0x100,
+        0xE8, 0x124, 0x164, 0x108, 0x100,
+        0x68, 0x124, 0x164, 0x108, 0x100,
+        0x8D, 0x8D, 0x124, 0x164, 0x108, 0x100,
+        0xC7, 0x45, 0x124, 0x164, 0x108, 0x100, 0x00,
+        0xE8,
+    },
+    0x0094B2F0 - 0x0094B33D,
     { 0xC3 }
 };
 
@@ -1323,7 +1385,7 @@ static const ProcessCtl::PatchData noMediaPatch2
     // .text:00CA3F33 014 FF 15 58 FC FF 00                             call    ds:_stricmp
     // 55 8b ec 56 57 8b 7d 08 8b f1 85 ff 74 ? 8d 46
     0x850000,
-    0x100000,
+    0x200000,
     {
         0x55, 0x8b, 0xec, 0x56, 0x57, 0x8b, 0x7d, 0x08, 0x8b, 0xf1, 0x85, 0xff, 0x74, 0x100, 0x8d, 0x46,
     },
@@ -1581,8 +1643,13 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
                             || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp4)) != 0
                         #endif
                             )
-                        && (opId++, applyPatch(passOpenMarketPatch) || applyPatch(passOpenMarketPatch2) || applyPatch(passOpenMarketPatch3))        // 9
-                        && (opId++, (applyPatch(noSaveSettingsPatch) || applyPatch(noSaveSettingsPatch2) || applyPatch(noSaveSettingsPatch3)))      // 10
+                        && (opId++, (applyPatch(passOpenMarketPatch)
+                                     || applyPatch(passOpenMarketPatch2)
+                                     || applyPatch(passOpenMarketPatch3)))      // 9
+                        && (opId++, (applyPatch(noSaveSettingsPatch)
+                                     || applyPatch(noSaveSettingsPatch2)
+                                     || applyPatch(noSaveSettingsPatch3)
+                                     || applyPatch(noSaveSettingsPatch4)))      // 10
                         && (opId++, applyPatch(noMediaPatch) || applyPatch(noMediaPatch2))
                         && (opId++, applyPatch(lowCpuPatch) || applyPatch(lowCpuPatch2) || applyPatch(lowCpuPatch3))
                         )
@@ -1675,12 +1742,18 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
                     && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
                     && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
                     && memoryAccess_->write(((byte *)pSettings_) + 0x349, &sm, 4)            // SimplifyMode
-                #else
+                #elif CLIENT_VERSION < 1710
                     memoryAccess_->write(((byte *)pSettings_) + 0xD7, &wid, 4)               // RenderWid
                     && memoryAccess_->write(((byte *)pSettings_) + 0xDB, &hei, 4)            // RenderHei
                     && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
                     && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
                     && memoryAccess_->write(((byte *)pSettings_) + 0x34A, &sm, 4)            // SimplifyMode
+                #else
+                    memoryAccess_->write(((byte *)pSettings_) + 0x10B, &wid, 4)              // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x10F, &hei, 4)           // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x11C, &z, 1)             // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x11D, &z, 1)             // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x128, &sm, 1)            // SimplifyMode
                 #endif
                     && debugger_->removeBreakpoint(adjustSettingsBp_)
                     ;
@@ -1779,6 +1852,7 @@ bool ProcessCtl::applyPatch(const PatchData & patchData)
     byte * addr = memoryAccess_->findPattern(patchData.hint, patchData.lookupLength, patchData.pattern.data(), patchData.pattern.size());
     if (addr != 0)
     {
+        qDebug() << "patch @" << addr + patchData.offset << ' ' << patchData.patch;
         return memoryAccess_->write(addr + patchData.offset, patchData.patch.data(), patchData.patch.size());
     }
     return false;
