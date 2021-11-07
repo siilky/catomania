@@ -75,11 +75,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -98,7 +95,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PreBuildEvent>
-      <Command>SubWCRev.exe ../.. "$(ProjectDir)app.rc.in" "$(ProjectDir)app.rc"</Command>
+      <Command>GitWCRev.exe "$(SolutionDir)." "$(ProjectDir)app.rc.in" "$(ProjectDir)app.rc"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Versioning...</Message>
@@ -140,7 +137,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>SubWCRev.exe ../.. "$(ProjectDir)app.rc.in" "$(ProjectDir)app.rc"</Command>
+      <Command>GitWCRev.exe "$(SolutionDir)." "$(ProjectDir)app.rc.in" "$(ProjectDir)app.rc"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Versioning...</Message>
@@ -386,12 +383,20 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="version.cpp.in">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GitWCRev.exe . version.cpp.in version.cpp</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">version.cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GitWCRev.exe . version.cpp.in version.cpp</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">version.cpp</Outputs>
+    </CustomBuild>
     <QtUic Include="ui\about.ui">
     </QtUic>
     <QtUic Include="ui\moveitems.ui">
     </QtUic>
     <QtUic Include="ui\getPin.ui">
     </QtUic>
+    <None Include="app.rc.in" />
     <None Include="icon.ico" />
     <QtUic Include="ui\accounts.ui">
     </QtUic>
