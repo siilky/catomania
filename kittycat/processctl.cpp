@@ -1520,9 +1520,11 @@ void ProcessCtl::init()
     windowHandle_ = 0;
     closeWindowBp_ = 0;
     replaceServerBp_ = 0;
+    replaceServerBp2_ = 0;
+    replaceServerBp3_ = 0;
     replaceRoleBp_ = 0;
-    replaceRoleStepBp_ = 0;
     replaceRoleEndBp_ = 0;
+    replaceRoleStepBp_ = 0;
     replaceRoleThreadId_ = 0;
     role_.clear();
     memoryAccess_.reset();
@@ -1537,7 +1539,11 @@ void ProcessCtl::setServerSubstitution(const QString & address, unsigned port)
 bool ProcessCtl::start(const QString & executable, const QString & user, const QString & password)
 {
     QFileInfo fi(executable);
+#if defined(MAILRU_TOKEN_AUTH)
     if (debugger_->startProcess(QString("\"%1\" startbypatcher user:%2 token2:%3 role:0000")
+#else
+    if (debugger_->startProcess(QString("\"%1\" startbypatcher user:%2 token:%3 role:0000")
+#endif
                                 .arg(executable)
                                 .arg(user)
                                 .arg(password)

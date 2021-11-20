@@ -90,7 +90,7 @@ public:
         if (connection_->open(login_.toStdString(), password_.toStdString(), forced_, server_, proxy_, localPort_, localIp))
         {
             processCtl_->setServerSubstitution(localIp.toString(), localPort_);
-            if (processCtl_->start(executable_, login_, password_.fill('0')))
+            if (processCtl_->start(executable_, login_, password_))
             {
                 return true;
             }

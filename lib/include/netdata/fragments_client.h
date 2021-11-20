@@ -63,9 +63,14 @@ namespace clientdata
             for (auto f : fragmentArray_)
             {
             #if PW_SERVER_VERSION == 1700
-                f->setId(f->getId() ^ (uint16_t)x ^ 0x12C);
-            #elif PW_SERVER_VERSION >= 1710
-                f->setId(f->getId() ^ (uint16_t)x ^ 0x142);
+                f->setId(f->getId() ^ (uint16_t)x ^ 300);
+            #elif PW_SERVER_VERSION == 1710
+                f->setId(f->getId() ^ (uint16_t)x ^ 322);
+            #elif PW_SERVER_VERSION == 1720
+                f->setId(f->getId() ^ (uint16_t)x ^ 340);
+            #else
+                (void)x;
+                (void)f;
             #endif
             }
         }
