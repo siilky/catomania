@@ -223,10 +223,10 @@ void NetChannelTcp::readFromSocket()
         Log("RFS Empty read");
         return;
     }
-//     else
-//     {
-//         Log("RFS %i", data.size());
-//     }
+    //else
+    //{
+    //    Log("RFS %i", data.size());
+    //}
 
     barray out = processDataIn(barray(data.begin(), data.end()));
     if (!out.empty())

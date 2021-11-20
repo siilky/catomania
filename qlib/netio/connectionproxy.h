@@ -34,6 +34,8 @@ namespace qlib
         void onAcceptError(QAbstractSocket::SocketError socketError);
         void onNewConnection();
 
+        void onClientDataIn(const QByteArray & data);
+
     private:
         // server
         std::string     login_;
@@ -43,6 +45,10 @@ namespace qlib
         QNetworkProxy   proxy_;
 
         QTcpServer      localServer_;
+
+    #if PW_SERVER_VERSION >= 1720
+        bool            serverDcWorkaroundDone_;
+    #endif
     };
 
 }

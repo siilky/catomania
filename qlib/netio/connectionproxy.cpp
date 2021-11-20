@@ -39,6 +39,10 @@ bool qlib::ConnectionProxy::open( const std::string    &login
     forced_ = forced;
     proxy_ = proxy;
 
+#if PW_SERVER_VERSION >= 1720
+    serverDcWorkaroundDone_ = false;
+#endif
+
     localServer_.setMaxPendingConnections(1);
     localServer_.listen(localIp, localPort);
 
@@ -113,12 +117,38 @@ void qlib::ConnectionProxy::onNewConnection()
     QObject::connect(server, &QChannelTcp::authDataIn,  client, &QChannelTcpServerEp::serverAuthData);
     QObject::connect(server, &QChannelTcp::dataIn
                     , client, static_cast<void(NetChannelTcp::*)(const QByteArray &)>(&NetChannelTcp::write));
+#if PW_SERVER_VERSION >= 1720
+    QObject::connect(client, &QChannelTcp::dataIn,      this, &ConnectionProxy::onClientDataIn);
+#else
     QObject::connect(client, &QChannelTcp::dataIn
                     , server, static_cast<void(QChannelTcp::*)(const QByteArray &)>(&NetChannelTcp::write));
+#endif
 
     if (!server->connect(login_, password_, adddress_, forced_))
     {
         close();
         return;
+    }
+}
+
+void qlib::ConnectionProxy::onClientDataIn(const QByteArray& data)
+{
+#if PW_SERVER_VERSION >= 1720
+    // server disconnects when two consecutive initial fragments are sent
+    if (!serverDcWorkaroundDone_
+        && data.size() == 49 && data[0] == 0x48)
+    {
+        static_cast<QChannelTcp*>(server_)->write(data.left(26));
+        qApp->processEvents();  // yes, both calls are required
+        QThread::msleep(100);
+        qApp->processEvents();
+        static_cast<QChannelTcp*>(server_)->write(data.right(data.size() - 26));
+
+        serverDcWorkaroundDone_ = true;
+    }
+    else
+#endif
+    {
+        static_cast<QChannelTcp *>(server_)->write(data);
     }
 }
