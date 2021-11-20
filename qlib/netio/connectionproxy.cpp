@@ -140,7 +140,7 @@ void qlib::ConnectionProxy::onClientDataIn(const QByteArray& data)
     {
         static_cast<QChannelTcp*>(server_)->write(data.left(26));
         qApp->processEvents();  // yes, both calls are required
-        QThread::msleep(100);
+        QThread::msleep(200);
         qApp->processEvents();
         static_cast<QChannelTcp*>(server_)->write(data.right(data.size() - 26));
 
