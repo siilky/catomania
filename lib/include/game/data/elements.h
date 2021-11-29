@@ -401,6 +401,11 @@ public:
     ErrorState load( const std::wstring & dataFile
                    , const std::wstring & configFile);
 
+    unsigned version() const
+    {
+        return elVersion_;
+    }
+
     // returns a new collection containing lists with given name,
     // or empty collection if list wasn't found
     ItemListCollection operator[](const std::string & listName) const;
@@ -432,6 +437,7 @@ private:
     typedef std::vector< std::shared_ptr<ItemList> >  ItemLists;
 
     ItemLists   itemLists_;
+    unsigned    elVersion_ = 0;
 };
 
 

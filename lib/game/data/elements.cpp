@@ -220,7 +220,7 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
         return result;
     }
 
-    const unsigned elVersion = fr.readWord();
+    elVersion_ = fr.readWord();
     const unsigned elSign = fr.readWord();
     const unsigned elTs = fr.readDword();
 
@@ -271,12 +271,12 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
 
         if (listConfig.types[0].first != Value::CountOverride)
         {
-            if (elVersion >= 191 )
+            if (elVersion_ >= 191 )
             {
                 const unsigned listType = fr.readDword();
             }
             itemCount = fr.readDword();
-            if (elVersion >= 191)
+            if (elVersion_ >= 191)
             {
                 const unsigned elementSize = fr.readDword();
             }

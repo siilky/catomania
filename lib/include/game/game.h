@@ -105,6 +105,8 @@ private:
     std::vector<Connection::Cookie> hooks_;
 
     bool                gacEnabled_;
+    unsigned            elementsVersion_;
+
     // handlers
     void onErrorMsg(const serverdata::FragmentGiErrorMsg *f);
     void onErrorInfo(const serverdata::FragmentErrorInfo *f);

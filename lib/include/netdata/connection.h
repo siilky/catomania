@@ -43,9 +43,13 @@ public:
     bool receive();
 
 #if PW_SERVER_VERSION >= 1700
-    void setGiIdEncodeVal(unsigned x)
+    void setGiIdEncodeVal(unsigned v)
     {
-        GIEncodeValue = x;
+        GIEncodeValue = v;
+    }
+    void setGiIdEncodeVal2(unsigned v2)
+    {
+        GIEncodeValue = v2;
     }
 #endif
 
@@ -146,6 +150,7 @@ private:
 
 #if PW_SERVER_VERSION >= 1700
     unsigned GIEncodeValue = 0;
+    unsigned GIEncodeValue2 = 0;
 #endif
 };
 

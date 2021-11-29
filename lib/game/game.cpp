@@ -67,6 +67,10 @@ void Game::bind(std::shared_ptr<Connection> connection)
     }
     gameTask_.bind(connection_);
 
+#if PW_SERVER_VERSION >= 1700
+    connection_->setGiIdEncodeVal2(elementsVersion_);
+#endif
+
     HANDLE_S_GI(hooks_, connection_, Game, ErrorMsg);
     HANDLE_S(hooks_, connection_, Game, ErrorInfo);
     HANDLE_S(hooks_, connection_, Game, SelectRoleRe);
@@ -94,6 +98,8 @@ void Game::unbind()
 
 void Game::setElements(const elements::ItemListCollection & items)
 {
+    elementsVersion_ = items.version();
+
     inventory_.setElements(items);
     commi_.setElements(items);
 

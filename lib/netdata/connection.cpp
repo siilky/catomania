@@ -101,7 +101,7 @@ bool ConnectionBase::send(FragmentBase *fragment)
 #if PW_SERVER_VERSION >= 1700
     if (GIEncodeValue != 0)
     {
-        fragment->encode(GIEncodeValue);
+        fragment->encode(GIEncodeValue ^ GIEncodeValue2);
     }
 #endif
 

@@ -60,19 +60,14 @@ namespace clientdata
 
         virtual void encode(unsigned int x)
         {
-            for (auto f : fragmentArray_)
-            {
             #if PW_SERVER_VERSION == 1700
-                f->setId(f->getId() ^ (uint16_t)x ^ 300);
-            #elif PW_SERVER_VERSION == 1710
-                f->setId(f->getId() ^ (uint16_t)x ^ 322);
-            #elif PW_SERVER_VERSION == 1720
-                f->setId(f->getId() ^ (uint16_t)x ^ 340);
+                for (auto f : fragmentArray_)
+                {
+                    f->setId(f->getId() ^ (uint16_t)x);
+                }
             #else
                 (void)x;
-                (void)f;
             #endif
-            }
         }
 
         virtual void print(tostream &stream) const
