@@ -49,7 +49,7 @@ public:
     }
     void setGiIdEncodeVal2(unsigned v2)
     {
-        GIEncodeValue = v2;
+        GIEncodeValue2 = v2;
     }
 #endif
 

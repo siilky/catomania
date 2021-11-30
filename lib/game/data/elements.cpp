@@ -396,6 +396,8 @@ ItemListCollection ItemListCollection::operator[](const std::string & listName) 
         }
     }
 
+    result.elVersion_ = elVersion_;
+
     return result;
 }
 
@@ -431,6 +433,7 @@ std::set<unsigned> ItemListCollection::allIds(const char * listName) const
 ItemListCollection ItemListCollection::operator+(const ItemListCollection & r)
 {
     std::copy(r.itemLists_.begin(), r.itemLists_.end(), std::back_inserter(itemLists_));
+    elVersion_ = r.elVersion_;
     return *this;
 }
 
