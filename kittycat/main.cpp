@@ -25,16 +25,16 @@ elements::ItemListCollection  g_elements_;
 QString g_elementExePath_;
 bool g_isSafeProcessMode = false;
 
-static bool loadElements(const wchar_t *elements, const wchar_t *config)
+static ErrorState loadElements(const wchar_t *elements, const wchar_t *config)
 {
     elements::ItemListCollection data;
 
-#ifndef _DEBUG
+#ifndef _DEBUG_
     ErrorState error = data.load(elements, config);
-    if (error.code != ERR_NO_ERROR)
+    if (error.code != ERR_NO_ERROR && error.code != ERR_PARTIAL_DATA)
     {
         g_elements_ = elements::ItemListCollection();
-        return false;
+        return error;
     }
 #else
     (void) elements;
@@ -112,7 +112,7 @@ static bool loadElements(const wchar_t *elements, const wchar_t *config)
         + data[elements::KID_DEBRIS_GENERATOR_ESSENCE]
         ;
 
-    return true;
+    return error;
 }
 
 static bool isClientUnpacked(const QString & clientPathName)
@@ -259,8 +259,17 @@ static bool loadClientFiles(Persistence & config)
 
         {
             QString elementPath = dir.filePath("elements.data");
-            loadFailed = !loadElements(elementPath.toStdWString().c_str(), elementConfigPath.toStdWString().c_str());
-            if (loadFailed)
+            auto result = loadElements(elementPath.toStdWString().c_str(), elementConfigPath.toStdWString().c_str());
+            if (result.code == ERR_PARTIAL_DATA)
+            {
+                QMessageBox::warning(0
+                                      , QApplication::applicationName()
+                                      , QObject::tr("Elements file %1 was loaded partially due to config mismatch\n"
+                                                    "which may affect using of item properties.\n"
+                                                    "Make sure you have latest version of application.")
+                                      .arg(elementPath));
+            }
+            else if (result.code != ERR_NO_ERROR)
             {
                 QMessageBox::critical( 0
                                      , QApplication::applicationName()

@@ -224,6 +224,8 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
     const unsigned elSign = fr.readWord();
     const unsigned elTs = fr.readDword();
 
+    bool isPartialLoad = false;
+
     for (size_t listNumber = 0; listNumber < elementConfig.size() && fr; ++listNumber)
     {
         ListConfig & listConfig = elementConfig[listNumber];
@@ -268,7 +270,7 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
         }
 
         unsigned itemCount = 1;
-
+        unsigned itemSize = 0;
         if (listConfig.types[0].first != Value::CountOverride)
         {
             if (elVersion_ >= 191 )
@@ -278,13 +280,15 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
             itemCount = fr.readDword();
             if (elVersion_ >= 191)
             {
-                const unsigned elementSize = fr.readDword();
+                itemSize = fr.readDword();
             }
         }
         else
         {
             listConfig.types.erase(listConfig.types.begin());
         }
+
+        bool sizeMismatchReported = false;
 
         for (unsigned itemNumber = 0; itemNumber < itemCount && fr; ++itemNumber)
         {
@@ -293,6 +297,8 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
 
             item.values_.resize(item.names_->size());
             unsigned valueIndex = 0;
+
+            const size_t startOffset = fr.offset();
 
             for (size_t field = 0; field < listConfig.types.size(); ++field)
             {
@@ -303,6 +309,22 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
                     assert(valueIndex < item.values_.size());
                     item.values_[valueIndex] = std::move(value);
                     valueIndex++;
+                }
+            }
+
+            if (itemSize != 0)
+            {
+                auto expectedSize = fr.offset() - startOffset;
+                if (expectedSize != itemSize)
+                {
+                    if (!sizeMismatchReported)
+                    {
+                        Log("List %zi %hs size mismatch %zi actual %zi", listNumber, list->name.c_str(), expectedSize, itemSize);
+                        sizeMismatchReported = true;
+                        isPartialLoad = true;
+                    }
+
+                    fr.move(itemSize - expectedSize);
                 }
             }
 
@@ -322,7 +344,10 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
     if ( ! fr)
     {
         result.set(ERR_INVALID_DATA, 0, std::wstring(L"Error reading element file '") + dataFile + L"',\nmake sure your element config is correct");
-        return result;
+    }
+    else if (isPartialLoad)
+    {
+        result.set(ERR_PARTIAL_DATA, 0, std::wstring(L"Element file '") + dataFile + L"' was loaded partially,\nmake sure your element config is correct");
     }
 
     return result;

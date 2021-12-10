@@ -21,6 +21,11 @@ public:
         return size_;
     }
 
+    size_t offset() const
+    {
+        return offset_;
+    }
+
 //     byte operator[](size_t offset);
 
     void            move(size_t offset);

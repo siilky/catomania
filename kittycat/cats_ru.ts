@@ -48,17 +48,17 @@
 <context>
     <name>AboutView</name>
     <message>
-        <location filename="forms/uiabout.cpp" line="86"/>
+        <location filename="forms/uiabout.cpp" line="91"/>
         <source>Expires at: %1</source>
         <translation>Иcтекает: %1</translation>
     </message>
     <message>
-        <location filename="forms/uiabout.cpp" line="90"/>
+        <location filename="forms/uiabout.cpp" line="95"/>
         <source>No expiration</source>
         <translation>Без ограничения по времени</translation>
     </message>
     <message>
-        <location filename="forms/uiabout.cpp" line="105"/>
+        <location filename="forms/uiabout.cpp" line="110"/>
         <source>version %1</source>
         <translation>версия %1</translation>
     </message>
@@ -150,97 +150,97 @@
 <context>
     <name>CatCtl</name>
     <message>
-        <location filename="catctl.cpp" line="440"/>
-        <location filename="catctl.cpp" line="565"/>
-        <location filename="catctl.cpp" line="682"/>
-        <location filename="catctl.cpp" line="706"/>
-        <location filename="catctl.cpp" line="791"/>
-        <location filename="catctl.cpp" line="835"/>
-        <location filename="catctl.cpp" line="948"/>
-        <location filename="catctl.cpp" line="996"/>
-        <location filename="catctl.cpp" line="1010"/>
+        <location filename="catctl.cpp" line="456"/>
+        <location filename="catctl.cpp" line="596"/>
+        <location filename="catctl.cpp" line="713"/>
+        <location filename="catctl.cpp" line="737"/>
+        <location filename="catctl.cpp" line="822"/>
+        <location filename="catctl.cpp" line="866"/>
+        <location filename="catctl.cpp" line="979"/>
+        <location filename="catctl.cpp" line="1027"/>
+        <location filename="catctl.cpp" line="1041"/>
         <source>License error. Please check your license is active</source>
         <translation>Проблема с лицензией. Проверьте, действительна ли ваша лицензия</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="447"/>
-        <location filename="catctl.cpp" line="578"/>
+        <location filename="catctl.cpp" line="463"/>
+        <location filename="catctl.cpp" line="609"/>
         <source>Invalid account info or no accounts configured</source>
         <translation>Настройки аккаунта неверны или отсутствуют</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="455"/>
+        <location filename="catctl.cpp" line="471"/>
         <source>Invalid server info or no servers are loaded</source>
         <translation>Список серверов неверен или отсутствует</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="469"/>
+        <location filename="catctl.cpp" line="485"/>
         <source>Email or password is empty. Please set valid email and password in account setup</source>
         <translation>Не заданы емайл или пароль. Пожалуйста задайте правильные емайл и пароль в настройках аккаунта</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="484"/>
+        <location filename="catctl.cpp" line="500"/>
         <source>Invalid email</source>
         <translation>Неверный емайл</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1262"/>
+        <location filename="catctl.cpp" line="1293"/>
         <source>No accounts found on this email</source>
         <translation>Для этого емайла нет аккаунтов</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1281"/>
+        <location filename="catctl.cpp" line="1312"/>
         <source>Account %1 not found on this email</source>
         <translation>Аккаунт %1 отсутствует для этого емайла</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="533"/>
-        <location filename="catctl.cpp" line="1296"/>
-        <location filename="catctl.cpp" line="1384"/>
+        <location filename="catctl.cpp" line="564"/>
+        <location filename="catctl.cpp" line="1327"/>
+        <location filename="catctl.cpp" line="1415"/>
         <source>No local ports available</source>
         <translation>Отсутсвуют доступные локальные порты</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1254"/>
-        <location filename="catctl.cpp" line="1368"/>
+        <location filename="catctl.cpp" line="1285"/>
+        <location filename="catctl.cpp" line="1399"/>
         <source>Failed to get authorization token</source>
         <translation>Не удалось получить токен авторизации</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1433"/>
+        <location filename="catctl.cpp" line="1466"/>
         <source>Failed to create db folder, trade history will not be recorded</source>
         <oldsource>Failed to create db folder, trade history will not be recorded.</oldsource>
         <translation>Не удалось создать db папку, регистрация сделок производиться не будет</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1445"/>
+        <location filename="catctl.cpp" line="1478"/>
         <source>Failed to create/open history file (%1), trade history will not be recorded</source>
         <oldsource>Failed to create/open history file (%1), trade history will not be recorded.</oldsource>
         <translation>Не удалось создать/открыть файл истории (%1), регистрация сделок производиться не будет</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1464"/>
+        <location filename="catctl.cpp" line="1497"/>
         <source>Market is not opened</source>
         <oldsource>Market is not opened: %1</oldsource>
         <translation>Магазин не открыт</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1469"/>
+        <location filename="catctl.cpp" line="1502"/>
         <source>Market is not opened: no items to trade</source>
         <translation>Магазин не открыт: нет предметов для торговли</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1499"/>
+        <location filename="catctl.cpp" line="1532"/>
         <source>Failed to record sell operation</source>
         <translation>Не удалось записать операцию продажи</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1524"/>
+        <location filename="catctl.cpp" line="1557"/>
         <source>Failed to record buy operation</source>
         <translation>Не удалось записать операцию покупки</translation>
     </message>
     <message>
-        <location filename="catctl.cpp" line="1727"/>
+        <location filename="catctl.cpp" line="1760"/>
         <source>Updating market setup</source>
         <translation>Обновляем настройки магазина</translation>
     </message>
@@ -341,8 +341,8 @@ when connection is dropped or any connection error is occured</source>
     </message>
     <message>
         <location filename="ui/catview.ui" line="416"/>
-        <location filename="forms/uicatview.cpp" line="1290"/>
-        <location filename="forms/uicatview.cpp" line="1395"/>
+        <location filename="forms/uicatview.cpp" line="1296"/>
+        <location filename="forms/uicatview.cpp" line="1401"/>
         <source>Market</source>
         <translation>Магазин</translation>
     </message>
@@ -420,391 +420,391 @@ after logging in to game and lock expiration</source>
     </message>
     <message>
         <location filename="ui/catview.ui" line="780"/>
-        <location filename="forms/uicatview.cpp" line="1485"/>
+        <location filename="forms/uicatview.cpp" line="1491"/>
         <source>Selling</source>
         <translation>Продается</translation>
     </message>
     <message>
         <location filename="ui/catview.ui" line="863"/>
-        <location filename="forms/uicatview.cpp" line="1486"/>
+        <location filename="forms/uicatview.cpp" line="1492"/>
         <source>Buying</source>
         <translation>Покупается</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1480"/>
-        <location filename="forms/uicatview.cpp" line="1481"/>
-        <location filename="forms/uicatview.cpp" line="1482"/>
+        <location filename="forms/uicatview.cpp" line="1486"/>
+        <location filename="forms/uicatview.cpp" line="1487"/>
+        <location filename="forms/uicatview.cpp" line="1488"/>
         <source>Copy to clipboard</source>
         <translation>Скопировать в буфер обмена</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="390"/>
+        <location filename="forms/uicatview.cpp" line="392"/>
         <source>Connecting...</source>
         <translation>Соединяемся...</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="380"/>
+        <location filename="forms/uicatview.cpp" line="382"/>
         <source>Please add account to log in</source>
         <translation>Добавьте аккаунт для входа</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="384"/>
+        <location filename="forms/uicatview.cpp" line="386"/>
         <source>Please select account/character to log in</source>
         <translation>Выберите аккаунт/персонаж для входа</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="395"/>
+        <location filename="forms/uicatview.cpp" line="401"/>
         <source>Connection Failed</source>
         <translation>Соединение не удалось</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="664"/>
+        <location filename="forms/uicatview.cpp" line="670"/>
         <source>Autoselecting character %1</source>
         <translation>Автовыбор персонажа %1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="671"/>
+        <location filename="forms/uicatview.cpp" line="677"/>
         <source>Failed to select character</source>
         <translation>Не удалось выбрать персонажа</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="676"/>
+        <location filename="forms/uicatview.cpp" line="682"/>
         <source>No characters on this account. Please create any character first or make sure you selected your server in accounts</source>
         <oldsource>No characters on this account. Please create any character first or make sure you selected your server in accounts.</oldsource>
         <translation>Нет персонажей на аккаунте. Пожалуйста, создайте персонажа, или убедитесь в правильности выбора сервера в настройках аккаунтов</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="570"/>
+        <location filename="forms/uicatview.cpp" line="576"/>
         <source>&lt;img src=&quot;:/catView/table_money_16.png&quot;/&gt; %1</source>
         <translation>&lt;img src=&quot;:/catView/table_money_16.png&quot;/&gt; %1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1484"/>
+        <location filename="forms/uicatview.cpp" line="1490"/>
         <source>Money</source>
         <translation>Денег</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1487"/>
+        <location filename="forms/uicatview.cpp" line="1493"/>
         <source>Gold</source>
         <translation>Золота</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1490"/>
+        <location filename="forms/uicatview.cpp" line="1496"/>
         <source>Profit</source>
         <translation>Профит</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1493"/>
+        <location filename="forms/uicatview.cpp" line="1499"/>
         <source>Market status</source>
         <translation>Состояние магазина</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1597"/>
+        <location filename="forms/uicatview.cpp" line="1603"/>
         <source>Market [%1]</source>
         <translation>Магазин [%1]</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1606"/>
+        <location filename="forms/uicatview.cpp" line="1612"/>
         <source>No more items to trade</source>
         <translation>Больше нечем торговать</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="684"/>
+        <location filename="forms/uicatview.cpp" line="690"/>
         <source>Scheduling market reopening</source>
         <translation>Запланировано переоткрытие магазина</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="634"/>
+        <location filename="forms/uicatview.cpp" line="640"/>
         <source>Task completed</source>
         <translation>Действия завершены</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="728"/>
+        <location filename="forms/uicatview.cpp" line="734"/>
         <source>Entering in game</source>
         <translation>Входим в игру</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="601"/>
+        <location filename="forms/uicatview.cpp" line="607"/>
         <source>Connected</source>
         <translation>Соединились</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="502"/>
-        <location filename="forms/uicatview.cpp" line="510"/>
+        <location filename="forms/uicatview.cpp" line="508"/>
+        <location filename="forms/uicatview.cpp" line="516"/>
         <source>Accept</source>
         <translation>Принять</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="503"/>
-        <location filename="forms/uicatview.cpp" line="511"/>
+        <location filename="forms/uicatview.cpp" line="509"/>
+        <location filename="forms/uicatview.cpp" line="517"/>
         <source>Decline</source>
         <translation>Отказаться</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="626"/>
+        <location filename="forms/uicatview.cpp" line="632"/>
         <source>Disconnected</source>
         <translation>Отсоединились</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="688"/>
+        <location filename="forms/uicatview.cpp" line="694"/>
         <source>Moving market</source>
         <translation>Передвигаем магазин</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="714"/>
+        <location filename="forms/uicatview.cpp" line="720"/>
         <source>Last login  %1  from %2.%3.%4.%5</source>
         <oldsource>Last login %1 from %2.%3.%4.%5</oldsource>
         <translation>Последний вход  %1  с %2.%3.%4.%5</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="715"/>
+        <location filename="forms/uicatview.cpp" line="721"/>
         <source>dd.MM.yyyy hh:mm:ss</source>
         <translation>dd.MM.yyyy hh:mm:ss</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="721"/>
+        <location filename="forms/uicatview.cpp" line="727"/>
         <source>IP: %2.%3.%4.%5</source>
         <translation>IP: %2.%3.%4.%5</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="692"/>
+        <location filename="forms/uicatview.cpp" line="698"/>
         <source>Immobilizer alert</source>
         <translation>Предупреждение иммобилайзера</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="51"/>
+        <location filename="forms/uicatview.cpp" line="53"/>
         <source>Chat</source>
         <translation>Чат</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="550"/>
+        <location filename="forms/uicatview.cpp" line="556"/>
         <source>Your license is expired</source>
         <translation>Срок действия лицензии закончился</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="556"/>
+        <location filename="forms/uicatview.cpp" line="562"/>
         <source>Your license will expire soon</source>
         <translation>Срок действия лицензии скоро закончится</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="562"/>
+        <location filename="forms/uicatview.cpp" line="568"/>
         <source>About and Registration</source>
         <translation>Информация о программе и регистрации</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="698"/>
+        <location filename="forms/uicatview.cpp" line="704"/>
         <source>Unknown event %1</source>
         <translation>ХЗ: %1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="747"/>
+        <location filename="forms/uicatview.cpp" line="753"/>
         <source>Lock is set to %1 day(s) %2:%3:%4.</source>
         <translation>Замок установлен на %1 дней %2:%3:%4.</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="756"/>
+        <location filename="forms/uicatview.cpp" line="762"/>
         <source>Failed to set lock time</source>
         <translation>Не удалось установить время замка</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="766"/>
+        <location filename="forms/uicatview.cpp" line="772"/>
         <source>Market opened</source>
         <translation>Магазин открыт</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="772"/>
+        <location filename="forms/uicatview.cpp" line="778"/>
         <source>Market closed</source>
         <translation>Магазин закрыт</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="796"/>
+        <location filename="forms/uicatview.cpp" line="802"/>
         <source>^C0C0C0%1 x %2 obtained/^</source>
         <translation>^C0C0C0%1 x %2 получено/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="805"/>
+        <location filename="forms/uicatview.cpp" line="811"/>
         <source>^C0C0C0%1 x %2 lost/^</source>
         <translation>^C0C0C0%1 x %2 потрачено/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="816"/>
+        <location filename="forms/uicatview.cpp" line="822"/>
         <source>%1 x ^FFC0C0%2/^ %3 purchased</source>
         <translation>%1 x ^FFC0C0%2/^ %3 куплено</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="824"/>
+        <location filename="forms/uicatview.cpp" line="830"/>
         <source>%1 %2 purchased</source>
         <translation>%1 %2 куплено</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="838"/>
+        <location filename="forms/uicatview.cpp" line="844"/>
         <source>%1 x ^C0C0FF%2/^ %3 sold to %4</source>
         <translation>%1 x ^C0C0FF%2/^ %3 продано %4</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="847"/>
+        <location filename="forms/uicatview.cpp" line="853"/>
         <source>%1 %2 sold to %3</source>
         <translation>%1 %2 продано %3</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="860"/>
+        <location filename="forms/uicatview.cpp" line="866"/>
         <source>^C0C0C0%1 deals you %2 of damage/^</source>
         <translation>^C0C0C0%1 наносит вам %2 урона/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="872"/>
+        <location filename="forms/uicatview.cpp" line="878"/>
         <source>^FFC0C0You are killed by %1/^</source>
         <translation>^FFC0C0Вас убил %1/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="877"/>
+        <location filename="forms/uicatview.cpp" line="883"/>
         <source>^FFC0C0You are dead/^</source>
         <translation>^FFC0C0Вы умерли/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="891"/>
+        <location filename="forms/uicatview.cpp" line="897"/>
         <source>Resurrecting...</source>
         <translation>Воскрешаемся...</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="895"/>
+        <location filename="forms/uicatview.cpp" line="901"/>
         <source>Resurrected</source>
         <translation>Воскресились</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="915"/>
+        <location filename="forms/uicatview.cpp" line="921"/>
         <source>^80FFFFReceived %1 exp/^</source>
         <translation>^80FFFFПолучено %1 опыта/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="919"/>
+        <location filename="forms/uicatview.cpp" line="925"/>
         <source>^80FFFFReceived %1 soul/^</source>
         <translation>^80FFFFПолучено %1 духа/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="926"/>
+        <location filename="forms/uicatview.cpp" line="932"/>
         <source>^80FFFFReached level %1/^</source>
         <translation>^80FFFFДостигнут уровень %1/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="933"/>
+        <location filename="forms/uicatview.cpp" line="939"/>
         <source>Revival is enabled. &lt;a href=&quot;action:revive&quot; style=&quot;color:#33FFFF&quot;&gt;Revive&lt;/a&gt;?</source>
         <translation>Доступно воскрешение. &lt;a href=&quot;action:revive&quot; style=&quot;color:#33FFFF&quot;&gt;Воскреснуть&lt;/a&gt;?</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1021"/>
+        <location filename="forms/uicatview.cpp" line="1027"/>
         <source>^FFD0D0Account blocked at %1. Time to unblock:</source>
         <translation>^FFD0D0Аккаунт заблокирован в %1. Время до разблокировки:</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1087"/>
+        <location filename="forms/uicatview.cpp" line="1093"/>
         <source>Selecting character %1</source>
         <translation>Выбираем персонажа %1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1407"/>
+        <location filename="forms/uicatview.cpp" line="1413"/>
         <source>&lt;img src=&quot;:/catView/money.png&quot;/&gt; %1 &amp;nbsp; </source>
         <translation>&lt;img src=&quot;:/catView/money.png&quot;/&gt; %1 &amp;nbsp; </translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1409"/>
+        <location filename="forms/uicatview.cpp" line="1415"/>
         <source>&lt;img src=&quot;:/catView/coins.png&quot;/&gt; %1</source>
         <translation>&lt;img src=&quot;:/catView/coins.png&quot;/&gt; %1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1420"/>
+        <location filename="forms/uicatview.cpp" line="1426"/>
         <source>&lt;img src=&quot;:/catView/coin_gold.png&quot;/&gt; %1.%2</source>
         <translation>&lt;img src=&quot;:/catView/coin_gold.png&quot;/&gt; %1.%2</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="905"/>
-        <location filename="forms/uicatview.cpp" line="1267"/>
+        <location filename="forms/uicatview.cpp" line="911"/>
+        <location filename="forms/uicatview.cpp" line="1273"/>
         <source>Revive</source>
         <translation>Воскреснуть</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="941"/>
+        <location filename="forms/uicatview.cpp" line="947"/>
         <source>%1 requests you to trade. &lt;a href=&quot;action:acceptTrade:%2&quot; style=&quot;color:#33FFFF&quot;&gt;Accept&lt;/a&gt;/&lt;a href=&quot;action:rejectTrade:%2&quot; style=&quot;color:#33FFFF&quot;&gt;Decline&lt;/a&gt;?</source>
         <translation>%1 предлагает вам обмен. &lt;a href=&quot;action:acceptTrade:%2&quot; style=&quot;color:#33FFFF&quot;&gt;Принять&lt;/a&gt;/&lt;a href=&quot;action:rejectTrade:%2&quot; style=&quot;color:#33FFFF&quot;&gt;Отказаться&lt;/a&gt;?</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="955"/>
+        <location filename="forms/uicatview.cpp" line="961"/>
         <source>Started trade with %1</source>
         <translation>Начат обмен с %1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="960"/>
+        <location filename="forms/uicatview.cpp" line="966"/>
         <source>Trade canceled</source>
         <oldsource>Trade with %1 canceled</oldsource>
         <translation>Обмен отменен</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="970"/>
+        <location filename="forms/uicatview.cpp" line="976"/>
         <source>Trade completed</source>
         <translation>Обмен завершен</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="974"/>
+        <location filename="forms/uicatview.cpp" line="980"/>
         <source>Trade failed</source>
         <translation>Обмен не удался</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="989"/>
+        <location filename="forms/uicatview.cpp" line="995"/>
         <source>Position: %1 %2 %3</source>
         <translation>Место: %1 %2 %3</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="999"/>
+        <location filename="forms/uicatview.cpp" line="1005"/>
         <source>^FFD0D0%1./^</source>
         <translation>^FFD0D0%1./^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1007"/>
+        <location filename="forms/uicatview.cpp" line="1013"/>
         <source>^FFD0D0%1 %2/^</source>
         <translation>^FFD0D0%1 %2/^</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1025"/>
+        <location filename="forms/uicatview.cpp" line="1031"/>
         <source> %1 day(s)</source>
         <translation> %1 дней</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1027"/>
+        <location filename="forms/uicatview.cpp" line="1033"/>
         <source> %1 hour(s)</source>
         <translation> %1 час(ов)</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1029"/>
+        <location filename="forms/uicatview.cpp" line="1035"/>
         <source> %1 min(s)</source>
         <translation> %1 мин(ут)</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1046"/>
+        <location filename="forms/uicatview.cpp" line="1052"/>
         <source>Connecting in: %1</source>
         <translation>Соединение через: %1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1201"/>
+        <location filename="forms/uicatview.cpp" line="1207"/>
         <source>Invalid account info or no accounts configured</source>
         <translation>Настройки аккаунта неверны или отсутствуют</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1229"/>
+        <location filename="forms/uicatview.cpp" line="1235"/>
         <source>%1.</source>
         <translation>%1.</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1344"/>
+        <location filename="forms/uicatview.cpp" line="1350"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1340"/>
+        <location filename="forms/uicatview.cpp" line="1346"/>
         <source>Lock is on for %1 seconds</source>
         <translation>Замок действует еще %1 секунд(ы)</translation>
     </message>
     <message>
-        <location filename="forms/uicatview.cpp" line="1360"/>
+        <location filename="forms/uicatview.cpp" line="1366"/>
         <source>Lock expired</source>
         <translation>Замок открыт</translation>
     </message>
@@ -1176,68 +1176,67 @@ when money is less than number (in millions).</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1246"/>
         <source>Identifier</source>
-        <translation>Идентификатор</translation>
+        <translation type="vanished">Идентификатор</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1273"/>
+        <location filename="ui/config.ui" line="1299"/>
         <source>Interface</source>
         <translation>Интерфейс</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1294"/>
+        <location filename="ui/config.ui" line="1320"/>
         <source>Chat</source>
         <translation>Чат</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1315"/>
+        <location filename="ui/config.ui" line="1341"/>
         <source>Buffer size</source>
         <translation>Размер буфера</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1366"/>
+        <location filename="ui/config.ui" line="1392"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1376"/>
+        <location filename="ui/config.ui" line="1402"/>
         <source>Event logging</source>
         <translation>Запись событий</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1420"/>
+        <location filename="ui/config.ui" line="1446"/>
         <source>Limit lines in cat history screen</source>
         <translation>Ограничить число строк в окне истории</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1423"/>
+        <location filename="ui/config.ui" line="1449"/>
         <source>Limit history lines to</source>
         <translation>Ограничить число строк в окне истории до</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1448"/>
+        <location filename="ui/config.ui" line="1474"/>
         <source>Save history to file</source>
         <translation>Сохранять историю событий в файл</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1458"/>
+        <location filename="ui/config.ui" line="1484"/>
         <source>Create new log file every day</source>
         <oldsource>Split log files per day</oldsource>
         <translation>Каждый день создавать новый файл</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1482"/>
+        <location filename="ui/config.ui" line="1508"/>
         <source>Path to log files</source>
         <translation>Каталог для файлов</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1502"/>
+        <location filename="ui/config.ui" line="1528"/>
         <source>Select folder for log files</source>
         <translation>Выберите каталог для файлов</translation>
     </message>
     <message>
-        <location filename="ui/config.ui" line="1565"/>
+        <location filename="ui/config.ui" line="1591"/>
         <source>Application settings</source>
         <translation>Настройки приложения</translation>
     </message>
@@ -1328,6 +1327,16 @@ Market will be closed, reevaluated and opened again</source>
         <location filename="ui/config.ui" line="1173"/>
         <source>SOCKS 5</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="ui/config.ui" line="1246"/>
+        <source>Hardware Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/config.ui" line="1272"/>
+        <source>PC Name</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ui/config.ui" line="465"/>
@@ -1447,12 +1456,12 @@ authorization</source>
 <context>
     <name>ConfigView</name>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1337"/>
+        <location filename="forms/uiconfig.cpp" line="1339"/>
         <source>&lt;img src=&quot;:/catView/money.png&quot;/&gt; %1 &amp;nbsp; </source>
         <translation>&lt;img src=&quot;:/catView/money.png&quot;/&gt; %1 &amp;nbsp; </translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1339"/>
+        <location filename="forms/uiconfig.cpp" line="1341"/>
         <source>&lt;img src=&quot;:/catView/coins.png&quot;/&gt; %1</source>
         <translation>&lt;img src=&quot;:/catView/coins.png&quot;/&gt; %1</translation>
     </message>
@@ -1479,7 +1488,7 @@ authorization</source>
         <location filename="forms/uiconfig.cpp" line="229"/>
         <location filename="forms/uiconfig.cpp" line="231"/>
         <location filename="forms/uiconfig.cpp" line="883"/>
-        <location filename="forms/uiconfig.cpp" line="1357"/>
+        <location filename="forms/uiconfig.cpp" line="1359"/>
         <source>Different</source>
         <translation>Разное</translation>
     </message>
@@ -1496,52 +1505,52 @@ Would you like to save changes?</source>
 Вы хотите сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1243"/>
+        <location filename="forms/uiconfig.cpp" line="1245"/>
         <source>Catshop: None</source>
         <translation>Палатка: нету</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1268"/>
+        <location filename="forms/uiconfig.cpp" line="1270"/>
         <source>Catshop: %1d %2:%3:%4</source>
         <translation>Палатка: %1д %2:%3:%4</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1277"/>
+        <location filename="forms/uiconfig.cpp" line="1279"/>
         <source>Catshop</source>
         <translation>Палатка</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1333"/>
+        <location filename="forms/uiconfig.cpp" line="1335"/>
         <source>&lt;img src=&quot;:/catView/coin_gold.png&quot;/&gt; %1.%2&amp;nbsp;&amp;nbsp;&amp;nbsp;</source>
         <translation>&lt;img src=&quot;:/catView/coin_gold.png&quot;/&gt; %1 %2&amp;nbsp;&amp;nbsp;&amp;nbsp;</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1347"/>
+        <location filename="forms/uiconfig.cpp" line="1349"/>
         <source>Tiny</source>
         <translation>Минимальный</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1348"/>
+        <location filename="forms/uiconfig.cpp" line="1350"/>
         <source>Small</source>
         <translation>Небольшой</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1349"/>
+        <location filename="forms/uiconfig.cpp" line="1351"/>
         <source>Medium</source>
         <translation>Средний</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1350"/>
+        <location filename="forms/uiconfig.cpp" line="1352"/>
         <source>Large</source>
         <translation>Большой</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1351"/>
+        <location filename="forms/uiconfig.cpp" line="1353"/>
         <source>Huge</source>
         <translation>Огромный</translation>
     </message>
     <message>
-        <location filename="forms/uiconfig.cpp" line="1352"/>
+        <location filename="forms/uiconfig.cpp" line="1354"/>
         <source>???</source>
         <translation></translation>
     </message>
@@ -1905,52 +1914,52 @@ count</oldsource>
         <translation>Добавить ...</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="494"/>
+        <location filename="forms/uimultiview.cpp" line="493"/>
         <source>Delete cat/group</source>
         <translation>Удалить кота/группу</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="490"/>
+        <location filename="forms/uimultiview.cpp" line="489"/>
         <source>Add Cat</source>
         <translation>Добавить кота</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="259"/>
+        <location filename="forms/uimultiview.cpp" line="258"/>
         <source>Load cat(s) from configuration file</source>
         <translation>Загрузить кот(ов) из файла настроек</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="261"/>
+        <location filename="forms/uimultiview.cpp" line="260"/>
         <source>Cat configuration (*.jccfg);;Previous version configuration (*.cfg)</source>
         <translation>Файл настроек кота (*.jccfg);;Файл конфигурации предыдущей версии программы (*.cfg)</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="333"/>
+        <location filename="forms/uimultiview.cpp" line="332"/>
         <source>Save cat configuration to file</source>
         <translation>Сохранить настройки кота в файл</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="335"/>
+        <location filename="forms/uimultiview.cpp" line="334"/>
         <source>Cat configuration (*.jccfg)</source>
         <translation>Файл настроек кота (*.jccfg)</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="491"/>
+        <location filename="forms/uimultiview.cpp" line="490"/>
         <source>Add Group</source>
         <translation>Добавить группу</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="492"/>
+        <location filename="forms/uimultiview.cpp" line="491"/>
         <source>Load Cat(s)</source>
         <translation>Загрузить кота(ов)</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="493"/>
+        <location filename="forms/uimultiview.cpp" line="492"/>
         <source>Save Cat</source>
         <translation>Сохранить кота</translation>
     </message>
     <message>
-        <location filename="forms/uimultiview.cpp" line="495"/>
+        <location filename="forms/uimultiview.cpp" line="494"/>
         <source>Setup</source>
         <translation>Настройка</translation>
     </message>
@@ -2009,7 +2018,7 @@ count</oldsource>
 <context>
     <name>ProcessCtl</name>
     <message>
-        <location filename="processctl.cpp" line="1360"/>
+        <location filename="processctl.cpp" line="1847"/>
         <source>Failed to operate with process (%1) </source>
         <translation>Операция с процессом не удалась (%1)</translation>
     </message>
@@ -2017,18 +2026,18 @@ count</oldsource>
 <context>
     <name>QApplication</name>
     <message>
+        <location filename="forms/uiabout.cpp" line="42"/>
         <location filename="license.cpp" line="78"/>
-        <location filename="forms/uiabout.cpp" line="37"/>
         <source>Failed to get license file name</source>
         <translation>Не удалось установить имя файла лицензии</translation>
     </message>
     <message>
-        <location filename="forms/uiabout.cpp" line="42"/>
+        <location filename="forms/uiabout.cpp" line="47"/>
         <source>Please enter new license code</source>
         <translation>Введите новый код регистрации</translation>
     </message>
     <message>
-        <location filename="forms/uiabout.cpp" line="67"/>
+        <location filename="forms/uiabout.cpp" line="72"/>
         <source>%1
 Previous license still in use.</source>
         <translation>%1
@@ -2054,8 +2063,8 @@ Previous license still in use.</source>
         <translation>Файл лицензии пуст.</translation>
     </message>
     <message>
+        <location filename="forms/uiabout.cpp" line="61"/>
         <location filename="license.cpp" line="113"/>
-        <location filename="forms/uiabout.cpp" line="56"/>
         <source>Error creating license file
 %1
 %2</source>
@@ -2083,56 +2092,65 @@ Previous license still in use.</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&lt;p&gt;Уровень: %2&lt;br&gt;Случайный выбор: %3/%4</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="169"/>
+        <location filename="main.cpp" line="180"/>
         <source>Could not find elements configuration file.
 Please check your installation.</source>
         <translation>Файл конфигурации элементов не найден.
 Пожалуйста, проверьте правильность установки программы.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="209"/>
+        <location filename="main.cpp" line="220"/>
         <source>Path %1 does not seem to contain required files.
 Please choose another game path.</source>
         <translation>Папка %1 не содержит необходимых файлов.
 Пожалуйста, выберите другой путь до папки с игрой.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="226"/>
+        <location filename="main.cpp" line="237"/>
         <source>File %1 is missing.
 Please choose another game path or use different executable option.</source>
         <translation>Файл %1 не обнаружен.
 Пожалуйста, выберите другой путь до папки с игрой или вариант запуска.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="239"/>
+        <location filename="main.cpp" line="250"/>
         <source>File %1 seems to be packed and not usable.
 Please choose another game path or use different executable option.</source>
         <translation>Файл %1 упакован и не может быть использован.
 Пожалуйста, выберите другой путь до папки с игрой или вариант запуска.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="256"/>
+        <location filename="main.cpp" line="267"/>
+        <source>Elements file %1 was loaded partially due to config mismatch
+which may affect using of item properties.
+Make sure you have latest version of application.</source>
+        <translation>Файл элементов %1 был загружен частично, из-за несоответствия конфига,
+что может повлиять на использование свойств предметов.
+Убедитесь, что вы используете последнюю версию приложения.</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="276"/>
         <source>Elements file %1 failed to load.
 Please choose another game path.</source>
         <translation>Не удалось загрузить файл элементов %1.
 Пожалуйста, выберите другой путь до папки с игрой.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="270"/>
+        <location filename="main.cpp" line="290"/>
         <source>GShop file %1 failed to load.
 Please choose another game path.</source>
         <translation>Не удалось загрузить файл шопа %1.
 Пожалуйста, выберите другой путь до папки с игрой.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="288"/>
+        <location filename="main.cpp" line="308"/>
         <source>Surfaces file %1 failed to load.
 Please choose another game path.</source>
         <translation>Не удалось загрузить файл текстур %1.
 Пожалуйста, выберите другой путь до папки с игрой.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="374"/>
+        <location filename="main.cpp" line="406"/>
         <source>Config file %1 failed to load and was restored from previously saved state. Please check your market setup and prices are in actual state for all cats before opening.</source>
         <oldsource>Config file %1
 failed to load and was restored from previously saved state.
@@ -2293,6 +2311,14 @@ Please check your market setup and prices are in actual state for all cats befor
         <location filename="forms/uitrade.cpp" line="821"/>
         <source>Accept</source>
         <translation>Принято</translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <location filename="main.cpp" line="354"/>
+        <source>Safe client mode.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
