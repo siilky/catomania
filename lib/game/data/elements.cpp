@@ -221,8 +221,8 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
     }
 
     elVersion_ = fr.readWord();
-    const unsigned elSign = fr.readWord();
-    const unsigned elTs = fr.readDword();
+    /*const unsigned elSign =*/ fr.readWord();
+    /*const unsigned elTs =*/ fr.readDword();
 
     bool isPartialLoad = false;
 
@@ -275,7 +275,7 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
         {
             if (elVersion_ >= 191 )
             {
-                const unsigned listType = fr.readDword();
+                /*const unsigned listType =*/ fr.readDword();
             }
             itemCount = fr.readDword();
             if (elVersion_ >= 191)

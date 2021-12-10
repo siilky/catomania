@@ -220,7 +220,6 @@ bool SystemHandleInformation::GetType(HANDLE h, WORD & type, DWORD processId)
 
 bool SystemHandleInformation::GetTypeFromTypeToken(const std::wstring & typeToken, WORD& type)
 {
-    const WORD count = 27;
     static const struct
     {
         HandleType      type;
