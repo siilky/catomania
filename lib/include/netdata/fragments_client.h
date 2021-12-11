@@ -60,7 +60,7 @@ namespace clientdata
 
         virtual void encode(unsigned int x)
         {
-            #if PW_SERVER_VERSION == 1700
+            #if PW_SERVER_VERSION >= 1700
                 for (auto f : fragmentArray_)
                 {
                     f->setId(f->getId() ^ (uint16_t)x);

@@ -281,6 +281,12 @@ namespace serverdata
                     s.skip(4);
                 }
             #endif
+            #if PW_SERVER_VERSION >= 1720
+                if ((status2 & 0x200000) != 0)
+                {
+                    s.skip(20);
+                }
+            #endif
             }
         };
 
@@ -2941,7 +2947,11 @@ namespace serverdata
     protected:
         template<int mode> void format(Serializer<mode> & s)
         {
+        #if PW_SERVER_VERSION < 1720
             s.b(unk1).lr(daysMask).lr(unk2).lr(monthsMask).lr(serverTs);
+        #else
+            s.b(unk1).lr(daysMask).lr(monthsMask).lr(serverTs).skip(3);
+        #endif // PW_SERVER_VERSION < 1720
         }
 
         void print(tostream & stream) const

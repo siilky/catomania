@@ -258,6 +258,16 @@ bool CharAttrs::read(SerializerIn & s)
         offset += 1;
     }
 #endif
+#if PW_SERVER_VERSION >= 1720
+    if (primary_[6] & 0x20)	// 0x200000
+    {
+        offset += 20;
+    }
+    if (primary_[1] & 0x20)
+    {
+        offset++;
+    }
+#endif
 
 #if defined(PW_SERVER_CHARINFOEXT)
     std::vector<byte> header;
