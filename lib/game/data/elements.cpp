@@ -319,7 +319,7 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
                 {
                     if (!sizeMismatchReported)
                     {
-                        Log("List %zi %hs size mismatch %zi actual %zi", listNumber, list->name.c_str(), expectedSize, itemSize);
+                        Log("List %zi %hs size mismatch: config %zi actual %zi", listNumber, list->name.c_str(), expectedSize, itemSize);
                         sizeMismatchReported = true;
                         isPartialLoad = true;
                     }
