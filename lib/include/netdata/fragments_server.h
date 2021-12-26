@@ -934,7 +934,11 @@ namespace serverdata
             template<int mode> void format(Serializer<mode> & s)
             {
                 s.b(zoneNumber).b(zoneLevel).b(u0)
-                    .l(owningClan).l(attackingClan).l(battleTime).l(u1).l(u2);
+                    .l(owningClan).l(attackingClan).l(battleTime).l(u1)
+                #if PW_SERVER_VERSION <= 1710
+                    .l(u2)
+                #endif
+                    ;
             }
         };
 
