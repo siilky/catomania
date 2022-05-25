@@ -1686,7 +1686,9 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
                 const unsigned wid = 1024;
                 const unsigned hei = 768;
                 const unsigned z = 0;
+            #if CLIENT_VERSION >= 1530
                 const unsigned sm = 4;
+            #endif
 
                 success =
                 #if CLIENT_VERSION < 1520
