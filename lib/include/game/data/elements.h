@@ -35,7 +35,7 @@ namespace elements
     static const char * FASHION             = "FASHION_ESSENCE";
     static const char * TRANS_SCROLLS       = "FACETICKET_ESSENCE";
     //static const char * HEAD_BOLUS          = "SUITE_ESSENCE";
-	static const char * PET_ESSENCE			= "PET_ESSENCE";
+    static const char * PET_ESSENCE			= "PET_ESSENCE";
     static const char * PET_EGGS            = "PET_EGG_ESSENCE";
     static const char * PET_FOOD            = "PET_FOOD_ESSENCE";
     static const char * PET_TRANSFIGURATION = "PET_FACETICKET_ESSENCE";
@@ -66,7 +66,7 @@ namespace elements
     static const char * BANKNOTES           = "MONEY_CONVERTIBLE_ESSENCE";
     // 1.5.1
     static const char * UNIVERSAL_TOKEN     = "UNIVERSAL_TOKEN_ESSENCE";
-	static const char * POKER_ESSENCE		= "POKER_ESSENCE";
+    static const char * POKER_ESSENCE		= "POKER_ESSENCE";
     static const char * CARDS               = "POKER_DICE_ESSENCE";
     // 1.5.2
     static const char * ASTROLABE_ESSENCE                       = "ASTROLABE_ESSENCE";  
@@ -84,7 +84,7 @@ namespace elements
     static const char * UNLOCK_RUNE_SLOT_ITEM_ESSENCE           = "UNLOCK_RUNE_SLOT_ITEM_ESSENCE";
     static const char * RUNE_ITEM_ESSENCE                       = "RUNE_ITEM_ESSENCE";
 
-	static const char * HOME_UNLOCK_PAPER_ESSENCE				= "HOME_UNLOCK_PAPER_ESSENCE";
+    static const char * HOME_UNLOCK_PAPER_ESSENCE				= "HOME_UNLOCK_PAPER_ESSENCE";
     static const char * FIX_MONSTER_ITEM_ESSENCE                = "FIX_MONSTER_ITEM_ESSENCE";
     static const char * ITEM_USED_FOR_AREA_ESSENCE              = "ITEM_USED_FOR_AREA_ESSENCE";
     static const char * CAPTURE_ITEM_ESSENCE                    = "CAPTURE_ITEM_ESSENCE";
@@ -422,14 +422,14 @@ public:
     bool getItem(unsigned id, Item & item) const;
     //const Item & getItem(const char *listName, unsigned id);
 
-	auto begin() const
-	{
-		return itemLists_.begin();
-	}
-	auto end() const
-	{
-		return itemLists_.end();
-	}
+    auto begin() const
+    {
+        return itemLists_.begin();
+    }
+    auto end() const
+    {
+        return itemLists_.end();
+    }
 
 private:
     Value getValue(FileReader &fr, std::pair<Value::ValueType, unsigned /*width*/> type);

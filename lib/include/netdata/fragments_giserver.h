@@ -226,12 +226,12 @@ namespace serverdata
                 {
                     #if PW_SERVER_VERSION <= 1510
                         s.arr(bStatus, 16, &Serializer<mode>::b);
-					#elif PW_SERVER_VERSION < 1600
-						s.arr(bStatus, 24, &Serializer<mode>::b);
-					#elif PW_SERVER_VERSION < 1700
-						s.arr(bStatus, 28, &Serializer<mode>::b);
-					#else      
-						s.arr(bStatus, 36, &Serializer<mode>::b);
+                    #elif PW_SERVER_VERSION < 1600
+                        s.arr(bStatus, 24, &Serializer<mode>::b);
+                    #elif PW_SERVER_VERSION < 1700
+                        s.arr(bStatus, 28, &Serializer<mode>::b);
+                    #else      
+                        s.arr(bStatus, 36, &Serializer<mode>::b);
                     #endif
                 }
                 if ((status & 0x1000) != 0)
@@ -1631,9 +1631,9 @@ namespace serverdata
             stream << _T("  [Item to Money]  Slot:") << dec << (unsigned)slot << _T(" Id:") << hex << setw(8) << itemId
                 << _T(" Amount:") << dec << amount 
                 << _T(" Money:") << money 
-			#if PW_SERVER_VERSION >= 1640
-				<< _T(" Silver:") << silverMoney
-			#endif
+            #if PW_SERVER_VERSION >= 1640
+                << _T(" Silver:") << silverMoney
+            #endif
                 << endl;
         }
     };
@@ -2542,8 +2542,8 @@ namespace serverdata
             int     count;
             DWORD   price;
             DWORD   unk;
-			DWORD   unk2;
-			barray  attrs;
+            DWORD   unk2;
+            barray  attrs;
 
             template<int mode> void format(Serializer<mode> & s)
             {
@@ -2557,10 +2557,10 @@ namespace serverdata
                     {
                         // предмет на продажу
                         s.lr(unk)
-						#if PW_SERVER_VERSION >= 1620
-							.lr(unk2)
-						#endif
-							.arr(attrs, &Serializer<mode>::wr, &Serializer<mode>::b);
+                        #if PW_SERVER_VERSION >= 1620
+                            .lr(unk2)
+                        #endif
+                            .arr(attrs, &Serializer<mode>::wr, &Serializer<mode>::b);
                     }
                     else
                     {

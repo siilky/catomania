@@ -34,7 +34,11 @@ static ErrorState loadElements(const wchar_t *elements, const wchar_t *config)
     if (error.code != ERR_NO_ERROR && error.code != ERR_PARTIAL_DATA)
     {
         g_elements_ = elements::ItemListCollection();
-        return error;
+        // temporary failthrough
+        if (data.version() == 0)
+        {
+            return error;
+        }
     }
 #else
     (void) elements;

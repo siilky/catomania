@@ -2023,7 +2023,7 @@ void CatCtl::saveMarketSetup()
 
     json.set(L"ShopItems", marketSetup_, json::DirectConversion<MarketItemSetup>());
     json.set(L"ShopTitle", marketTitle_);
-	json.set(L"Money", gameThread_->getMoney());
+    json.set(L"Money", gameThread_->getMoney());
 
     json.set(L"LastUpdate", QDateTime::currentDateTime().toTime_t());
 
