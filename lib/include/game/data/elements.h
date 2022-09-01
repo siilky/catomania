@@ -432,7 +432,34 @@ public:
     }
 
 private:
-    Value getValue(FileReader &fr, std::pair<Value::ValueType, unsigned /*width*/> type);
+    class PackedList
+    {
+    public:
+        PackedList(FileReader & fr, size_t itemSize);
+
+        size_t count() const
+        {
+            return items.size();
+        }
+
+        MemReader nextItem();
+
+    private:
+        struct Entry
+        {
+            unsigned id;
+            int16_t size;
+        };
+
+        const size_t itemSize_;
+        std::vector<Entry>  items;
+        MemReader mr_;
+        barray data_;
+        size_t offset_ = 0;
+        int curIndex_ = 0;
+    };
+
+    Value getValue(MemReader &mr, std::pair<Value::ValueType, unsigned /*width*/> type);
 
     typedef std::vector< std::shared_ptr<ItemList> >  ItemLists;
 

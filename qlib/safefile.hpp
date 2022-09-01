@@ -3,8 +3,8 @@
 class SafeFile
 {
 public:
-	SafeFile(const QString & pathname);
-	~SafeFile();
+    SafeFile(const QString & pathname);
+    ~SafeFile();
 
     bool read(QByteArray & data);
     bool write(const QByteArray & data);

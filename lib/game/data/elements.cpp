@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "game/data/elements.h"
 #include "game/data/filereader.h"
+#include <netio/mppc.h>
 
 namespace elements
 {
@@ -122,99 +123,11 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
     ErrorState result;
 
     //
-    // Read element configuration
-    //
-
-    std::ifstream config(configFile.c_str());
-    if ( ! config)
-    {
-        result.set(ERR_INVALID_DATA, 0, L"Elements: can't open config file");
-        return result;
-    }
-
-    std::vector<ListConfig> elementConfig;
-
-    enum state_t
-    {
-        READ_NAME = 0,
-        READ_VARS,
-        READ_TYPES,
-    } state = READ_NAME;
-
-    ListConfig current;
-    unsigned lineCtr = 0;
-    std::string line;
-
-    while( ! config.eof())
-    {
-        getline(config, line);
-        lineCtr++;
-
-        if (line.empty())
-        {
-            continue;
-        }
-
-        switch (state)
-        {
-            case READ_NAME:
-                current.name = line;
-                state = READ_VARS;
-                break;
-
-            case READ_VARS:
-                current.names = split(line, ';');
-                if (current.names.empty())
-                {
-                    result.set(ERR_INVALID_DATA, 0, std::wstring(L"Wrong variable list at line ") + std::to_wstring(lineCtr));
-                    return result;
-                }
-                state = READ_TYPES;
-                break;
-
-            case READ_TYPES:
-            {
-                std::vector< std::string > types = split(line, ';');
-                if (types.empty() || ! current.setTypes(types))
-                {
-                    result.set(ERR_INVALID_DATA, 0, std::wstring(L"Wrong variable list at line ") + std::to_wstring(lineCtr));
-                    return result;
-                }
-
-                if (current.names.size() != current.types.size())
-                {
-                    result.set(ERR_INVALID_DATA, 0, std::wstring(L"Names and types size mismatch at line ") + std::to_wstring(lineCtr));
-                    return result;
-                }
-
-                elementConfig.push_back(current);
-
-                current.name.clear();
-                current.types.clear();
-                current.names.clear();
-
-                state = READ_NAME;
-                break;
-            }
-
-            default:
-                assert(0);
-                state = READ_NAME;
-        }
-    }
-
-    if (elementConfig.empty())
-    {
-        result.set(ERR_INVALID_DATA, 0, L"Elements configuration error");
-        return result;
-    }
-
-    //
-    // Read element data
+    // Read elements version first
     //
 
     FileReader fr;
-    if ( ! fr.open(dataFile))
+    if (!fr.open(dataFile))
     {
         result.set(ERR_INVALID_DATA, 0, std::wstring(L"Error opening element file '") + dataFile + L"'");
         return result;
@@ -223,6 +136,144 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
     elVersion_ = fr.readWord();
     /*const unsigned elSign =*/ fr.readWord();
     /*const unsigned elTs =*/ fr.readDword();
+
+
+    std::vector<int> elementSizes;
+    std::vector<ListConfig> elementConfig;
+
+    //
+    // Read element configuration
+    //
+
+    {
+        std::ifstream config(configFile.c_str());
+        if ( ! config)
+        {
+            result.set(ERR_INVALID_DATA, 0, L"Elements: can't open config file");
+            return result;
+        }
+
+        std::string line;
+
+        if (elVersion_ >= 352)
+        {
+            getline(config, line);
+            auto numbers = stringSplit(line, ",");
+            try
+            {
+                for (auto & s : numbers)
+                {
+                    elementSizes.push_back(std::stoi(s));
+                }
+            }
+            catch (const std::invalid_argument &)
+            {
+                result.set(ERR_CONFIG, 0, L"Elements: failed to parse element sizes entry");
+                return result;
+            }
+
+            if (elementSizes.empty())
+            {
+                result.set(ERR_CONFIG, 0, L"Elements: missing element sizes entry");
+                return result;
+            }
+        }
+
+        enum state_t
+        {
+            READ_NAME = 0,
+            READ_VARS,
+            READ_TYPES,
+        } state = READ_NAME;
+
+        ListConfig current;
+        unsigned lineCtr = 0;
+
+        while( ! config.eof())
+        {
+            getline(config, line);
+            lineCtr++;
+
+            if (line.empty())
+            {
+                continue;
+            }
+
+            switch (state)
+            {
+                case READ_NAME:
+                    current.name = line;
+                    state = READ_VARS;
+                    break;
+
+                case READ_VARS:
+                    current.names = split(line, ';');
+                    if (current.names.empty())
+                    {
+                        result.set(ERR_INVALID_DATA, 0, std::wstring(L"Wrong variable list at line ") + std::to_wstring(lineCtr));
+                        return result;
+                    }
+                    state = READ_TYPES;
+                    break;
+
+                case READ_TYPES:
+                {
+                    std::vector< std::string > types = split(line, ';');
+                    if (types.empty() || ! current.setTypes(types))
+                    {
+                        result.set(ERR_INVALID_DATA, 0, std::wstring(L"Wrong variable list at line ") + std::to_wstring(lineCtr));
+                        return result;
+                    }
+
+                    if (current.names.size() != current.types.size())
+                    {
+                        result.set(ERR_INVALID_DATA, 0, std::wstring(L"Names and types size mismatch at line ") + std::to_wstring(lineCtr));
+                        return result;
+                    }
+
+                    elementConfig.push_back(current);
+
+                    current.name.clear();
+                    current.types.clear();
+                    current.names.clear();
+
+                    state = READ_NAME;
+                    break;
+                }
+
+                default:
+                    assert(0);
+                    state = READ_NAME;
+            }
+        }
+
+        if (elementConfig.empty())
+        {
+            result.set(ERR_INVALID_DATA, 0, L"Elements configuration error");
+            return result;
+        }
+    }
+
+    //
+    // Read element data
+    //
+
+    if (elVersion_ >= 352)
+    {
+        auto s1 = fr.readDword();
+        fr.move(s1);
+
+        /*auto f1 =*/ fr.readDword();
+
+        auto s2 = fr.readDword();
+        fr.move(s2);
+
+        /*auto f2 =*/ fr.readDword();
+        /*auto f3 =*/ fr.readDword();
+
+        auto s3 = fr.readDword();
+        fr.move(s3);
+    }
 
     bool isPartialLoad = false;
 
@@ -271,21 +322,41 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
 
         unsigned itemCount = 1;
         unsigned itemSize = 0;
-        if (listConfig.types[0].first != Value::CountOverride)
+        if (listConfig.types[0].first == Value::CountOverride)
         {
-            if (elVersion_ >= 191 )
-            {
-                /*const unsigned listType =*/ fr.readDword();
-            }
-            itemCount = fr.readDword();
-            if (elVersion_ >= 191)
-            {
-                itemSize = fr.readDword();
-            }
+            listConfig.types.erase(listConfig.types.begin());
         }
         else
         {
-            listConfig.types.erase(listConfig.types.begin());
+            if (elVersion_ < 352)
+            {
+                if (elVersion_ >= 191)
+                {
+                    /*auto listType =*/ fr.readDword();
+                }
+                itemCount = fr.readDword();
+                if (elVersion_ >= 191)
+                {
+                    itemSize = fr.readDword();
+                }
+            }
+            else
+            {
+                itemSize = elementSizes[listNumber];
+            }
+        }
+
+        std::unique_ptr<PackedList> pList;
+
+        if (elVersion_ >= 352)
+        {
+            if (listNumber == 58)
+            {
+                continue;
+            }
+
+            pList = std::make_unique<PackedList>(fr, itemSize);
+            itemCount = pList->count();
         }
 
         bool sizeMismatchReported = false;
@@ -297,12 +368,19 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
 
             item.values_.resize(item.names_->size());
             unsigned valueIndex = 0;
-
+            
             const size_t startOffset = fr.offset();
+            MemReader mr { elVersion_ >= 352 ? pList->nextItem() : MemReader() };
+        #if defined(_DEBUG)
+            std::vector<elements::Value> values;
+        #endif
 
             for (size_t field = 0; field < listConfig.types.size(); ++field)
             {
-                elements::Value value = getValue(fr, listConfig.types[field]);
+                elements::Value value = getValue(elVersion_ >= 352 ? mr : fr, listConfig.types[field]);
+            #if defined(_DEBUG)
+                values.push_back(value);
+            #endif
 
                 if (listConfig.names[field] != "?")
                 {
@@ -312,7 +390,20 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
                 }
             }
 
-            if (itemSize != 0)
+            if (elVersion_ >= 352)
+            {
+                assert(mr.offset() == mr.size());
+                if (mr.offset() != mr.size())
+                {
+                    if (!sizeMismatchReported)
+                    {
+                        Log("List %zi %hs size mismatch: config %zi actual %zi", listNumber, list->name.c_str(), mr.offset(), mr.size());
+                        sizeMismatchReported = true;
+                        isPartialLoad = true;
+                    }
+                }
+            }
+            else if (itemSize != 0)
             {
                 auto expectedSize = fr.offset() - startOffset;
                 if (expectedSize != itemSize)
@@ -353,31 +444,31 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
     return result;
 }
 
-elements::Value ItemListCollection::getValue(FileReader &fr, std::pair<Value::ValueType, unsigned /*width*/> type)
+elements::Value ItemListCollection::getValue(MemReader & mr, std::pair<Value::ValueType, unsigned /*width*/> type)
 {
     switch (type.first)
     {
         case ListConfig::Type::Int32:
         {
-            int v = fr.readDword();
+            int v = mr.readDword();
             return Value(v);
         }
 
         case ListConfig::Type::Float:
         {
-            float v = fr.readFloat();
+            float v = mr.readFloat();
             return Value(v);
         }
 
         case ListConfig::Type::String:
         {
-            std::string v = fr.readString(type.second);
+            std::string v = mr.readString(type.second);
             return Value(v);
         }
 
         case ListConfig::Type::Wstring:
         {
-            std::wstring v = fr.readWstring(type.second / 2);
+            std::wstring v = mr.readWstring(type.second / 2);
             return Value(v);
         }
 
@@ -387,17 +478,17 @@ elements::Value ItemListCollection::getValue(FileReader &fr, std::pair<Value::Va
             switch (type.second)
             {
                 case 2:
-                    size = fr.readWord();
+                    size = mr.readWord();
                     break;
                 case 4:
-                    size = fr.readDword();
+                    size = mr.readDword();
                     break;
                 default:
                     assert(0);
             }
             if (size > 0)
             {
-                barray v = fr.readBytes(size);
+                barray v = mr.readBytes(size);
                 return Value(v);
             }
             return Value();
@@ -474,5 +565,74 @@ bool ItemListCollection::getItem(unsigned id, Item & item) const
     }
     return false;
 }
+
+//
+
+ItemListCollection::PackedList::PackedList(FileReader & fr, size_t itemSize)
+    : itemSize_(itemSize)
+{
+    auto count = fr.readDword();
+    if (count == 0)
+    {
+        return;
+    }
+
+    while (fr && count--)
+    {
+        items.push_back(std::move(Entry { fr.readDword(), int16_t(fr.readWord()) }));
+    }
+    if (!fr) return;
+
+    auto size = fr.readDword();
+    data_ = fr.readBytes(size);
+    mr_.open(data_.data(), size);
+}
+
+MemReader ItemListCollection::PackedList::nextItem()
+{
+    auto compressed = barray(data_.data() + offset_, data_.data() + offset_ + items[curIndex_].size);
+    offset_ += items[curIndex_].size;
+    ++curIndex_;
+
+    barray data;
+
+    if (itemSize_ > 0x2000)
+    {
+        auto it = compressed.begin();
+
+        while (data.size() < itemSize_)
+        {
+            auto chunkRem = getWORD_r(it);
+            //compressed.erase(compressed.begin(), it);
+
+            auto chunkSz = chunkRem & 0x7FFF;
+            if (chunkSz != 0)
+            {
+                MPPCDecoder dec;
+                auto chunk = dec.transform(barray(it, it + chunkSz));
+                data.insert(data.end(), chunk.begin(), chunk.end());
+                it += chunkSz;
+            }
+            else
+            {
+                assert(0);
+                // ??
+                data.insert(data.end(), it, compressed.end());
+            }
+        }
+    }
+    else
+    {
+        MPPCDecoder dec;
+        data = dec.transform(compressed);
+    }
+        
+    assert(data.size() == itemSize_);
+
+    MemReader mr;
+    mr.open(std::move(data));
+    return mr;
+}
+
 
 } // namespace

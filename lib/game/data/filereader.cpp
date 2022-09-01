@@ -4,21 +4,6 @@
 #include "game/data/filereader.h"
 
 
-FileReader::FileReader()
-    : isGood_(false)
-    , size_(0)
-    , offset_(0)
-    , file_(INVALID_HANDLE_VALUE)
-    , fileMapping_(INVALID_HANDLE_VALUE)
-    , memory_(0)
-{
-}
-
-FileReader::~FileReader()
-{
-    close();
-}
-
 bool FileReader::open(const std::wstring & filename)
 {
     if (file_ != INVALID_HANDLE_VALUE)
@@ -41,16 +26,15 @@ bool FileReader::open(const std::wstring & filename)
 
         if (low != INVALID_FILE_SIZE)
         {
-            size_ = ((long long)high << 32) | (long long)low;
+            size_t size = (long long(high) << 32) | long long(low);
 
             fileMapping_ = CreateFileMapping(file_, 0, PAGE_READONLY, high, low, 0);
             if (fileMapping_ != 0)
             {
-                memory_ = MapViewOfFile(fileMapping_, FILE_MAP_READ, 0, 0, size_);
-                if (memory_ != 0)
+                auto memory = MapViewOfFile(fileMapping_, FILE_MAP_READ, 0, 0, size);
+                if (memory != 0)
                 {
-                    offset_ = 0;
-                    isGood_ = true;
+                    MemReader::open(memory, size);
                 }
             }
         }
@@ -73,7 +57,6 @@ void FileReader::close()
     if (memory_ != 0)
     {
         UnmapViewOfFile(memory_);
-        memory_ = 0;
     }
 
     if (fileMapping_ != 0)
@@ -88,11 +71,11 @@ void FileReader::close()
         file_ = INVALID_HANDLE_VALUE;
     }
 
-    isGood_ = false;
-    size_ = 0;
+    MemReader::close();
 }
 
-void FileReader::move(size_t offset)
+
+void MemReader::move(size_t offset)
 {
     if (offset_ + offset <= size_)
     {
@@ -104,7 +87,7 @@ void FileReader::move(size_t offset)
     }
 }
 
-byte FileReader::readByte()
+byte MemReader::readByte()
 {
     byte result = 0;
 
@@ -121,7 +104,7 @@ byte FileReader::readByte()
     return result;
 }
 
-WORD FileReader::readWord()
+WORD MemReader::readWord()
 {
     WORD result = 0;
 
@@ -138,7 +121,7 @@ WORD FileReader::readWord()
     return result;
 }
 
-DWORD FileReader::readDword()
+DWORD MemReader::readDword()
 {
     DWORD result = 0;
 
@@ -155,7 +138,7 @@ DWORD FileReader::readDword()
     return result;
 }
 
-float FileReader::readFloat()
+float MemReader::readFloat()
 {
     float result = 0;
 
@@ -172,7 +155,7 @@ float FileReader::readFloat()
     return result;
 }
 
-std::string FileReader::readString(size_t size)
+std::string MemReader::readString(size_t size)
 {
     std::string result;
 
@@ -196,7 +179,7 @@ std::string FileReader::readString(size_t size)
     return result;
 }
 
-std::wstring FileReader::readWstring(size_t size)
+std::wstring MemReader::readWstring(size_t size)
 {
     std::wstring result;
 
@@ -224,7 +207,7 @@ std::wstring FileReader::readWstring(size_t size)
     return result;
 }
 
-barray FileReader::readBytes(size_t size)
+barray MemReader::readBytes(size_t size)
 {
     barray result;
 

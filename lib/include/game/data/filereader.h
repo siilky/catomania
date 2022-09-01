@@ -3,15 +3,52 @@
 
 #include "types.h"
 
-class FileReader
+class MemReader
 {
+    MemReader(const MemReader &) = delete;
+    MemReader operator=(const MemReader &) = delete;
 public:
-    FileReader();
-    virtual ~FileReader();
+    MemReader() = default;
+    MemReader(MemReader && r)
+        : internalData_(std::move(r.internalData_))
+        , size_(r.size_)
+        , offset_(r.offset_)
+        , isGood_(r.isGood_)
+    {
+        memory_ = internalData_.empty() ? r.memory_ : internalData_.data();
+    }
 
-    bool open(const std::wstring & filename);
+    virtual ~MemReader()
+    {
+        close();
+    }
 
-    operator bool()
+    void open(barray && data)
+    {
+        internalData_ = data;
+        memory_ = internalData_.data();
+        size_ = data.size();
+        offset_ = 0;
+        isGood_ = true;
+    }
+
+    void open(void * memory, size_t size)
+    {
+        memory_ = memory;
+        size_ = size;
+        offset_ = 0;
+        isGood_ = true;
+    }
+
+    void close()
+    {
+        internalData_.clear();
+        isGood_ = false;
+        memory_ = 0;
+        size_ = 0;
+    }
+
+    operator bool() const
     {
         return isGood_;
     }
@@ -26,6 +63,7 @@ public:
         return offset_;
     }
 
+
 //     byte operator[](size_t offset);
 
     void            move(size_t offset);
@@ -37,15 +75,29 @@ public:
     std::wstring    readWstring(size_t size);
     barray          readBytes(size_t size);
 
-private:
-    bool    isGood_;
-    size_t  offset_, size_;
+protected:
+    bool    isGood_ = false;
+    size_t  offset_ = 0, size_ = 0;
 
+    void   *memory_ = 0;
+    barray internalData_;
+};
+
+
+class FileReader : public MemReader
+{
+public:
+    ~FileReader()
+    {
+        close();
+    }
+
+    bool open(const std::wstring & filename);
     void close();
 
-    HANDLE  file_;
-    HANDLE  fileMapping_;
-    void   *memory_;
+private:
+    HANDLE  file_ = INVALID_HANDLE_VALUE;
+    HANDLE  fileMapping_ = INVALID_HANDLE_VALUE;
 };
 
 
