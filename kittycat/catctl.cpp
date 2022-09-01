@@ -283,7 +283,7 @@ CatCtl::CatCtl(const JsonValue & config, QObject *parent /*= NULL*/ )
         reconnectTimer_.start();
     }
 
-    VMProtectBeginVirtualization(__FUNCTION__);
+    //VMProtectBeginVirtualization(__FUNCTION__);
     if (Vmp::hasOption(Vmp::OptionHistory))
     {
         tradeHistory_ = new HistoryDb();
@@ -303,7 +303,7 @@ CatCtl::CatCtl(const JsonValue & config, QObject *parent /*= NULL*/ )
         autoPriceMonitor_ = 0;
     }
 
-    VMProtectEnd();
+    //VMProtectEnd();
 }
 
 CatCtl::~CatCtl()
