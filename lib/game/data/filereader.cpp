@@ -87,13 +87,13 @@ void MemReader::move(size_t offset)
     }
 }
 
-byte MemReader::readByte()
+uint8_t MemReader::readByte()
 {
-    byte result = 0;
+    uint8_t result = 0;
 
     if (offset_ < size_)
     {
-        result = *((byte*)(memory_) + offset_);
+        result = *((uint8_t *)(memory_) + offset_);
         offset_++;
     }
     else
@@ -104,13 +104,13 @@ byte MemReader::readByte()
     return result;
 }
 
-WORD MemReader::readWord()
+uint16_t MemReader::readWord()
 {
-    WORD result = 0;
+    uint16_t result = 0;
 
     if ((offset_ + 2) <= size_)
     {
-        result = *(WORD*)((byte*)(memory_) + offset_);
+        result = *(uint16_t *)((byte*)(memory_) + offset_);
         offset_ += 2;
     }
     else
@@ -121,13 +121,13 @@ WORD MemReader::readWord()
     return result;
 }
 
-DWORD MemReader::readDword()
+uint32_t MemReader::readDword()
 {
-    DWORD result = 0;
+    uint32_t result = 0;
 
     if ((offset_ + 4) <= size_)
     {
-        result = *(DWORD*)((byte*)(memory_) + offset_);
+        result = *(uint32_t *)((byte*)(memory_) + offset_);
         offset_ += 4;
     }
     else

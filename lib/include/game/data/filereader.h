@@ -53,6 +53,11 @@ public:
         return isGood_;
     }
 
+    bool eof() const
+    {
+        return offset_ >= size_;
+    }
+
     size_t size() const
     {
         return size_;
@@ -67,9 +72,9 @@ public:
 //     byte operator[](size_t offset);
 
     void            move(size_t offset);
-    byte            readByte();
-    WORD            readWord();
-    DWORD           readDword();
+    uint8_t         readByte();
+    uint16_t        readWord();
+    uint32_t        readDword();
     float           readFloat();
     std::string     readString(size_t size);
     std::wstring    readWstring(size_t size);
