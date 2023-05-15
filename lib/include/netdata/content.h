@@ -161,8 +161,10 @@ private:
     bool    isParsed_ = false;
 #if PW_SERVER_VERSION < 1500
     byte    primary_[4];
-#else
+#elif PW_SERVER_VERSION < 1760
     byte    primary_[8];
+#else
+    byte    primary_[12];
 #endif
     barray  additional_;
 

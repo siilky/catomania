@@ -1,7 +1,7 @@
 #ifndef gshop_h_
 #define gshop_h_
 
-#define GSHOP_VERSION   1710
+#define GSHOP_VERSION   1760
 
 namespace GShop
 {
@@ -62,6 +62,12 @@ public:
 #if GSHOP_VERSION >= 1700
     unsigned    extra4;
     unsigned    extra5;
+#endif
+#if GSHOP_VERSION >= 1760
+    unsigned    extra6;
+    unsigned    extra7;
+    unsigned    extra8;
+    unsigned    extra9;
 #endif
 
     bool isNull() const

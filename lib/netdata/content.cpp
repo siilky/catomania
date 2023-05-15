@@ -35,9 +35,12 @@ bool CharAttrs::read(SerializerIn & s)
 #if PW_SERVER_VERSION < 1470
     copy(offset, offset + 4, primary_);
     offset += 4;
-#else
+#elif PW_SERVER_VERSION < 1760
     copy(offset, offset + 8, primary_);
     offset += 8;
+#else
+    copy(offset, offset + 12, primary_);
+    offset += 12;
 #endif
 
     barray::const_iterator pos = offset;
@@ -56,6 +59,9 @@ bool CharAttrs::read(SerializerIn & s)
     if (primary_[0] & 0x02)
     {
         offset++;
+    #if PW_SERVER_VERSION >= 1760
+        offset++;
+    #endif
     }
 
     if (primary_[0] & 0x40)
@@ -199,9 +205,15 @@ bool CharAttrs::read(SerializerIn & s)
     {
         offset += 4;
     }
-    if (primary_[5] & 0x04)
+    if (primary_[5] & 0x04) // +26  0x400
     {
         // float
+        offset += 4;
+    }
+#endif
+#if PW_SERVER_VERSION >= 1760
+    if (primary_[5] & 0x40) // +26  0x4000
+    {
         offset += 4;
     }
 #endif
@@ -222,18 +234,18 @@ bool CharAttrs::read(SerializerIn & s)
     }
 #endif
 #if PW_SERVER_VERSION >= 1620
-	if (primary_[5] & 0x80)	// 0x8000
-	{
-		offset += 4;
-	}
-	if (primary_[6] & 0x01)	// 0x10000
-	{
-		offset ++;
-	}
-	if (primary_[6] & 0x02)	// 0x20000
-	{
-		offset += 4;
-	}
+    if (primary_[5] & 0x80)	// 0x8000
+    {
+        offset += 4;
+    }
+    if (primary_[6] & 0x01)	// 0x10000
+    {
+        offset ++;
+    }
+    if (primary_[6] & 0x02)	// 0x20000
+    {
+        offset += 4;
+    }
 #endif
 #if PW_SERVER_VERSION < 1700
     if (primary_[6] & 0x04)	// 0x40000
@@ -258,14 +270,28 @@ bool CharAttrs::read(SerializerIn & s)
         offset += 1;
     }
 #endif
+#if PW_SERVER_VERSION >= 1760
+    if (primary_[1] & 0x20) // 0x2000
+    {
+        offset++;
+    }
+#endif
 #if PW_SERVER_VERSION >= 1720
     if (primary_[6] & 0x20)	// 0x200000
     {
         offset += 20;
     }
-    if (primary_[1] & 0x20)
+    #if PW_SERVER_VERSION < 1760
+        if (primary_[1] & 0x20)
+        {
+            offset++;
+        }
+    #endif
+#endif
+#if PW_SERVER_VERSION >= 1760
+    if (primary_[7] & 0x01)	// 0x1000000
     {
-        offset++;
+        offset += 2;
     }
 #endif
 

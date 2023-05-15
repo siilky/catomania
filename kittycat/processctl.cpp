@@ -1068,7 +1068,7 @@ static const ProcessCtl::BreakpointData closeWindowBp
 
     // 6a 06 ? ff ? 6a 00 ? ff ?
     0x000000,
-    0x600000,
+    0x650000,
     {
         0x6A, 0x06, 0x156, 0xFF, 0x1D7,
         0x6A, 0x00, 0x156, 0xFF,
@@ -1146,7 +1146,7 @@ static const ProcessCtl::BreakpointData adjustSettingsBp3
     // .text:008A53F9 044 EB C6                                         jmp     short loc_8A53C1
     // c2 0c 00 ff 75 10 8b ce e8 ? ? ? ?
     0x4A0000,
-    0x100000,
+    0x150000,
     {
         0xC2, 0x0C, 0x00,
         0xff, 0x75, 0x10,
@@ -1481,7 +1481,7 @@ static const ProcessCtl::PatchData lowCpuPatch3
     // .text:00433DC5 038 E9 88 00 00 00                                jmp     loc_433C75
 
     0x000000,
-    0x600000,
+    0x650000,
     {
         0x6A, 0x0F,
         0xFF, 0x15, 0x148, 0x142, 0x1D4, 0x100,
@@ -1631,18 +1631,18 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
                 && ((opId++, serverAddress_.isEmpty()) // if server not empty then set BP
                     || ((replaceServerBp_ = placeBreakpoint(replaceServerBp)) != 0
                         || (replaceServerBp2_ = placeBreakpoint(replaceServerBp2)) != 0
-                        || (replaceServerBp3_ = placeBreakpoint(replaceServerBp3)) != 0))
+                        || (replaceServerBp3_ = placeBreakpoint(replaceServerBp3)) != 0))       // 2
                 && (isSafeMode_
                     || (   (opId++, (applyPatch(disableProtector) || applyPatch(disableProtector2) || applyPatch(disableProtector3) || applyPatch(disableProtector4) || applyPatch(disableProtector5)))
                         && (opId++, (applyPatch(createWindowSkipShowPatch) || applyPatch(createWindowSkipShowPatch2) || applyPatch(createWindowSkipShowPatch3)))  //3
                         && (opId++, ((adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp)) != 0
                                      || (adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp2)) != 0
-                                     || (adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp3)) != 0))
-                        && (opId++, ((createWindowBp_ = placeBreakpoint(createWindowBp)) != 0
+                                     || (adjustSettingsBp_ = placeBreakpoint(adjustSettingsBp3)) != 0)) // 5
+                        && (opId++, ((createWindowBp_ = placeBreakpoint(createWindowBp)) != 0   // 6
                                      || (createWindowBp_ = placeBreakpoint(createWindowBp2)) != 0
                                      || (createWindowBp_ = placeBreakpoint(createWindowBp3)) != 0))
-                        && (opId++, closeWindowBp_ = placeBreakpoint(closeWindowBp)) != 0
-                        && (opId++, ((replaceRoleBp_ = placeBreakpoint(replaceRoleBp)) != 0)     // 8
+                        && (opId++, closeWindowBp_ = placeBreakpoint(closeWindowBp)) != 0       // 7
+                        && (opId++, ((replaceRoleBp_ = placeBreakpoint(replaceRoleBp)) != 0)    // 8
                         #if CLIENT_VERSION >= 1520
                             || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp2)) != 0
                             || (replaceRoleBp_ = placeBreakpoint(replaceRoleBp3)) != 0
@@ -1657,7 +1657,7 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
                                      || applyPatch(noSaveSettingsPatch3)
                                      || applyPatch(noSaveSettingsPatch4)))      // 10
                         && (opId++, applyPatch(noMediaPatch) || applyPatch(noMediaPatch2))
-                        && (opId++, applyPatch(lowCpuPatch) || applyPatch(lowCpuPatch2) || applyPatch(lowCpuPatch3))
+                        && (opId++, applyPatch(lowCpuPatch) || applyPatch(lowCpuPatch2) || applyPatch(lowCpuPatch3))    // 12
                         )
                     )
                 )
@@ -1686,7 +1686,7 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
                 const unsigned wid = 1024;
                 const unsigned hei = 768;
                 const unsigned z = 0;
-            #if CLIENT_VERSION >= 1520
+            #if CLIENT_VERSION >= 1520 && CLIENT_VERSION < 1760
                 const unsigned sm = 4;
             #endif
 
@@ -1756,12 +1756,18 @@ void ProcessCtl::breakpoint(quintptr addr, unsigned threadId)
                     && memoryAccess_->write(((byte *)pSettings_) + 0xE7, &z, 1)              // FullScreen
                     && memoryAccess_->write(((byte *)pSettings_) + 0xE9, &z, 1)              // VerticalSync
                     && memoryAccess_->write(((byte *)pSettings_) + 0x34A, &sm, 4)            // SimplifyMode
-                #else
+                #elif CLIENT_VERSION < 1760
                     memoryAccess_->write(((byte *)pSettings_) + 0x10B, &wid, 4)              // RenderWid
                     && memoryAccess_->write(((byte *)pSettings_) + 0x10F, &hei, 4)           // RenderHei
                     && memoryAccess_->write(((byte *)pSettings_) + 0x11C, &z, 1)             // FullScreen
                     && memoryAccess_->write(((byte *)pSettings_) + 0x11D, &z, 1)             // VerticalSync
                     && memoryAccess_->write(((byte *)pSettings_) + 0x128, &sm, 1)            // SimplifyMode
+                #else
+                    memoryAccess_->write(((byte *)pSettings_) + 0x10F, &wid, 4)              // RenderWid
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x113, &hei, 4)           // RenderHei
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x11F, &z, 1)             // FullScreen
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x121, &z, 1)             // VerticalSync
+                    && memoryAccess_->write(((byte *)pSettings_) + 0x12C, &z, 1)             // ModeSetting (SimplifyMode)
                 #endif
                     && debugger_->removeBreakpoint(adjustSettingsBp_)
                     ;

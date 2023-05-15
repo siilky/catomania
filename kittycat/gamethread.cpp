@@ -576,8 +576,11 @@ std::shared_ptr<ITask> GameThread::constructTask()
         (
             task<TDelay>(5000)
             & task<TEvent>(boost::bind(&GameThread::onLoggedIn, this))
+        #if PW_SERVER_VERSION < 1760
+            // is registration has gone or has been changed?
             & task<TEvent>(boost::bind(&GameThread::onlineRegistration, this))
                 .startIf(FCondition(boost::bind(&GameThread::isOnlineRegAvailable, this)))
+        #endif
         )
         &&
         (
