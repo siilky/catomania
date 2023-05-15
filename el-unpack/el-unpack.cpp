@@ -3,8 +3,9 @@
 
 #include <boost/nowide/args.hpp>
 #include <CLI11/CLI11.hpp>
-#include <game/data/filereader.h>
-#include <netio/mppc.h>
+
+#include "game/data/filereader.h"
+#include "netio/mppc.h"
 
 
 class FileWriter
@@ -120,6 +121,40 @@ private:
 };
 
 
+std::string readTextFile(std::filesystem::path filename)
+{
+    std::ifstream file(filename);
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    return content;
+}
+
+/*
+static barray uncompress(const barray & data, int oSize)
+{
+    barray result;
+    result.resize(oSize);
+
+    if (oSize >= 8192)
+    {
+        if (GNET::mppc::uncompress2(result.data(), &oSize, data.data(), data.size()) >= 0)
+        {
+            result.resize(oSize);
+            return result;
+        }
+        else throw std::runtime_error("Failed to uncompress mppc");
+    }
+    else
+    {
+        if (GNET::mppc::uncompress(result.data(), &oSize, data.data(), data.size()) >= 0)
+        {
+            result.resize(oSize);
+            return result;
+        }
+        else throw std::runtime_error("Failed to uncompress mppc");
+    }
+}
+*/
+
 static int main_fn(int argc, char ** argv)
 {
     CLI::App app{ "el-unpack" };
@@ -162,6 +197,28 @@ static int main_fn(int argc, char ** argv)
         return 1;
     }
 
+    auto lengthsFile = std::filesystem::current_path() / ("lengths." + std::to_string(elVersion) + ".cfg");
+    if (!std::filesystem::exists(lengthsFile))
+    {
+        std::cerr << "Lengths file " << lengthsFile << " does not exist" << std::endl;
+        return 1;
+    }
+
+    auto lengthsData = readTextFile(lengthsFile);
+    auto lengths = CLI::detail::split(lengthsData, ',');
+    if (lengths.empty())
+    {
+        std::cerr << "Failed to read lengths from file " << lengthsFile << std::endl;
+        return 1;
+    }
+
+    std::vector<uint32_t> lengthsInt;
+    for (const auto & l : lengths)
+    {
+        lengthsInt.push_back(std::stoi(l));
+    }
+    std::cout << "Lengths: " << lengthsInt.size() << std::endl;
+
 
     auto list0s = fr.readDword();
     //fr.move(s1);
@@ -182,7 +239,8 @@ static int main_fn(int argc, char ** argv)
     FileWriter fw;
     if (!fw.open(outputPath))
     {
-        std::cerr << "Failed to open " << outputPath << " : " << GetLastError() << std::endl;
+        //std::cerr << "Failed to open " << outputPath << " : " << GetLastError() << std::endl;
+        throw std::system_error(GetLastError(), std::system_category(), "Failed to open " + outputPath.string());
         return 1;
     }
 
@@ -199,7 +257,7 @@ static int main_fn(int argc, char ** argv)
         int16_t size;
     };
 
-    int listId = 1;
+    unsigned listId = 1;
 
     while (fr && !fr.eof())
     {
@@ -216,66 +274,80 @@ static int main_fn(int argc, char ** argv)
             fw.write(list101p.size());
             fw.write(list101p);
         }
-
-        std::vector<Entry> dir;
-
-        auto itemsCount = fr.readDword();
-        if (itemsCount > 0)
+        else if (listId == 59)
         {
-            for (size_t i = 0; i < itemsCount; i++)
+            // no list59 lol
+            listId++;
+            continue;
+        }
+
+
+        if (listId > lengthsInt.size())
+        {
+            std::cerr << "List " << listId << " exceeds lengths size " << lengthsInt.size();
+        }
+        int unpackedChunkSize = lengthsInt[listId - 1];
+
+        if (unpackedChunkSize > 0)
+        {
+            auto itemsCount = fr.readDword();
+
+            // first entry
+            fw.write(listId);
+            fw.write(itemsCount);
+            fw.write(unpackedChunkSize);
+
+            if (itemsCount > 0)
             {
-                Entry e;
-                e.id = fr.readDword();
-                e.size = fr.readWord();
-                dir.push_back(e);
-            }
-
-            int packedSize = fr.readDword();
-
-            int unpackedChunkSize = 0;
-            for (const auto & e : dir)
-            {
-                auto packedChunk = fr.readBytes(e.size);
-
-                packedSize -= e.size;
-                if (packedSize < 0)
+                std::vector<Entry> dir;
+                for (size_t i = 0; i < itemsCount; i++)
                 {
-                    std::cerr << "List " << listId << " packed data exhausted: " << packedSize << std::endl;
-                    return 1;
+                    Entry e;
+                    e.id = fr.readDword();
+                    e.size = fr.readWord();
+                    dir.push_back(e);
                 }
 
-                auto dec = std::make_unique<MPPCDecoder>();
-                auto chunk = dec->transform(packedChunk);
+                int packedSize = fr.readDword();
 
-                if (unpackedChunkSize == 0)
+                for (const auto & e : dir)
                 {
-                    // first entry
-                    unpackedChunkSize = chunk.size();
+                    auto packedChunk = fr.readBytes(e.size);
 
-                    fw.write(listId);
-                    fw.write(itemsCount);
-                    fw.write(unpackedChunkSize);
-                }
-                else if (unpackedChunkSize != chunk.size())
-                {
-                    std::cerr << "List " << listId << " chunk size mismatch : " << unpackedChunkSize << " != " << chunk.size() << std::endl;
-                    return 1;
-                }
+                    packedSize -= e.size;
+                    if (packedSize < 0)
+                    {
+                        std::cerr << "List " << listId << " packed data exhausted: " << packedSize << std::endl;
+                        return 1;
+                    }
 
-                fw.write(chunk);
+                    auto dec = std::make_unique<MPPCDecoder>();
+                    auto chunk = dec->transform(packedChunk, unpackedChunkSize);
+
+                    //auto chunk = uncompress(packedChunk);
+                    //assert(chunk.size() == unpackedChunkSize);
+                    //assert(chunk == chunk2);
+
+                    if (unpackedChunkSize != chunk.size())
+                    {
+                        std::cerr << "List " << listId << " chunk size mismatch : " << unpackedChunkSize << " != " << chunk.size() << std::endl;
+                        return 1;
+                    }
+
+                    fw.write(chunk);
+                }
             }
         }
         else
         {
-            fw.write(listId);
-            fw.write(itemsCount);
-            fw.write(0);    // dont know chunk size
+            // zero chunk size means like flush everything we have remaining
+            fw.write(fr.readBytes(fr.size() - fr.offset()));
         }
 
         listId++;
     }
 
-    std::cout << "Done " << listId << " lists" << std::endl;
+    std::cout << "Done " << listId - 1 << " lists" << std::endl;
 
     return 0;
 }
@@ -289,11 +361,11 @@ int main(int argc, char ** argv)
     }
     catch (const std::system_error & se)
     {
-        std::cerr << "System error: " << se.code() << " - " << se.what() << std::endl;
+        std::cerr << "Error: (" << se.code() << ") " << se.what() << std::endl;
     }
     catch (const std::runtime_error & re)
     {
-        std::cerr << "Runtime error: " << re.what() << std::endl;
+        std::cerr << "Error: " << re.what() << std::endl;
     }
     catch (const std::exception & e)
     {

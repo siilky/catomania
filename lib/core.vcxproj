@@ -414,6 +414,8 @@
     <ClInclude Include="include\netdata\sw_version.h" />
     <ClInclude Include="include\netio\connector.h" />
     <ClInclude Include="include\netio\encoder.h" />
+    <ClInclude Include="include\netio\gnbyteorder.h" />
+    <ClInclude Include="include\netio\gnmppc.h" />
     <ClInclude Include="include\netio\mppc.h" />
     <ClInclude Include="include\netio\netchannel.h" />
     <ClInclude Include="include\netio\netchannelx.h" />

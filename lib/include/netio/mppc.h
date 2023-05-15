@@ -72,6 +72,7 @@ public:
     MPPCDecoder();
 
     barray transform(const barray & data);
+    barray transform(const barray & data, int oSize);
 
 private:
     static const unsigned HistorySize = 8192;

@@ -392,7 +392,7 @@ ErrorState ItemListCollection::load( const std::wstring & dataFile
 
             if (elVersion_ >= 352)
             {
-                assert(mr.offset() == mr.size());
+                //assert(mr.offset() == mr.size());
                 if (mr.offset() != mr.size())
                 {
                     if (!sizeMismatchReported)
@@ -594,38 +594,8 @@ MemReader ItemListCollection::PackedList::nextItem()
     offset_ += items[curIndex_].size;
     ++curIndex_;
 
-    barray data;
-
-    if (itemSize_ > 0x2000)
-    {
-        auto it = compressed.begin();
-
-        while (data.size() < itemSize_)
-        {
-            auto chunkRem = getWORD_r(it);
-            //compressed.erase(compressed.begin(), it);
-
-            auto chunkSz = chunkRem & 0x7FFF;
-            if (chunkSz != 0)
-            {
-                MPPCDecoder dec;
-                auto chunk = dec.transform(barray(it, it + chunkSz));
-                data.insert(data.end(), chunk.begin(), chunk.end());
-                it += chunkSz;
-            }
-            else
-            {
-                assert(0);
-                // ??
-                data.insert(data.end(), it, compressed.end());
-            }
-        }
-    }
-    else
-    {
-        MPPCDecoder dec;
-        data = dec.transform(compressed);
-    }
+    MPPCDecoder dec;
+    auto data = dec.transform(compressed, itemSize_);
         
     assert(data.size() == itemSize_);
 

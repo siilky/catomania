@@ -43,6 +43,9 @@
     <Filter Include="include\ui">
       <UniqueIdentifier>{610422e1-efd2-470a-b419-0970d4f5697a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\netio\GNET">
+      <UniqueIdentifier>{a9e5d948-6c65-4f4f-ab14-f1430b153ba5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="io\asyncIoBuffer.cpp">
@@ -393,6 +396,12 @@
     <ClInclude Include="SystemInfo.h" />
     <ClInclude Include="include\game\comissionshop.h">
       <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netio\gnmppc.h">
+      <Filter>include\netio\GNET</Filter>
+    </ClInclude>
+    <ClInclude Include="include\netio\gnbyteorder.h">
+      <Filter>include\netio\GNET</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

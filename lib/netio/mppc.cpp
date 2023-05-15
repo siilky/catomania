@@ -2,10 +2,13 @@
 #include "stdafx.h"
 
 #include "netio/mppc.h"
+#include "log.h"
 
-#if defined(min)
-#undef min
-#endif
+#pragma warning(push)
+#pragma warning(disable: 4244)
+#pragma warning(disable: 4100)
+#include "netio/gnmppc.h"
+#pragma warning(pop)
 
 
 #define MPPC_PWHACKS    1
@@ -458,6 +461,40 @@ barray MPPCDecoder::transform(const barray & data)
 
     return result;
 }
+
+barray MPPCDecoder::transform(const barray & data, int oSize)
+{
+    barray result;
+    result.resize(oSize);
+
+    if (oSize >= 8192)
+    {
+        if (GNET::mppc::uncompress2(result.data(), &oSize, data.data(), data.size()) >= 0)
+        {
+            assert(oSize == (int)result.size());
+            result.resize(oSize);
+            return result;
+        }
+        else
+        {
+        }
+    }
+    else
+    {
+        if (GNET::mppc::uncompress(result.data(), &oSize, data.data(), data.size()) >= 0)
+        {
+            assert(oSize == (int)result.size());
+            result.resize(oSize);
+            return result;
+        }
+    }
+
+    //throw std::runtime_error("Failed to uncompress mppc");
+    assert(0);
+    Log("Failed to uncompress mppc");
+    return {};
+}
+
 
 #if defined(_DEBUG)
 #pragma warning(disable:6262)
