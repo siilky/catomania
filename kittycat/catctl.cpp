@@ -294,11 +294,14 @@ CatCtl::CatCtl(const JsonValue & config, QObject *parent /*= NULL*/ )
     {
         tradeHistory_ = 0;
     }
+
+    /*
     if (Vmp::hasOption(Vmp::OptionAutoprice))
     {
         autoPriceMonitor_ = AutoPriceMonitor::instance();
     }
     else
+    */
     {
         autoPriceMonitor_ = 0;
     }
@@ -341,6 +344,8 @@ QStringList CatCtl::getServers(int & current) const
 
 int CatCtl::getCurrentServerAsPwcatsIndex() const
 {
+    return -1;
+    /*
     if (currentServer_ < 0
         || (size_t)currentServer_ >= servers_.size())
     {
@@ -392,6 +397,7 @@ int CatCtl::getCurrentServerAsPwcatsIndex() const
 #else
     return -1;
 #endif
+    */
 }
 
 void CatCtl::setCurrentServer(int current)
