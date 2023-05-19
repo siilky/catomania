@@ -400,7 +400,7 @@ void Player::onProtectionInfo(const serverdata::FragmentGiProtectionInfo *f)
         assert(0);
     }
 #else
-	lockState_ = f->lock != 0 ? LockStateOn : LockStateOff; 
+    lockState_ = f->lock != 0 ? LockStateOn : LockStateOff; 
 #endif
 
     lockExpires_ = GTime::unixToTs(f->unlockTS);
