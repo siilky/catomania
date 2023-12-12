@@ -1,7 +1,7 @@
 #ifndef gshop_h_
 #define gshop_h_
 
-#define GSHOP_VERSION   1760
+#define GSHOP_VERSION   1780
 
 namespace GShop
 {

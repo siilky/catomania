@@ -139,7 +139,7 @@
       <EnablePREfast>false</EnablePREfast>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26495;4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ProjectReference />
@@ -152,7 +152,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <EnablePREfast>false</EnablePREfast>
       <ExceptionHandling>Async</ExceptionHandling>
-      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26495;4996</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -161,7 +161,7 @@
       <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ExceptionHandling>Async</ExceptionHandling>
-      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26495;4996</DisableSpecificWarnings>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -172,7 +172,7 @@
       <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <ExceptionHandling>Async</ExceptionHandling>
-      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26495;4996</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-FP|Win32'">
@@ -182,7 +182,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <EnablePREfast>false</EnablePREfast>
       <ExceptionHandling>Async</ExceptionHandling>
-      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26495;4996</DisableSpecificWarnings>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -197,7 +197,7 @@
       <PreprocessorDefinitions>BOOST_SIGNALS_NO_DEPRECATION_WARNING;WIN32;NDEBUG;_LIB;FRAGMENT_PRINTABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ExceptionHandling>Async</ExceptionHandling>
-      <DisableSpecificWarnings>26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26495;4996</DisableSpecificWarnings>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>

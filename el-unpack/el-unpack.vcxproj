@@ -148,9 +148,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="gnmppc.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\CLI11.2.2.0\build\native\cli11.targets" Condition="Exists('..\packages\CLI11.2.2.0\build\native\cli11.targets')" />

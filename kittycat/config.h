@@ -14,6 +14,6 @@
 #define ARC_TOKEN_AUTH
 //#define GAME_USING_CLIENT
 
-#define CLIENT_VERSION      1760
+#define CLIENT_VERSION      1780
 
 #endif
