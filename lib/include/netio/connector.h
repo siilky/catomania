@@ -53,6 +53,9 @@ private:
     bool        forcedLogin_ = false;
     bool        authenticated_ = false;
 
+    // comeback data
+    std::vector<std::string>    comebackData_;
+
     barray      aKey;               // auth key
     RC4Encoder  clientEnc;          // шифрование исходящих пакетов
     RC4Encoder  serverEnc;          // шифрование входящих пакетов

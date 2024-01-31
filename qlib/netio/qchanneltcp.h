@@ -53,6 +53,11 @@ protected:
     virtual barray processDataIn(const barray & data);
     virtual barray processDataOut(const barray & data);
 
+    virtual void fail(const std::wstring & msg)
+    {
+        setError(msg);
+    }
+
     void setError(const std::wstring & msg);
 
     ErrorState  error_;

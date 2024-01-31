@@ -26,6 +26,8 @@ public:
     Serializer & q()                    { size_ += 8; return *this; }
     Serializer & skip(size_t bytes)     { size_ += bytes; return *this; }
 
+    Serializer & cb(byte /*b*/)         { size_ ++; return *this; }
+
     Serializer & b(byte & /*b*/)        { size_ ++; return *this; }
     Serializer & w(WORD & /*w*/)        { size_ += 2; return *this; }
     Serializer & l(DWORD & /*d*/)       { size_ += 4; return *this; }
@@ -52,12 +54,12 @@ public:
     template<typename Elem, typename lengthType, typename outType>
     Serializer & arr( std::vector<Elem> & v
                     , Serializer & (Serializer::*lengthSetter)(lengthType &)
-                    , Serializer & (Serializer::*sizeSetter)(outType &))
+                    , Serializer & (Serializer::*setter)(outType &))
     {
-        lengthType length;
-        (this->*lengthSetter)(length);          // length placeholder
+        lengthType length = (lengthType)v.size();
+        (this->*lengthSetter)(length);
 
-        return arr(v, v.size(), sizeSetter);    //array placeholdes
+        return arr(v, length, setter);
     }
 
     // Array of basic elements with defined count.
@@ -79,10 +81,10 @@ public:
     Serializer & arr( std::vector<Elem> & v
                     , Serializer & (Serializer::*lengthSetter)(lengthType &))
     {
-        lengthType length;
-        (this->*lengthSetter)(length);          // length placeholder
+        lengthType length = (lengthType)v.size();
+        (this->*lengthSetter)(length);
 
-        return arr(v, v.size());                  // array placeholder
+        return arr(v, length);
     }
 
     // Array of POD elements with defined count.
@@ -132,6 +134,8 @@ public:
     Serializer & l()                    { curPos_ += 4; return *this; }
     Serializer & q()                    { curPos_ += 8; return *this; }
     Serializer & skip(size_t bytes)     { curPos_ += bytes; return *this; }
+
+    Serializer & cb(byte /*b*/)         { /*b = * */curPos_++; return *this; }
 
     Serializer & b(byte & b)            { b = *curPos_++; return *this; }
     Serializer & w(WORD & w)            { w = getWORD(curPos_); return *this; }
@@ -261,6 +265,8 @@ public:
     Serializer & w()                    { putWORD(curPos_, 0); return *this; }
     Serializer & l()                    { putDWORD(curPos_, 0); return *this; }
     Serializer & skip(size_t bytes)     { for (size_t i = 0; i < bytes; i++) { *curPos_++ = 0; } return *this; }
+
+    Serializer & cb(byte b)             { *curPos_++ = b; return *this; }
 
     Serializer & b(byte & b)            { *curPos_++ = b; return *this; }
     Serializer & w(WORD & w)            { putWORD(curPos_, w); return *this; }

@@ -8,10 +8,10 @@ namespace Ui {class Chat;}
 class CatCtl;
 
 class Chat : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	Chat(QSharedPointer<CatCtl> ctl, QWidget * parent = Q_NULLPTR);
-	~Chat();
+    Chat(QSharedPointer<CatCtl> ctl, QWidget * parent = Q_NULLPTR);
+    ~Chat();
 
     void setBufferSize(int chatBufferOption);
 

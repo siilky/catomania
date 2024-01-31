@@ -7,7 +7,10 @@
 #include "md5.h"
 #include "netio/connector.h"
 #include "netdata/fragments.h"
+#include "netdata/serialize.h"
+#include "netdata/fragments_client.h"
 #include "error.h"
+#include "compactuint.h"
 
 Connector::Connector()
 {
@@ -18,6 +21,21 @@ Connector::Connector()
         logfile_.fill('0');
         logfile_.setf(std::ios::uppercase);
     }
+#endif
+
+#if defined (PW_SERVER_COMEBACK)
+    std::ifstream file("comeback.txt");
+    if (file.is_open())
+    {
+        std::string line;
+        while (std::getline(file, line))
+        {
+            comebackData_.push_back(line);
+        }
+    }
+    else
+        Log("Failed to read comeback.txt");
+
 #endif
 }
 
@@ -60,7 +78,9 @@ barray Connector::processDataIn(const barray & data$)
     if (authenticated_)
     {
         barray out(data$);
+#if !defined(PW_SERVER_COMEBACK)
         serverEnc.encode(out);
+#endif
 
         // tofstream file("io.data", ios_base::out | ios_base::app);
         // file << '[' << hex << setw(8) << time(0) << "]  " << endl;
@@ -97,16 +117,15 @@ barray Connector::processDataIn(const barray & data$)
         {
             case 0x01:      // server key
             {
-                // посылаем пакет <03> <login>.c <key>.c
-                barray pack(3);
-                pack[0] = 0x03;
+                // CECGameSession::OnPrtcChallenge
 
-                pack[2] = byte(login_.length());
-                pack.insert(pack.end(), login_.begin(), login_.end());
+                clientdata::FragmentChallengeResponse fr;
+
+                fr.login = login_;
 
             #if defined(PW_SERVER_TOKEN_AUTH)
                 // берем ключ из пришедшего пакета
-                unsigned keyLength = bytes[0];        // not sure if CU is used here
+                unsigned keyLength = bytes[0];  // should be cu
                 if (keyLength > bytes.size() - 1)
                 {
                     fail(L"[01] Key size exceeds packet length");
@@ -117,63 +136,76 @@ barray Connector::processDataIn(const barray & data$)
                 key.insert(key.begin(), password_.begin(), password_.end());
                 aKey = MD5Bin(key);
 
-                pack.push_back(byte(aKey.size()));
-                pack.insert(pack.end(), aKey.begin(), aKey.end());
+                fr.response = aKey;
 
             #elif defined(PW_SERVER_TOKEN_2_AUTH)
-                pack.push_back(byte(aKey.size()));
-                pack.insert(pack.end(), aKey.begin(), aKey.end());
+                fr.response = aKey;
 
             #else
                 // получаем MD5 от login+password
                 string lpw(login_ + password_);
                 barray md5LogPsw = MD5Bin(barray(lpw.begin(), lpw.end()));
 
-                // берем ключ из пришедшего пакета
-                unsigned keyLength = bytes[0];        // not sure if CU is used here
+                // Octets nonce
+                unsigned keyLength = bytes[0];        
                 if (keyLength > bytes.size() - 1)
                 {
                     fail(L"[01] Key size exceeds packet length");
                     break;
                 }
 
+                // version, algo
+                auto offset = 1 + keyLength;
+                Log("Challenge version: %i.%i.%i.%i algo %i", (int)bytes[offset], (int)bytes[offset + 1], (int)bytes[offset + 2], (int)bytes[offset + 3], (int)bytes[offset + 4]);
+                
                 barray key(bytes.begin() + 1, bytes.begin() + 1 + keyLength);
 
                 // получаем MD5_HMAC от md5LogPsw и key
                 aKey = HMAC_MD5(md5LogPsw, key);
 
-                pack.push_back(byte(aKey.size()));
-                pack.insert(pack.end(), aKey.begin(), aKey.end());
+                fr.response = aKey;
             #endif
 
-            #if PW_SERVER_VERSION >= 1440
-            #if defined(PW_SERVER_TOKEN_AUTH)
-                pack.push_back(1);
-            #elif defined(PW_SERVER_TOKEN_2_AUTH)
-                pack.push_back(2);
-            #else
-                pack.push_back(0);
-            #endif
-            #endif
-            #if PW_SERVER_VERSION >= 1451
-                pack.push_back(4);
-            #if defined(PW_SERVER_TOKEN_AUTH)
-                pack.push_back(0x03);
-                pack.push_back(0x00);
-                pack.push_back(0x00);
-                pack.push_back(0x00);
-            #else //if defined(PW_SERVER_TOKEN_2_AUTH)
-                pack.push_back(0xFF);
-                pack.push_back(0xFF);
-                pack.push_back(0xFF);
-                pack.push_back(0xFF);
-            #endif
-            #endif
+#if defined(PW_SERVER_TOKEN_AUTH)
+                fr.use_token = 1;
+#elif defined(PW_SERVER_TOKEN_2_AUTH)
+                fr.use_token = 2;
+#else
+                fr.use_token = 0;
+#endif
 
-                pack[1] = char(pack.size() - 2);
+#if defined(PW_SERVER_COMEBACK)
+                if (comebackData_.empty())
+                {
+                    fail(L"No comeback data");
+                    break;
+                }
+
+                auto xorString = [] (const std::string & input) -> std::string
+                {
+                    std::string output;
+                    const unsigned char kb[] = { 0x83, 0x23, 0x90, 0x13 };
+                    for (size_t i = 0; i < input.size(); i++)
+                    {
+                        output += input[i] ^ kb[i % 4];
+                    }
+                    return output;
+                };
+
+                // here should be utf8 conversion from wstring if we have unicode file
+                
+                fr.hwid = xorString(comebackData_[0]);
+                for (size_t i = 1; i < comebackData_.size(); i++)
+                {
+                    auto hdd_id = xorString(comebackData_[i]);
+                    fr.hdd_ids.push_back(hdd_id);
+                }
+#endif
+
+                auto bytes_re = fr.assemble();
 
                 Log("Sending login");
-                sendReply(processDataOut(pack));
+                sendReply(processDataOut(bytes_re));
 
                 break;
             }
@@ -254,7 +286,9 @@ barray Connector::processDataOut(const barray & data)
     if (authenticated_)
     {
         barray encoded(data);
+#if !defined(PW_SERVER_COMEBACK)
         clientEnc.encode(encoded);
+#endif
         return encoded;
     }
     else

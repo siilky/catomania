@@ -128,6 +128,57 @@ namespace clientdata
 
     // ------------------------------------------------------------------------------
 
+    class ChallengeResponseImpl
+    {
+    public:
+        enum { ID = 0x0003 };
+
+        std::string login;
+        barray response;
+        byte use_token;
+#if defined(PW_SERVER_COMEBACK)
+        std::string hwid;
+        std::vector<std::string> hdd_ids;
+#endif
+
+    protected:
+        template<int mode> void format(Serializer<mode> & s)
+        {
+            s.c(login).arr(response, &Serializer<mode>::cui, &Serializer<mode>::b);
+
+    #if PW_SERVER_VERSION >= 1440
+            s.b(use_token);
+    #endif
+
+#if defined(PW_SERVER_COMEBACK)
+            s.c(hwid).arr(hdd_ids, &Serializer<mode>::cui, &Serializer<mode>::c);
+#else
+    #if PW_SERVER_VERSION >= 1451
+                pack.cb(4);
+        #if defined(PW_SERVER_TOKEN_AUTH)
+                s.cb(0x03);
+                s.cb(0x00);
+                s.cb(0x00);
+                s.cb(0x00);
+        #else //if defined(PW_SERVER_TOKEN_2_AUTH)
+                s.cb(0xFF);
+                s.cb(0xFF);
+                s.cb(0xFF);
+                s.cb(0xFF);
+        #endif
+    #endif
+#endif
+        }
+
+        void print(tostream & stream) const
+        {
+            stream << _T(" [Challenge Re]");
+        }
+    };
+
+    typedef FragmentSpec<ChallengeResponseImpl>   FragmentChallengeResponse;
+
+
     class SelectRoleImpl
     {
     public:
